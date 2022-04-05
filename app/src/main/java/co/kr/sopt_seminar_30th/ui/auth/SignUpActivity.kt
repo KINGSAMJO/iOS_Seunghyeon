@@ -1,5 +1,6 @@
 package co.kr.sopt_seminar_30th.ui.auth
 
+import android.content.Intent
 import android.os.Bundle
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.ActivitySignUpBinding
@@ -13,5 +14,18 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        signUp()
+    }
+
+    private fun signUp() {
+        binding.btnSignUp.setOnClickListener {
+            val intent = Intent(this, SignInActivity::class.java).apply {
+                putExtra("userId", binding.etUserId.text.toString())
+            }
+            setResult(RESULT_OK, intent)
+            if (!isFinishing) {
+                finish()
+            }
+        }
     }
 }
