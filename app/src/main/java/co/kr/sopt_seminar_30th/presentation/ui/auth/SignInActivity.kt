@@ -1,11 +1,11 @@
-package co.kr.sopt_seminar_30th.ui.auth
+package co.kr.sopt_seminar_30th.presentation.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.ActivitySignInBinding
-import co.kr.sopt_seminar_30th.ui.base.BaseActivity
+import co.kr.sopt_seminar_30th.presentation.ui.base.BaseActivity
 
 class SignInActivity : BaseActivity<ActivitySignInBinding>() {
     override val TAG: String

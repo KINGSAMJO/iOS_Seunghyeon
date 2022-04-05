@@ -1,4 +1,4 @@
-package co.kr.sopt_seminar_30th.ui.base
+package co.kr.sopt_seminar_30th.presentation.ui.base
 
 import android.os.Bundle
 import android.util.Log
