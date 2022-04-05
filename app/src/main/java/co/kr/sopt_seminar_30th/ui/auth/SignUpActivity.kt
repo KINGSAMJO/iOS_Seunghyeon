@@ -1,6 +1,5 @@
 package co.kr.sopt_seminar_30th.ui.auth
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.ActivitySignUpBinding

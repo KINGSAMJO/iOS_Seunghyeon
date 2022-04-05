@@ -10,7 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SOPT_Seminar_30th">
         <activity
-            android:name=".ui.SignInActivity"
+            android:name=".ui.auth.SignUpActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.auth.SignInActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
