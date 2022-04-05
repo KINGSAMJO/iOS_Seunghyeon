@@ -2,7 +2,6 @@ package co.kr.sopt_seminar_30th.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.ActivitySignInBinding
