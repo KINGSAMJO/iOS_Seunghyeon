@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewmodel"
+            type="co.kr.sopt_seminar_30th.presentation.viewmodel.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,6 +59,7 @@
                 android:hint="@string/text_user_name_hint"
                 android:importantForAutofill="no"
                 android:inputType="text"
+                android:text="@={viewmodel.userName}"
                 app:layout_constraintBottom_toTopOf="@id/tv_user_id"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -82,6 +86,7 @@
                 android:hint="@string/text_user_id_hint"
                 android:importantForAutofill="no"
                 android:inputType="text"
+                android:text="@={viewmodel.userId}"
                 app:layout_constraintBottom_toTopOf="@id/tv_user_password"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -108,6 +113,7 @@
                 android:hint="@string/text_user_password_hint"
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
+                android:text="@={viewmodel.userPassword}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
