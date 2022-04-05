@@ -3,12 +3,16 @@
     package="co.kr.sopt_seminar_30th">
 
     <application
+        android:name=".application.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/sopt_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/sopt_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.SOPT_Seminar_30th">
+        <activity
+            android:name=".presentation.ui.home.HomeActivity"
+            android:exported="false" />
         <activity
             android:name=".presentation.ui.auth.SignUpActivity"
             android:exported="false"
