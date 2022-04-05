@@ -16,8 +16,8 @@ class InsertUserInformationUseCase @Inject constructor(
         userAge: Int?,
         userMbti: String?,
         userImage: String?
-    ) {
-        withContext(Dispatchers.IO) {
+    ): Long {
+        return withContext(Dispatchers.IO) {
             repository.insertUserInformation(
                 UserInformation(
                     userId,

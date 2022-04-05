@@ -12,7 +12,7 @@ interface UserDao {
     suspend fun getUserInformation(id: String): User
 
     @Insert
-    suspend fun insertUserInformation(userInformation: User)
+    suspend fun insertUserInformation(userInformation: User): Long
 
     @Update
     suspend fun updateUserInformation(userInformation: User)

@@ -10,12 +10,7 @@ class GetUserInformationUseCase @Inject constructor(
     private val repository: UserRepository
 )  {
     suspend operator fun invoke(
-        userId: String,
-//        userPassword: String,
-//        userName: String,
-//        userAge: Int?,
-//        userMbti: String?,
-//        userImage: String?
+        userId: String
     ): UserInformation {
         return withContext(Dispatchers.IO) {
             repository.getUserInformation(userId)
