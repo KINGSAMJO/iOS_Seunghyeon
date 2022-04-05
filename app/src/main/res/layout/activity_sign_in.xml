@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="20dp"
-        tools:context=".ui.SignInActivity">
+        tools:context=".ui.auth.SignInActivity">
 
         <TextView
             android:id="@+id/tv_title"
@@ -40,7 +40,7 @@
                 android:id="@+id/tv_user_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_sign_in_user_id"
+                android:text="@string/text_user_id"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@id/et_user_id"
@@ -53,7 +53,7 @@
                 android:id="@+id/et_user_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/text_sign_in_user_id_hint"
+                android:hint="@string/text_user_id_hint"
                 android:importantForAutofill="no"
                 android:inputType="text"
                 app:layout_constraintBottom_toTopOf="@id/tv_user_password"
@@ -65,7 +65,8 @@
                 android:id="@+id/tv_user_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_sign_in_user_password"
+                android:layout_marginTop="10dp"
+                android:text="@string/text_user_password"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@id/et_user_password"
@@ -78,7 +79,7 @@
                 android:id="@+id/et_user_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/text_sign_in_user_password_hint"
+                android:hint="@string/text_user_password_hint"
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -102,8 +103,8 @@
             android:id="@+id/btn_sign_up"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/text_sign_up"
             android:backgroundTint="@color/purple_700"
+            android:text="@string/text_sign_up"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_sign_in" />

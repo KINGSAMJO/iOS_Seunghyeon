@@ -1,4 +1,4 @@
-package co.kr.sopt_seminar_30th.ui
+package co.kr.sopt_seminar_30th.ui.auth
 
 import android.os.Bundle
 import co.kr.sopt_seminar_30th.R
