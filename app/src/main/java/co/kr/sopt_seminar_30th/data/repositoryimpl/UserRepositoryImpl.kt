@@ -29,8 +29,9 @@ class UserRepositoryImpl @Inject constructor(
         return userDao.insertUserInformation(UserMapper.mapperToUser(userInformation))
     }
 
-    override suspend fun updateUserInformation(userInformation: UserInformation) {
+    override suspend fun updateUserInformation(userInformation: UserInformation): UserInformation {
         userDao.updateUserInformation(UserMapper.mapperToUser(userInformation))
+        return getUserInformation(userInformation.userId)
     }
 
     override suspend fun getUserId(): String {

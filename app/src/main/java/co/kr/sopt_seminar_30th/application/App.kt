@@ -8,15 +8,13 @@ import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
 @HiltAndroidApp
-class App: Application() {
+class App : Application() {
     var userId: String = ""
 
     override fun onCreate() {
         super.onCreate()
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
 
-        if(BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
+        Timber.plant(Timber.DebugTree())
     }
 }

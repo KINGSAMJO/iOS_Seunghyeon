@@ -12,6 +12,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
+    override val TAG: String
+        get() = SignUpActivity::class.java.simpleName
     override val layoutRes: Int
         get() = R.layout.activity_sign_up
 
@@ -34,7 +36,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
 
     private fun observeSignUp() {
         signUpViewModel.isSuccess.observe(this) {
-            when(it) {
+            when (it) {
                 true -> {
                     val intent = Intent(this, SignInActivity::class.java).apply {
                         putExtra("userId", binding.etUserId.text.toString())

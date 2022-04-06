@@ -17,8 +17,8 @@ class UpdateUserInformationUseCase @Inject constructor(
         userMbti: String?,
         userImage: String?,
         userDescription: String?
-    ) {
-        withContext(Dispatchers.IO) {
+    ): UserInformation {
+        return withContext(Dispatchers.IO) {
             repository.updateUserInformation(
                 UserInformation(
                     userId,

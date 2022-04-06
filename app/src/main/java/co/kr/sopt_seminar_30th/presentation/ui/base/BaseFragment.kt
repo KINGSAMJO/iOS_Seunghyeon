@@ -5,24 +5,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import timber.log.Timber
 
-abstract class BaseFragment<T: ViewDataBinding>: Fragment() {
+abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     private var _binding: T? = null
     val binding get() = _binding ?: error("Binding not Initialized")
+    abstract val TAG: String
     abstract val layoutRes: Int
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Timber.i("onAttach")
+        Timber.tag(TAG).i("onAttach")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Timber.i("onCreate")
+        Timber.tag(TAG).i("onCreate")
     }
 
     override fun onCreateView(
@@ -30,6 +32,7 @@ abstract class BaseFragment<T: ViewDataBinding>: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Timber.tag(TAG).i("onCreateView")
         _binding = DataBindingUtil.inflate(layoutInflater, layoutRes, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
@@ -37,47 +40,55 @@ abstract class BaseFragment<T: ViewDataBinding>: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Timber.i("onViewCreated")
+        val imm: InputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(getView()?.windowToken, 0)
+        Timber.tag(TAG).i("onViewCreated")
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        Timber.i("onViewStateRestored")
+        Timber.tag(TAG).i("onViewStateRestored")
     }
 
     override fun onStart() {
         super.onStart()
-        Timber.i("onStart")
+        Timber.tag(TAG).i("onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        Timber.i("onResume")
+        Timber.tag(TAG).i("onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Timber.i("onPause")
+        Timber.tag(TAG).i("onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        Timber.i("onStop")
+        Timber.tag(TAG).i("onStop")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        Timber.i("onSaveInstanceState")
+        Timber.tag(TAG).i("onSaveInstanceState")
     }
 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
-        Timber.i("onDestroyView")
+        Timber.tag(TAG).i("onDestroyView")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Timber.i("onDestroy")
+        Timber.tag(TAG).i("onDestroy")
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = this
     }
 }

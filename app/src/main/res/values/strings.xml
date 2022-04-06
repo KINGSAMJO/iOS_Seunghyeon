@@ -11,4 +11,11 @@
     <string name="text_user_name_hint">이름을 입력해주세요</string>
     <string name="description_profile_image">ProfileImage</string>
     <string name="text_edit">EDIT</string>
+    <string name="text_save">SAVE</string>
+    <string name="text_user_age">나이</string>
+    <string name="text_user_mbti">MBTI</string>
+    <string name="text_user_description">자기소개</string>
+    <string name="text_user_age_hint">나이를 입력해주세요</string>
+    <string name="text_user_mbti_hint">MBTI를 입력해주세요</string>
+    <string name="text_user_description_hint">자기소개를 입력해주세요</string>
 </resources>

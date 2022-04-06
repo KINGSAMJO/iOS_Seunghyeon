@@ -15,5 +15,5 @@ interface UserDao {
     suspend fun insertUserInformation(userInformation: User): Long
 
     @Update
-    suspend fun updateUserInformation(userInformation: User)
+    suspend fun updateUserInformation(userInformation: User): Int
 }

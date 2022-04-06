@@ -14,6 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignInActivity : BaseActivity<ActivitySignInBinding>() {
+    override val TAG: String
+        get() = SignInActivity::class.java.simpleName
     override val layoutRes: Int
         get() = R.layout.activity_sign_in
 
@@ -53,7 +55,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
 
     private fun observeLogin() {
         signInViewModel.isSuccess.observe(this) {
-            when(it) {
+            when (it) {
                 true -> {
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
