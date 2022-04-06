@@ -15,7 +15,8 @@ class UpdateUserInformationUseCase @Inject constructor(
         userName: String,
         userAge: Int?,
         userMbti: String?,
-        userImage: String?
+        userImage: String?,
+        userDescription: String?
     ) {
         withContext(Dispatchers.IO) {
             repository.updateUserInformation(
@@ -25,7 +26,8 @@ class UpdateUserInformationUseCase @Inject constructor(
                     userName,
                     userAge,
                     userMbti,
-                    userImage
+                    userImage,
+                    userDescription
                 )
             )
         }

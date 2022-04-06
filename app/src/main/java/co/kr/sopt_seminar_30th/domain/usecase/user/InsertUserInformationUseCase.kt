@@ -12,10 +12,7 @@ class InsertUserInformationUseCase @Inject constructor(
     suspend operator fun invoke(
         userId: String,
         userPassword: String,
-        userName: String,
-        userAge: Int?,
-        userMbti: String?,
-        userImage: String?
+        userName: String
     ): Long {
         return withContext(Dispatchers.IO) {
             repository.insertUserInformation(
@@ -23,9 +20,10 @@ class InsertUserInformationUseCase @Inject constructor(
                     userId,
                     userPassword,
                     userName,
-                    userAge,
-                    userMbti,
-                    userImage
+                    0,
+                    null,
+                    null,
+                    null
                 )
             )
         }

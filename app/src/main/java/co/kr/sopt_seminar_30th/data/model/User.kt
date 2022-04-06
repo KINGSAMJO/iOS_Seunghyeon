@@ -12,4 +12,5 @@ data class User(
     @ColumnInfo(name="userAge") val userAge: Int?,
     @ColumnInfo(name="userMbti") val userMbti: String?,
     @ColumnInfo(name="userImage") val userImage: String?,
+    @ColumnInfo(name="userDescription") val userDescription: String?
 )

@@ -29,10 +29,7 @@ class SignUpViewModel @Inject constructor(
                     insertUserInformationUseCase(
                         userId.value!!,
                         userPassword.value!!,
-                        userName.value!!,
-                        null,
-                        null,
-                        null
+                        userName.value!!
                     )
                 }.onSuccess {
                     _isSuccess.value = true

@@ -10,4 +10,5 @@ data class UserInformation(
     val userAge: Int?,
     val userMbti: String?,
     val userImage: String?,
+    val userDescription: String?
 )

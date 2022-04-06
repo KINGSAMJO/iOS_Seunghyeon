@@ -11,7 +11,8 @@ object UserMapper {
             userName = user.userName,
             userAge = user.userAge,
             userMbti = user.userMbti,
-            userImage = user.userImage
+            userImage = user.userImage,
+            userDescription = user.userDescription
         )
     }
 
@@ -22,7 +23,8 @@ object UserMapper {
             userName = userInformation.userName,
             userAge = userInformation.userAge,
             userMbti = userInformation.userMbti,
-            userImage = userInformation.userImage
+            userImage = userInformation.userImage,
+            userDescription = userInformation.userDescription
         )
     }
 }
