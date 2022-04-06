@@ -5,45 +5,45 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import timber.log.Timber
 
 abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     lateinit var binding: T
-    abstract val TAG: String
     abstract val layoutRes: Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i(TAG, "onCreate")
+        Timber.i("onCreate")
         binding = DataBindingUtil.setContentView(this, layoutRes)
     }
 
     override fun onStart() {
         super.onStart()
-        Log.i(TAG, "onStart")
+        Timber.i("onStart")
     }
 
     override fun onRestart() {
         super.onRestart()
-        Log.i(TAG, "onRestart")
+        Timber.i("onRestart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.i(TAG, "onResume")
+        Timber.i("onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.i(TAG, "onPause")
+        Timber.i("onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.i(TAG, "onStop")
+        Timber.i("onStop")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.i(TAG, "onDestroy")
+        Timber.i("onDestroy")
     }
 }
