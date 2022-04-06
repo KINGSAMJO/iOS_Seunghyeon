@@ -59,4 +59,7 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.4.0'
     implementation 'androidx.fragment:fragment-ktx:1.4.1'
     implementation 'androidx.room:room-ktx:2.4.2'
+
+    // security
+    implementation 'androidx.security:security-crypto:1.0.0'
 }
