@@ -9,6 +9,8 @@ import timber.log.Timber
 
 @HiltAndroidApp
 class App: Application() {
+    var userId: String = ""
+
     override fun onCreate() {
         super.onCreate()
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)

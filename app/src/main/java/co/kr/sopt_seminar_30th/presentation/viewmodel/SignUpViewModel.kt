@@ -8,6 +8,7 @@ import co.kr.sopt_seminar_30th.domain.usecase.user.InsertUserInformationUseCase
 import co.kr.sopt_seminar_30th.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,6 +38,7 @@ class SignUpViewModel @Inject constructor(
                     _isSuccess.value = true
                 }.onFailure {
                     _isSuccess.value = false
+                    Timber.e(it)
                 }
             }
         }

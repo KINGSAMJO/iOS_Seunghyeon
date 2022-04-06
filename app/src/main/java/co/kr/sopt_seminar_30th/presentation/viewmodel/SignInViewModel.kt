@@ -10,6 +10,7 @@ import co.kr.sopt_seminar_30th.domain.usecase.user.LoginUseCase
 import co.kr.sopt_seminar_30th.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,6 +36,7 @@ class SignInViewModel @Inject constructor(
                     _isSuccess.value = it
                 }.onFailure {
                     _isSuccess.value = false
+                    Timber.e(it)
                 }
             }
         }
@@ -46,6 +48,8 @@ class SignInViewModel @Inject constructor(
                 getUserIdUseCase()
             }.onSuccess {
                 userId.value = it
+            }.onFailure {
+                Timber.e(it)
             }
         }
     }
