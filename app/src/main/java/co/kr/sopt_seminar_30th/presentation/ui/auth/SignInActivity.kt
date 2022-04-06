@@ -14,8 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignInActivity : BaseActivity<ActivitySignInBinding>() {
-    override val TAG: String
-        get() = SignInActivity::class.java.simpleName
     override val layoutRes: Int
         get() = R.layout.activity_sign_in
 
