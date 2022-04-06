@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.kr.sopt_seminar_30th.domain.entity.UserInformation
-import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserInformationUseCase
+import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
+import co.kr.sopt_seminar_30th.domain.usecase.user.LoginUseCase
 import co.kr.sopt_seminar_30th.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val getUserInformationUseCase: GetUserInformationUseCase
+    private val getUserIdUseCase: GetUserIdUseCase,
+    private val loginUseCase: LoginUseCase
 ): ViewModel() {
     var userId = MutableLiveData<String>()
     var userPassword = MutableLiveData<String>()
@@ -43,7 +45,13 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    private fun checkLoginSuccess() {
-        _isSuccess.value = (userInformation.value?.userId == userId.value && userInformation.value?.userPassword == userPassword.value)
+    fun getPreferenceUserId() {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                getUserIdUseCase()
+            }.onSuccess {
+                userId.value = it
+            }
+        }
     }
 }

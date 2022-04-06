@@ -36,4 +36,20 @@ object UseCaseModule {
     ): UpdateUserInformationUseCase {
         return UpdateUserInformationUseCase(repository)
     }
+
+    @ViewModelScoped
+    @Provides
+    fun provideGetPreferenceUserIdUseCase(
+        repository: UserRepository
+    ): GetUserIdUseCase {
+        return GetUserIdUseCase(repository)
+    }
+
+    @ViewModelScoped
+    @Provides
+    fun provideLoginUseCase(
+        repository: UserRepository
+    ): LoginUseCase {
+        return LoginUseCase(repository)
+    }
 }

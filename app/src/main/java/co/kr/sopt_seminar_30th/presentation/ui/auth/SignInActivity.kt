@@ -33,6 +33,8 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
         super.onCreate(savedInstanceState)
         binding.viewmodel = signInViewModel
         binding.lifecycleOwner = this
+
+        signInViewModel.getPreferenceUserId()
         signUp()
         login()
         observeLogin()
