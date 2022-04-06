@@ -1,5 +1,7 @@
 package co.kr.sopt_seminar_30th.presentation.viewmodel
 
+import android.net.Uri
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,6 +28,7 @@ class HomeViewModel @Inject constructor(
     var userAge = MutableLiveData<String?>()
     var userMbti = MutableLiveData<String?>()
     var userDescription = MutableLiveData<String?>()
+    var userImage = MutableLiveData<Uri?>()
 
     private var _updateSuccess = SingleLiveEvent<Boolean>()
     val updateSuccess: LiveData<Boolean> get() = _updateSuccess
@@ -43,6 +46,7 @@ class HomeViewModel @Inject constructor(
                 }
                 userMbti.value = it.userMbti
                 userDescription.value = it.userDescription
+                userImage.value = it.userImage?.toUri()
             }.onFailure {
                 Timber.e(it)
             }
@@ -59,7 +63,7 @@ class HomeViewModel @Inject constructor(
                         it.userName,
                         userAge.value?.toInt(),
                         userMbti.value,
-                        it.userImage,
+                        userImage.value.toString(),
                         userDescription.value
                     )
                 }.onSuccess {
@@ -70,11 +74,13 @@ class HomeViewModel @Inject constructor(
                         userAge.value = it.userAge.toString()
                     }
                     userMbti.value = it.userMbti
+                    userImage.value = it.userImage?.toUri()
                     userDescription.value = it.userDescription
                     _updateSuccess.value = true
                 }.onFailure {
                     userAge.value = user.value?.userAge.toString()
                     userMbti.value = user.value?.userMbti
+                    userImage.value = user.value?.userImage?.toUri()
                     userDescription.value = user.value?.userDescription
                     _updateSuccess.value = false
                 }
