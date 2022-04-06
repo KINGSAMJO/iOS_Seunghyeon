@@ -9,4 +9,6 @@
     <string name="text_sign_up">SIGN UP</string>
     <string name="text_user_name">이름</string>
     <string name="text_user_name_hint">이름을 입력해주세요</string>
+    <string name="description_profile_image">ProfileImage</string>
+    <string name="text_edit">EDIT</string>
 </resources>
