@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel" />
@@ -45,8 +46,8 @@
                     android:id="@+id/tv_profile_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`이름: ` + viewmodel.user.userName}"
                     android:layout_marginTop="5dp"
+                    android:text="@{`이름: ` + viewmodel.user.userName}"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toTopOf="@id/tv_profile_age"
@@ -57,8 +58,8 @@
                 <TextView
                     android:id="@+id/tv_profile_age"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:text="@{viewmodel.user.userAge == 0 ? `나이: 미입력` : `나이: ` + Integer.toString(viewmodel.user.userAge)}"
                     android:textColor="@color/black"
                     android:textSize="20sp"
@@ -71,9 +72,9 @@
                     android:id="@+id/tv_profile_mbti"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:text="@{viewmodel.user.userMbti == null ? `MBTI: 미입력` : `MBTI: ` + viewmodel.user.userMbti}"
                     android:textColor="@color/black"
-                    android:layout_marginTop="5dp"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toTopOf="@id/tv_profile_description"
                     app:layout_constraintEnd_toEndOf="@id/tv_profile_name"
@@ -84,8 +85,8 @@
                     android:id="@+id/tv_profile_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{`자기소개:\n` }"
                     android:layout_marginTop="10dp"
+                    android:text="@{viewmodel.user.userDescription == null ? `자기소개:\n미입력` : `자기소개:\n` + viewmodel.user.userDescription}"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -99,10 +100,10 @@
             android:id="@+id/btn_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="@string/text_edit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/text_edit"
             app:layout_constraintTop_toBottomOf="@id/sv_profile"
             app:layout_constraintWidth_percent="0.5" />
 
