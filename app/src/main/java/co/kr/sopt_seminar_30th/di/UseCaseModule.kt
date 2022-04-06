@@ -1,9 +1,7 @@
 package co.kr.sopt_seminar_30th.di
 
 import co.kr.sopt_seminar_30th.domain.repository.UserRepository
-import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserInformationUseCase
-import co.kr.sopt_seminar_30th.domain.usecase.user.InsertUserInformationUseCase
-import co.kr.sopt_seminar_30th.domain.usecase.user.UpdateUserInformationUseCase
+import co.kr.sopt_seminar_30th.domain.usecase.user.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

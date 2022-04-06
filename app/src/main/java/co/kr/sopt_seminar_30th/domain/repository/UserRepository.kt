@@ -4,6 +4,7 @@ import co.kr.sopt_seminar_30th.domain.entity.UserInformation
 
 interface UserRepository {
     suspend fun getUserInformation(userId: String): UserInformation
+    suspend fun login(userId: String, userPassword: String): Boolean
     suspend fun insertUserInformation(userInformation: UserInformation): Long
     suspend fun updateUserInformation(userInformation: UserInformation)
     suspend fun getUserId(): String

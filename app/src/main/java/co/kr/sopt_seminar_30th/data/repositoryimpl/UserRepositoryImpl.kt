@@ -15,6 +15,16 @@ class UserRepositoryImpl @Inject constructor(
         return UserMapper.mapperToUserInformation(userDao.getUserInformation(userId))
     }
 
+    override suspend fun login(userId: String, userPassword: String): Boolean {
+        val userInformation = getUserInformation(userId)
+        return if(userInformation.userId == userId && userInformation.userPassword == userPassword) {
+            dataStore.userId = userId
+            true
+        } else {
+            false
+        }
+    }
+
     override suspend fun insertUserInformation(userInformation: UserInformation): Long {
         return userDao.insertUserInformation(UserMapper.mapperToUser(userInformation))
     }

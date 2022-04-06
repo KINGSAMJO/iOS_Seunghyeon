@@ -49,7 +49,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
 
     private fun login() {
         binding.btnSignIn.setOnClickListener {
-            signInViewModel.checkSignInPermission()
+            signInViewModel.login()
         }
     }
 

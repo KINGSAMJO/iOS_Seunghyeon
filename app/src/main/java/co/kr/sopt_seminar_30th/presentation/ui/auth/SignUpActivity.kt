@@ -23,13 +23,14 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         super.onCreate(savedInstanceState)
         binding.viewmodel = signUpViewModel
         binding.lifecycleOwner = this
+
         signUp()
         observeSignUp()
     }
 
     private fun signUp() {
         binding.btnSignUp.setOnClickListener {
-            signUpViewModel.checkSignUpPermission()
+            signUpViewModel.signUp()
         }
     }
 

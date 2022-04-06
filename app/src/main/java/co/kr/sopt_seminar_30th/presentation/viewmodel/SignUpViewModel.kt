@@ -21,27 +21,23 @@ class SignUpViewModel @Inject constructor(
     private var _isSuccess = SingleLiveEvent<Boolean>()
     val isSuccess: LiveData<Boolean> get() = _isSuccess
 
-    fun checkSignUpPermission() {
+    fun signUp() {
         if (!userId.value.isNullOrBlank() && !userPassword.value.isNullOrBlank() && !userName.value.isNullOrBlank()) {
-            signUp()
-        }
-    }
-
-    private fun signUp() {
-        viewModelScope.launch {
-            kotlin.runCatching {
-                insertUserInformationUseCase(
-                    userId.value!!,
-                    userPassword.value!!,
-                    userName.value!!,
-                    null,
-                    null,
-                    null
-                )
-            }.onSuccess {
-                _isSuccess.value = true
-            }.onFailure {
-                _isSuccess.value = false
+            viewModelScope.launch {
+                kotlin.runCatching {
+                    insertUserInformationUseCase(
+                        userId.value!!,
+                        userPassword.value!!,
+                        userName.value!!,
+                        null,
+                        null,
+                        null
+                    )
+                }.onSuccess {
+                    _isSuccess.value = true
+                }.onFailure {
+                    _isSuccess.value = false
+                }
             }
         }
     }
