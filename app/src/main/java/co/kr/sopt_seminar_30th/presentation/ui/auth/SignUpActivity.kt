@@ -40,6 +40,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                 true -> {
                     val intent = Intent(this, SignInActivity::class.java).apply {
                         putExtra("userId", binding.etUserId.text.toString())
+                        putExtra("userPassword", binding.etUserPassword.text.toString())
                     }
                     setResult(RESULT_OK, intent)
                     if (!isFinishing) {

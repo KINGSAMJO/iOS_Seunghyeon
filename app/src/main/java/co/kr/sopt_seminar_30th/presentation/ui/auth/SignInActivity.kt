@@ -25,7 +25,9 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
                 val userId = it.data?.getStringExtra("userId") ?: ""
+                val userPassword = it.data?.getStringExtra("userPassword") ?: ""
                 binding.etUserId.setText(userId)
+                binding.etUserPassword.setText(userPassword)
             }
         }
 
