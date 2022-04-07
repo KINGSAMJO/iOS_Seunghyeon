@@ -3,7 +3,9 @@ package co.kr.sopt_seminar_30th.data.repositoryimpl
 import co.kr.sopt_seminar_30th.data.datasource.local.SopthubDataStore
 import co.kr.sopt_seminar_30th.data.datasource.local.UserDao
 import co.kr.sopt_seminar_30th.data.mapper.UserMapper
-import co.kr.sopt_seminar_30th.domain.entity.UserInformation
+import co.kr.sopt_seminar_30th.domain.entity.user.LoginUserInformation
+import co.kr.sopt_seminar_30th.domain.entity.user.SignUpUserInformation
+import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
 import co.kr.sopt_seminar_30th.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -15,22 +17,22 @@ class UserRepositoryImpl @Inject constructor(
         return UserMapper.mapperToUserInformation(userDao.getUserInformation(userId))
     }
 
-    override suspend fun login(userId: String, userPassword: String): Boolean {
-        val userInformation = getUserInformation(userId)
-        return if(userInformation.userId == userId && userInformation.userPassword == userPassword) {
-            dataStore.userId = userId
+    override suspend fun login(loginUserInformation: LoginUserInformation): Boolean {
+        val userInformation = getUserInformation(loginUserInformation.userId)
+        return if(userInformation.userId == loginUserInformation.userId && userInformation.userPassword == loginUserInformation.userPassword) {
+            dataStore.userId = loginUserInformation.userId
             true
         } else {
             false
         }
     }
 
-    override suspend fun insertUserInformation(userInformation: UserInformation): Long {
-        return userDao.insertUserInformation(UserMapper.mapperToUser(userInformation))
+    override suspend fun insertUserInformation(signUpUserInformation: SignUpUserInformation): Long {
+        return userDao.insertUserInformation(UserMapper.mapperToUserDto(signUpUserInformation))
     }
 
     override suspend fun updateUserInformation(userInformation: UserInformation): UserInformation {
-        userDao.updateUserInformation(UserMapper.mapperToUser(userInformation))
+        userDao.updateUserInformation(UserMapper.mapperToUserDto(userInformation))
         return getUserInformation(userInformation.userId)
     }
 

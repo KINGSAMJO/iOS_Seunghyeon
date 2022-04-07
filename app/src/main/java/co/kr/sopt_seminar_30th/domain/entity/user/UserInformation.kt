@@ -1,7 +1,4 @@
-package co.kr.sopt_seminar_30th.domain.entity
-
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
+package co.kr.sopt_seminar_30th.domain.entity.user
 
 data class UserInformation(
     val userId: String,

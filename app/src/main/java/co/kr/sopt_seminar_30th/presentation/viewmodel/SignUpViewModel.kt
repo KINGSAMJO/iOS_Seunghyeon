@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.kr.sopt_seminar_30th.domain.entity.user.SignUpUserInformation
+import co.kr.sopt_seminar_30th.domain.usecase.base.Result
 import co.kr.sopt_seminar_30th.domain.usecase.user.InsertUserInformationUseCase
 import co.kr.sopt_seminar_30th.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,17 +27,19 @@ class SignUpViewModel @Inject constructor(
     fun signUp() {
         if (!userId.value.isNullOrBlank() && !userPassword.value.isNullOrBlank() && !userName.value.isNullOrBlank()) {
             viewModelScope.launch {
-                kotlin.runCatching {
-                    insertUserInformationUseCase(
+                val result = insertUserInformationUseCase(
+                    SignUpUserInformation(
                         userId.value!!,
                         userPassword.value!!,
                         userName.value!!
                     )
-                }.onSuccess {
-                    _isSuccess.value = true
-                }.onFailure {
-                    _isSuccess.value = false
-                    Timber.e(it)
+                )
+                when (result) {
+                    is Result.Success -> _isSuccess.value = true
+                    is Result.Error -> {
+                        _isSuccess.value = false
+                        Timber.e(result.exception)
+                    }
                 }
             }
         }

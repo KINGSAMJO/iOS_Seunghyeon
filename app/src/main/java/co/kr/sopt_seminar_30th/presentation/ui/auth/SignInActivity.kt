@@ -34,7 +34,6 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
         binding.viewmodel = signInViewModel
         binding.lifecycleOwner = this
 
-        signInViewModel.getPreferenceUserId()
         signUp()
         login()
         observeLogin()

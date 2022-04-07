@@ -2,7 +2,6 @@ package co.kr.sopt_seminar_30th.domain.usecase.base
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 abstract class CoroutineUseCase<P, R>(private val coroutineDispatcher: CoroutineDispatcher) {
     protected abstract suspend fun execute(parameter: P): R

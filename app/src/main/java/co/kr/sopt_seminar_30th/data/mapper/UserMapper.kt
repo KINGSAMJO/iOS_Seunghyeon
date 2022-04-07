@@ -1,10 +1,11 @@
 package co.kr.sopt_seminar_30th.data.mapper
 
-import co.kr.sopt_seminar_30th.data.model.User
-import co.kr.sopt_seminar_30th.domain.entity.UserInformation
+import co.kr.sopt_seminar_30th.data.model.UserDto
+import co.kr.sopt_seminar_30th.domain.entity.user.SignUpUserInformation
+import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
 
 object UserMapper {
-    fun mapperToUserInformation(user: User): UserInformation {
+    fun mapperToUserInformation(user: UserDto): UserInformation {
         return UserInformation(
             userId = user.userId,
             userPassword = user.userPassword,
@@ -16,8 +17,8 @@ object UserMapper {
         )
     }
 
-    fun mapperToUser(userInformation: UserInformation): User {
-        return User(
+    fun mapperToUserDto(userInformation: UserInformation): UserDto {
+        return UserDto(
             userId = userInformation.userId,
             userPassword = userInformation.userPassword,
             userName = userInformation.userName,
@@ -25,6 +26,18 @@ object UserMapper {
             userMbti = userInformation.userMbti,
             userImage = userInformation.userImage,
             userDescription = userInformation.userDescription
+        )
+    }
+
+    fun mapperToUserDto(signUpUserInformation: SignUpUserInformation): UserDto {
+        return UserDto(
+            userId = signUpUserInformation.userId,
+            userPassword = signUpUserInformation.userPassword,
+            userName = signUpUserInformation.userName,
+            0,
+            null,
+            null,
+            null
         )
     }
 }

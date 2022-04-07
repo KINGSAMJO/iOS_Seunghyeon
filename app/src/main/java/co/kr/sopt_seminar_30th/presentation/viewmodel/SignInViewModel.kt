@@ -1,10 +1,13 @@
 package co.kr.sopt_seminar_30th.presentation.viewmodel
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.kr.sopt_seminar_30th.domain.entity.UserInformation
+import co.kr.sopt_seminar_30th.domain.entity.user.LoginUserInformation
+import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
+import co.kr.sopt_seminar_30th.domain.usecase.base.Result
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.LoginUseCase
 import co.kr.sopt_seminar_30th.util.SingleLiveEvent
@@ -13,11 +16,12 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+@SuppressLint("NullSafeMutableLiveData")
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val getUserIdUseCase: GetUserIdUseCase,
     private val loginUseCase: LoginUseCase
-): ViewModel() {
+) : ViewModel() {
     var userId = MutableLiveData<String>()
     var userPassword = MutableLiveData<String>()
 
@@ -27,29 +31,30 @@ class SignInViewModel @Inject constructor(
     private var _isSuccess = SingleLiveEvent<Boolean>()
     val isSuccess: LiveData<Boolean> get() = _isSuccess
 
-    fun login() {
-        if(!userId.value.isNullOrBlank() && !userId.value.isNullOrBlank()) {
-            viewModelScope.launch {
-                kotlin.runCatching {
-                    loginUseCase(userId.value!!, userPassword.value!!)
-                }.onSuccess {
-                    _isSuccess.value = it
-                }.onFailure {
-                    _isSuccess.value = false
-                    Timber.e(it)
-                }
+    init {
+        viewModelScope.launch {
+            val result = getUserIdUseCase(Unit)
+            when (result) {
+                is Result.Success -> userId.value = result.data
+                is Result.Error -> Timber.e(result.exception)
             }
         }
     }
 
-    fun getPreferenceUserId() {
-        viewModelScope.launch {
-            kotlin.runCatching {
-                getUserIdUseCase()
-            }.onSuccess {
-                userId.value = it
-            }.onFailure {
-                Timber.e(it)
+    fun login() {
+        if (!userId.value.isNullOrBlank() && !userId.value.isNullOrBlank()) {
+            viewModelScope.launch {
+                val result =
+                    loginUseCase(LoginUserInformation(userId.value!!, userPassword.value!!))
+                when (result) {
+                    is Result.Success -> {
+                        _isSuccess.value = result.data
+                    }
+                    is Result.Error -> {
+                        _isSuccess.value = false
+                        Timber.e(result.exception)
+                    }
+                }
             }
         }
     }
