@@ -31,6 +31,9 @@ class SignInViewModel @Inject constructor(
     private var _isSuccess = SingleLiveEvent<Boolean>()
     val isSuccess: LiveData<Boolean> get() = _isSuccess
 
+    private var _isEmpty = SingleLiveEvent<Boolean>()
+    val isEmpty: LiveData<Boolean> get() = _isEmpty
+
     init {
         viewModelScope.launch {
             val result = getUserIdUseCase(Unit)
@@ -57,6 +60,8 @@ class SignInViewModel @Inject constructor(
                     }
                 }
             }
+        } else {
+            _isEmpty.value = true
         }
     }
 }
