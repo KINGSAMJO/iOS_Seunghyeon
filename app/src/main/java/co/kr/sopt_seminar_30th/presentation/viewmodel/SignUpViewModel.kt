@@ -24,8 +24,12 @@ class SignUpViewModel @Inject constructor(
     private var _isSuccess = SingleLiveEvent<Boolean>()
     val isSuccess: LiveData<Boolean> get() = _isSuccess
 
+    private var _isEmpty = SingleLiveEvent<Boolean>()
+    val isEmpty: LiveData<Boolean> get() = _isEmpty
+
     fun signUp() {
         if (!userId.value.isNullOrBlank() && !userPassword.value.isNullOrBlank() && !userName.value.isNullOrBlank()) {
+            _isEmpty.value = true
             viewModelScope.launch {
                 val result = insertUserInformationUseCase(
                     SignUpUserInformation(
@@ -42,6 +46,8 @@ class SignUpViewModel @Inject constructor(
                     }
                 }
             }
+        } else {
+            _isEmpty.value = true
         }
     }
 }

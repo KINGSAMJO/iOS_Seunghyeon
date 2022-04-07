@@ -52,5 +52,11 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                 }
             }
         }
+
+        signUpViewModel.isEmpty.observe(this) {
+            if(it) {
+                Toast.makeText(this, "입력되지 않은 정보가 있습니다", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
