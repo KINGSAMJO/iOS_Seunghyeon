@@ -42,7 +42,8 @@ class SignInViewModel @Inject constructor(
     }
 
     fun login() {
-        if (!userId.value.isNullOrBlank() && !userId.value.isNullOrBlank()) {
+        if (!userId.value.isNullOrBlank() && !userPassword.value.isNullOrBlank()) {
+            _isEmpty.value = false
             viewModelScope.launch {
                 val result =
                     loginUseCase(LoginUserInformation(userId.value!!, userPassword.value!!))
