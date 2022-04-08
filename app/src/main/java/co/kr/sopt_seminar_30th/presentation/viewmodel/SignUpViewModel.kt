@@ -29,7 +29,7 @@ class SignUpViewModel @Inject constructor(
 
     fun signUp() {
         if (!userId.value.isNullOrBlank() && !userPassword.value.isNullOrBlank() && !userName.value.isNullOrBlank()) {
-            _isEmpty.value = true
+            _isEmpty.value = false
             viewModelScope.launch {
                 val result = insertUserInformationUseCase(
                     SignUpUserInformation(
