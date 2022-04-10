@@ -1,2 +1,1 @@
-1주차 README입니다.
-https://velog.io/@gxstxdgxs/THE-SOPT-Android-1차-세미나-과제
+1주차 README입니다 - https://velog.io/@gxstxdgxs/THE-SOPT-Android-1차-세미나-과제
