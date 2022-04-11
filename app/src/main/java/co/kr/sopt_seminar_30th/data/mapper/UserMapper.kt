@@ -1,7 +1,6 @@
 package co.kr.sopt_seminar_30th.data.mapper
 
 import co.kr.sopt_seminar_30th.data.model.UserDto
-import co.kr.sopt_seminar_30th.domain.entity.user.SignUpUserInformation
 import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
 
 object UserMapper {
@@ -26,18 +25,6 @@ object UserMapper {
             userMbti = userInformation.userMbti,
             userImage = userInformation.userImage,
             userDescription = userInformation.userDescription
-        )
-    }
-
-    fun mapperToUserDto(signUpUserInformation: SignUpUserInformation): UserDto {
-        return UserDto(
-            userId = signUpUserInformation.userId,
-            userPassword = signUpUserInformation.userPassword,
-            userName = signUpUserInformation.userName,
-            0,
-            null,
-            null,
-            null
         )
     }
 }

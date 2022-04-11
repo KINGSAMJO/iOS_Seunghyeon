@@ -11,9 +11,9 @@ class GetUserInformationUseCase @Inject constructor(
     private val repository: UserRepository,
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) {
-    suspend operator fun invoke(parameter: String): UserInformation {
+    suspend operator fun invoke(userId: String): UserInformation {
         return withContext(coroutineDispatcher) {
-            repository.getUserInformation(parameter)
+            repository.getUserInformation(userId)
         }
     }
 }

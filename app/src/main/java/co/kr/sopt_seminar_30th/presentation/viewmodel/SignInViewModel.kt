@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.kr.sopt_seminar_30th.domain.entity.user.LoginUserInformation
 import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.LoginUseCase
@@ -55,7 +54,7 @@ class SignInViewModel @Inject constructor(
             _isEmpty.value = false
             viewModelScope.launch {
                 kotlin.runCatching {
-                    loginUseCase(LoginUserInformation(userId.value!!, userPassword.value!!))
+                    loginUseCase(userId.value!!, userPassword.value!!)
                 }.onSuccess {
                     _isSuccess.value = it
                 }.onFailure {
