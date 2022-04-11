@@ -10,8 +10,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>() {
-    override val TAG: String
-        get() = HomeActivity::class.java.simpleName
     override val layoutRes: Int
         get() = R.layout.activity_home
 

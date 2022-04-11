@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import co.kr.sopt_seminar_30th.util.MyDefaultLifecycleObserver
 import timber.log.Timber
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
@@ -24,7 +25,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Timber.tag(TAG).i("onCreate")
+        lifecycle.addObserver(MyDefaultLifecycleObserver())
     }
 
     override fun onCreateView(
@@ -53,22 +54,18 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        Timber.tag(TAG).i("onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        Timber.tag(TAG).i("onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Timber.tag(TAG).i("onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        Timber.tag(TAG).i("onStop")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -84,7 +81,6 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Timber.tag(TAG).i("onDestroy")
     }
 
     companion object {
