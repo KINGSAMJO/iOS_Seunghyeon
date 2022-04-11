@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.kr.sopt_seminar_30th.domain.entity.user.LoginUserInformation
 import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
-import co.kr.sopt_seminar_30th.domain.usecase.base.Result
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.LoginUseCase
 import co.kr.sopt_seminar_30th.util.SingleLiveEvent
@@ -36,10 +35,17 @@ class SignInViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val result = getUserIdUseCase(Unit)
-            when (result) {
-                is Result.Success -> userId.value = result.data
-                is Result.Error -> Timber.e(result.exception)
+//            val result = getUserIdUseCase(Unit)
+//            when (result) {
+//                is Result.Success -> userId.value = result.data
+//                is Result.Error -> Timber.e(result.exception)
+//            }
+            kotlin.runCatching {
+                getUserIdUseCase()
+            }.onSuccess {
+                userId.value = it
+            }.onFailure {
+                Timber.e(it)
             }
         }
     }
@@ -48,16 +54,13 @@ class SignInViewModel @Inject constructor(
         if (!userId.value.isNullOrBlank() && !userPassword.value.isNullOrBlank()) {
             _isEmpty.value = false
             viewModelScope.launch {
-                val result =
+                kotlin.runCatching {
                     loginUseCase(LoginUserInformation(userId.value!!, userPassword.value!!))
-                when (result) {
-                    is Result.Success -> {
-                        _isSuccess.value = result.data
-                    }
-                    is Result.Error -> {
-                        _isSuccess.value = false
-                        Timber.e(result.exception)
-                    }
+                }.onSuccess {
+                    _isSuccess.value = it
+                }.onFailure {
+                    _isSuccess.value = false
+                    Timber.e(it)
                 }
             }
         } else {

@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
-import co.kr.sopt_seminar_30th.domain.usecase.base.Result
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserInformationUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.UpdateUserInformationUseCase
@@ -40,25 +39,30 @@ class HomeViewModel @Inject constructor(
 
     fun getUserInformation() {
         viewModelScope.launch {
-            val uid = getUserIdUseCase(Unit)
-            userId = when (uid) {
-                is Result.Success -> uid.data
-                else -> ""
+            kotlin.runCatching {
+                getUserIdUseCase()
+            }.onSuccess {
+                userId = it
+            }.onFailure {
+                userId = ""
+                error("Authorization error")
             }
 
-            val userInfo = getUserInformationUseCase(userId)
-            when (userInfo) {
-                is Result.Success -> {
-                    _user.value = userInfo.data
-                    when (userInfo.data.userAge) {
-                        0 -> userAge.value = null
-                        else -> userAge.value = userInfo.data.userAge.toString()
-                    }
-                    userMbti.value = userInfo.data.userMbti
-                    userImage.value = userInfo.data.userImage?.toUri()
-                    userDescription.value = userInfo.data.userDescription
+            kotlin.runCatching {
+                getUserInformationUseCase(userId)
+            }.onSuccess {
+                _user.value = it
+
+                when (it.userAge) {
+                    0 -> userAge.value = null
+                    else -> userAge.value = it.userAge.toString()
                 }
-                is Result.Error -> Timber.e(userInfo.exception)
+                userMbti.value = it.userMbti
+                userImage.value = it.userImage?.toUri()
+                userDescription.value = it.userDescription
+            }.onFailure {
+                Timber.e(it)
+                error("Failed while loading user information from DB")
             }
         }
     }
@@ -66,38 +70,35 @@ class HomeViewModel @Inject constructor(
     fun editProfile() {
         viewModelScope.launch {
             user.value?.let {
-                val result = updateUserInformationUseCase(
-                    UserInformation(
-                        it.userId,
-                        it.userPassword,
-                        it.userName,
-                        userAge.value?.toInt(),
-                        userMbti.value,
-                        userImage.value.toString(),
-                        userDescription.value
+                kotlin.runCatching {
+                    updateUserInformationUseCase(
+                        UserInformation(
+                            it.userId,
+                            it.userPassword,
+                            it.userName,
+                            userAge.value?.toInt(),
+                            userMbti.value,
+                            userImage.value.toString(),
+                            userDescription.value
+                        )
                     )
-                )
+                }.onSuccess {
+                    _user.value = it
 
-                when (result) {
-                    is Result.Success -> {
-                        _user.value = result.data
-                        if (result.data.userAge == 0) {
-                            userAge.value = null
-                        } else {
-                            userAge.value = result.data.userAge.toString()
-                        }
-                        userMbti.value = result.data.userMbti
-                        userImage.value = result.data.userImage?.toUri()
-                        userDescription.value = result.data.userDescription
-                        _updateSuccess.value = true
+                    userAge.value = when (it.userAge) {
+                        0 -> null
+                        else -> it.userAge.toString()
                     }
-                    is Result.Error -> {
-                        userAge.value = user.value?.userAge.toString()
-                        userMbti.value = user.value?.userMbti
-                        userImage.value = user.value?.userImage?.toUri()
-                        userDescription.value = user.value?.userDescription
-                        _updateSuccess.value = false
-                    }
+                    userMbti.value = it.userMbti
+                    userImage.value = it.userImage?.toUri()
+                    userDescription.value = it.userDescription
+                    _updateSuccess.value = true
+                }.onFailure {
+                    userAge.value = user.value?.userAge.toString()
+                    userMbti.value = user.value?.userMbti
+                    userImage.value = user.value?.userImage?.toUri()
+                    userDescription.value = user.value?.userDescription
+                    _updateSuccess.value = false
                 }
             }
         }
