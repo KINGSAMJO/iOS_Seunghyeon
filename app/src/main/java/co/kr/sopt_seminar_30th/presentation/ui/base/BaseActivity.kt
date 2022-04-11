@@ -7,7 +7,7 @@ import androidx.databinding.ViewDataBinding
 import timber.log.Timber
 
 abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
-    lateinit var binding: T
+    protected lateinit var binding: T
     abstract val TAG: String
     abstract val layoutRes: Int
 
