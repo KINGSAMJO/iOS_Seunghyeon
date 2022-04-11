@@ -13,7 +13,7 @@ import timber.log.Timber
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     private var _binding: T? = null
-    val binding get() = _binding ?: error("Binding not Initialized")
+    protected val binding get() = _binding ?: error("Binding not Initialized")
     abstract val TAG: String
     abstract val layoutRes: Int
 
