@@ -31,7 +31,7 @@
 
                 <ImageView
                     android:id="@+id/iv_profile_image"
-                    setProfileImage="@{viewmodel.userImage}"
+                    setProfileImageUri="@{viewmodel.userImage}"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/description_profile_image"

@@ -18,7 +18,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun login(id: String, password: String): Boolean {
         val userInformation = getUserInformation(id)
-        return if(userInformation.userId == id && userInformation.userPassword == password) {
+        return if (userInformation.userId == id && userInformation.userPassword == password) {
             dataStore.userId = id
             true
         } else {

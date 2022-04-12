@@ -7,10 +7,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "UserInformation")
 data class UserDto(
     @PrimaryKey val userId: String,
-    @ColumnInfo(name="userPassword") val userPassword: String,
-    @ColumnInfo(name="userName") val userName: String,
-    @ColumnInfo(name="userAge") val userAge: Int?,
-    @ColumnInfo(name="userMbti") val userMbti: String?,
-    @ColumnInfo(name="userImage") val userImage: String?,
-    @ColumnInfo(name="userDescription") val userDescription: String?
+    @ColumnInfo(name = "userPassword") val userPassword: String,
+    @ColumnInfo(name = "userName") val userName: String,
+    @ColumnInfo(name = "userAge") val userAge: Int?,
+    @ColumnInfo(name = "userMbti") val userMbti: String?,
+    @ColumnInfo(name = "userImage") val userImage: String?,
+    @ColumnInfo(name = "userDescription") val userDescription: String?
 )

@@ -7,7 +7,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
 import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
+import co.kr.sopt_seminar_30th.domain.usecase.follower.GetFollowerListUseCase
+import co.kr.sopt_seminar_30th.domain.usecase.follower.InsertFollowerListUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserInformationUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.UpdateUserInformationUseCase
@@ -20,11 +23,16 @@ import javax.inject.Inject
 @SuppressLint("NullSafeMutableLiveData")
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val insertFollowerListUseCase: InsertFollowerListUseCase,
+    private val getFollowerListUseCase: GetFollowerListUseCase,
     private val getUserIdUseCase: GetUserIdUseCase,
     private val getUserInformationUseCase: GetUserInformationUseCase,
     private val updateUserInformationUseCase: UpdateUserInformationUseCase
 ) : ViewModel() {
     private var userId: String = ""
+
+    private var _follower = MutableLiveData<List<FollowerInformation>>()
+    val follower: LiveData<List<FollowerInformation>> get() = _follower
 
     private var _user = MutableLiveData<UserInformation>()
     val user: LiveData<UserInformation> get() = _user
@@ -36,6 +44,28 @@ class HomeViewModel @Inject constructor(
 
     private var _updateSuccess = SingleLiveEvent<Boolean>()
     val updateSuccess: LiveData<Boolean> get() = _updateSuccess
+
+    fun insertFollowerList(followerList: List<FollowerInformation>) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                insertFollowerListUseCase(followerList)
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
+
+    fun getFollowerList() {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                getFollowerListUseCase()
+            }.onSuccess {
+                _follower.value = it
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
 
     fun getUserInformation() {
         viewModelScope.launch {
