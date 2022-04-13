@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="repository"
+            type="co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tv_repository_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{repository.repositoryName}"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_repository_description"/>
+
+        <TextView
+            android:id="@+id/tv_repository_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{repository.repositoryDescription}"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_repository_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

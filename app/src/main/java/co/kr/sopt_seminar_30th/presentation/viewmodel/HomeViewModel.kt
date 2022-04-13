@@ -8,9 +8,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
+import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
 import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
 import co.kr.sopt_seminar_30th.domain.usecase.follower.GetFollowerListUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.follower.InsertFollowerListUseCase
+import co.kr.sopt_seminar_30th.domain.usecase.repository.GetRepositoryListUseCase
+import co.kr.sopt_seminar_30th.domain.usecase.repository.InsertRepositoryListUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserInformationUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.UpdateUserInformationUseCase
@@ -25,6 +28,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val insertFollowerListUseCase: InsertFollowerListUseCase,
     private val getFollowerListUseCase: GetFollowerListUseCase,
+    private val insertRepositoryListUseCase: InsertRepositoryListUseCase,
+    private val getRepositoryListUseCase: GetRepositoryListUseCase,
     private val getUserIdUseCase: GetUserIdUseCase,
     private val getUserInformationUseCase: GetUserInformationUseCase,
     private val updateUserInformationUseCase: UpdateUserInformationUseCase
@@ -33,6 +38,9 @@ class HomeViewModel @Inject constructor(
 
     private var _follower = MutableLiveData<List<FollowerInformation>>()
     val follower: LiveData<List<FollowerInformation>> get() = _follower
+
+    private var _repository = MutableLiveData<List<RepositoryInformation>>()
+    val repository: LiveData<List<RepositoryInformation>> get() = _repository
 
     private var _user = MutableLiveData<UserInformation>()
     val user: LiveData<UserInformation> get() = _user
@@ -61,6 +69,28 @@ class HomeViewModel @Inject constructor(
                 getFollowerListUseCase()
             }.onSuccess {
                 _follower.value = it
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
+
+    fun insertRepositoryList(repositoryList: List<RepositoryInformation>) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                insertRepositoryListUseCase(repositoryList)
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
+
+    fun getRepositoryList() {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                getRepositoryListUseCase()
+            }.onSuccess {
+                _repository.value = it
             }.onFailure {
                 Timber.e(it)
             }

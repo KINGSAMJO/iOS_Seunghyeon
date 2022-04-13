@@ -52,35 +52,10 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         Timber.tag(TAG).i("onViewStateRestored")
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        Timber.tag(TAG).i("onSaveInstanceState")
-    }
-
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
         Timber.tag(TAG).i("onDestroyView")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     companion object {

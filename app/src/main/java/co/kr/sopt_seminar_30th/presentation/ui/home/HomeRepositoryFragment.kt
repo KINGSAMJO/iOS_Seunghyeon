@@ -1,25 +1,25 @@
 package co.kr.sopt_seminar_30th.presentation.ui.home
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.replace
 import co.kr.sopt_seminar_30th.R
-import co.kr.sopt_seminar_30th.databinding.FragmentHomeBinding
+import co.kr.sopt_seminar_30th.databinding.FragmentHomeRepositoryBinding
+import co.kr.sopt_seminar_30th.presentation.ui.adapter.HomeRepositoryAdapter
 import co.kr.sopt_seminar_30th.presentation.ui.base.BaseFragment
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+class HomeRepositoryFragment : BaseFragment<FragmentHomeRepositoryBinding>() {
     override val TAG: String
-        get() = HomeFragment::class.java.simpleName
+        get() = HomeRepositoryFragment::class.java.simpleName
     override val layoutRes: Int
-        get() = R.layout.fragment_home
+        get() = R.layout.fragment_home_repository
 
     private val homeViewModel by activityViewModels<HomeViewModel>()
+    private lateinit var homeRepositoryAdapter: HomeRepositoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,28 +28,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding.viewmodel = homeViewModel
-        initFragmentContainerView()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModel.getUserInformation()
-        editProfile()
+        initRecyclerView()
+        homeViewModel.getRepositoryList()
     }
 
-    private fun initFragmentContainerView() {
-        val transaction = childFragmentManager.beginTransaction()
-        transaction.replace<HomeRepositoryFragment>(R.id.fcv_home_bottom)
-            .commit()
-    }
-
-    private fun editProfile() {
-        binding.btnEdit.setOnClickListener {
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.fcv_home, EditProfileFragment())
-                .addToBackStack("EditProfile")
-                .commit()
+    private fun initRecyclerView() {
+        homeRepositoryAdapter = HomeRepositoryAdapter()
+        binding.rvHomeRepository.adapter = homeRepositoryAdapter
+        homeViewModel.repository.observe(viewLifecycleOwner) {
+            homeRepositoryAdapter.replaceItem(it)
         }
     }
 }

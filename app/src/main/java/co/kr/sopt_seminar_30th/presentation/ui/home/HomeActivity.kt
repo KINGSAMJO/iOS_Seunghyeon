@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.ActivityHomeBinding
 import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
+import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
 import co.kr.sopt_seminar_30th.presentation.ui.base.BaseActivity
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,27 +27,36 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     }
 
     private fun insertInitFollower() {
-        val followerList = listOf<FollowerInformation>(
-            FollowerInformation("한진희", "한진희입니다.", null),
-            FollowerInformation("곽호택", "곽호택입니다.", null),
-            FollowerInformation("권용민", "권용민입니다.", null),
-            FollowerInformation("김세훈", "김세훈입니다.", null),
-            FollowerInformation("김수빈", "김수빈입니다.", null),
-            FollowerInformation("김효림", "김효림입니다.", null),
-            FollowerInformation("문다빈", "문다빈입니다.", null),
-            FollowerInformation("문명주", "문명주입니다.", null),
-            FollowerInformation("박세은", "박세은입니다.", null),
-            FollowerInformation("심채영", "심채영입니다.", null),
-            FollowerInformation("이강민", "이강민입니다.", null),
-            FollowerInformation("이창환", "이창환입니다.", null),
-            FollowerInformation("이혜빈", "이혜빈입니다.", null),
-            FollowerInformation("정설희", "정설희입니다.", null),
-            FollowerInformation("조재훈", "조재훈입니다.", null)
+        val nameList = listOf<String>(
+            "한진희",
+            "곽호택",
+            "권용민",
+            "김세훈",
+            "김수빈",
+            "김효림",
+            "문다빈",
+            "문명주",
+            "박세은",
+            "심채영",
+            "이강민",
+            "이창환",
+            "이혜빈",
+            "정설희",
+            "조재훈"
         )
+        val followerList = mutableListOf<FollowerInformation>()
+        nameList.forEach {
+            followerList.add(FollowerInformation(it, it+"입니다.", null))
+        }
         homeViewModel.insertFollowerList(followerList)
     }
 
     private fun insertInitRepository() {
-
+        val repositoryList = listOf<RepositoryInformation>(
+            RepositoryInformation("SOPT_30th_Seminar", "30기 세미나 과제 레포지토리입니다."),
+            RepositoryInformation("SOPT_29th_Seminar", "29기 세미나 과제 레포지토리입니다."),
+            RepositoryInformation("SOPT_28th_Seminar", "28기 세미나 과제 레포지토리입니다."),
+        )
+        homeViewModel.insertRepositoryList(repositoryList)
     }
 }

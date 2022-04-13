@@ -3,7 +3,9 @@ package co.kr.sopt_seminar_30th.di
 import android.content.Context
 import co.kr.sopt_seminar_30th.data.database.AppDatabase
 import co.kr.sopt_seminar_30th.data.datasource.local.FollowerDao
+import co.kr.sopt_seminar_30th.data.datasource.local.RepositoryDao
 import co.kr.sopt_seminar_30th.data.datasource.local.UserDao
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,4 +29,8 @@ object DbModule {
     @Singleton
     @Provides
     fun provideFollowerDao(appDatabase: AppDatabase): FollowerDao = appDatabase.followerDao()
+
+    @Singleton
+    @Provides
+    fun provideRepositoryDao(appDatabase: AppDatabase): RepositoryDao = appDatabase.repositoryDao()
 }
