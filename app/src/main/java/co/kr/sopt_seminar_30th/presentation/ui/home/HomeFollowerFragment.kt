@@ -10,6 +10,7 @@ import co.kr.sopt_seminar_30th.databinding.FragmentHomeFollowerBinding
 import co.kr.sopt_seminar_30th.presentation.ui.adapter.HomeFollowerAdapter
 import co.kr.sopt_seminar_30th.presentation.ui.base.BaseFragment
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
+import co.kr.sopt_seminar_30th.util.MyItemDecoration
 
 class HomeFollowerFragment : BaseFragment<FragmentHomeFollowerBinding>() {
     override val TAG: String
@@ -37,6 +38,7 @@ class HomeFollowerFragment : BaseFragment<FragmentHomeFollowerBinding>() {
     }
 
     private fun initRecyclerView() {
+        binding.rvHomeFollower.addItemDecoration(MyItemDecoration(5, 10, R.color.purple_100))
         homeFollowerAdapter = HomeFollowerAdapter()
         binding.rvHomeFollower.adapter = homeFollowerAdapter
         homeViewModel.follower.observe(viewLifecycleOwner) {

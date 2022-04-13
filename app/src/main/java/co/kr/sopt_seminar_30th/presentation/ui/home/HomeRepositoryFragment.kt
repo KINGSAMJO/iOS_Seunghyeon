@@ -11,6 +11,7 @@ import co.kr.sopt_seminar_30th.databinding.FragmentHomeRepositoryBinding
 import co.kr.sopt_seminar_30th.presentation.ui.adapter.HomeRepositoryAdapter
 import co.kr.sopt_seminar_30th.presentation.ui.base.BaseFragment
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
+import co.kr.sopt_seminar_30th.util.MyItemDecoration
 
 class HomeRepositoryFragment : BaseFragment<FragmentHomeRepositoryBinding>() {
     override val TAG: String
@@ -38,6 +39,7 @@ class HomeRepositoryFragment : BaseFragment<FragmentHomeRepositoryBinding>() {
     }
 
     private fun initRecyclerView() {
+        binding.rvHomeRepository.addItemDecoration(MyItemDecoration(5, 10, R.color.purple_100))
         homeRepositoryAdapter = HomeRepositoryAdapter()
         binding.rvHomeRepository.adapter = homeRepositoryAdapter
         homeViewModel.repository.observe(viewLifecycleOwner) {
