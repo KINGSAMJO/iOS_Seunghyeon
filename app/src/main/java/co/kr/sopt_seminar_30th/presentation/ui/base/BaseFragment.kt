@@ -52,6 +52,12 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         Timber.tag(TAG).i("onViewStateRestored")
     }
 
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Timber.tag(TAG).i("onSaveInstanceState")
+    }
+
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()

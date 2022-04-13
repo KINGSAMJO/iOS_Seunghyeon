@@ -16,7 +16,6 @@ import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.FragmentEditProfileBinding
 import co.kr.sopt_seminar_30th.presentation.ui.base.BaseFragment
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
-import com.bumptech.glide.Glide
 
 class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
     override val TAG: String
@@ -27,10 +26,10 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
     private val homeViewModel by activityViewModels<HomeViewModel>()
     private val galleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if(it.resultCode == RESULT_OK && it.data != null) {
+            if (it.resultCode == RESULT_OK && it.data != null) {
                 val imageUri = it.data?.data
                 homeViewModel.userImage.value = imageUri
-            } else if(it.resultCode == RESULT_CANCELED) {
+            } else if (it.resultCode == RESULT_CANCELED) {
                 Toast.makeText(requireContext(), "사진 선택이 취소되었습니다", Toast.LENGTH_SHORT).show()
             }
         }
