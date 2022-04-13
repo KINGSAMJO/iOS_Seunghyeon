@@ -58,6 +58,11 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         Timber.tag(TAG).i("onDestroyView")
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        Timber.tag(TAG).i("onDetach")
+    }
+
     companion object {
         @JvmStatic
         fun newInstance() = this

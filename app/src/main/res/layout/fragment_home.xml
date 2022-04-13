@@ -83,9 +83,9 @@
                 android:text="@{viewmodel.user.userDescription == null ? `자기소개: 미입력` : `자기소개: ` + viewmodel.user.userDescription}"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/btn_edit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_profile_mbti" />
 
             <Button
@@ -100,12 +100,35 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <Button
+            android:id="@+id/btn_home_follower"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/purple_200"
+            android:text="@string/text_home_follower"
+            app:layout_constraintBottom_toTopOf="@id/fcv_home_bottom"
+            app:layout_constraintEnd_toStartOf="@id/btn_home_repository"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_profile" />
+
+        <Button
+            android:id="@+id/btn_home_repository"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/purple_200"
+            android:text="@string/text_home_repository"
+            app:layout_constraintBottom_toTopOf="@id/fcv_home_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_home_follower"
+            app:layout_constraintTop_toBottomOf="@id/layout_profile" />
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fcv_home_bottom"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_profile" />
+            app:layout_constraintTop_toBottomOf="@id/btn_home_follower" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

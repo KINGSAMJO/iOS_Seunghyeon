@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.FragmentHomeBinding
@@ -36,20 +38,63 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.getUserInformation()
         editProfile()
+        changeToFollowerFragment()
+        changeToRepositoryFragment()
     }
 
     private fun initFragmentContainerView() {
-        val transaction = childFragmentManager.beginTransaction()
-        transaction.replace<HomeRepositoryFragment>(R.id.fcv_home_bottom)
-            .commit()
+        val followerFragment = childFragmentManager.findFragmentByTag(FOLLOWER_FRAGMENT)
+        val repositoryFragment = childFragmentManager.findFragmentByTag(REPOSITORY_FRAGMENT)
+
+        childFragmentManager.apply {
+            if(fragments.isEmpty()) {
+                commit {
+                    add<HomeFollowerFragment>(R.id.fcv_home_bottom, FOLLOWER_FRAGMENT)
+                }
+            }
+        }
     }
 
     private fun editProfile() {
         binding.btnEdit.setOnClickListener {
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.fcv_home, EditProfileFragment())
-                .addToBackStack("EditProfile")
-                .commit()
+            parentFragmentManager.commit {
+                replace<EditProfileFragment>(R.id.fcv_home, EDIT_PROFILE_FRAGMENT)
+                addToBackStack(EDIT_PROFILE_FRAGMENT)
+            }
         }
+    }
+
+    private fun changeToFollowerFragment() {
+        binding.btnHomeFollower.setOnClickListener {
+            val followerFragment = childFragmentManager.findFragmentByTag(FOLLOWER_FRAGMENT)
+            val repositoryFragment = childFragmentManager.findFragmentByTag(REPOSITORY_FRAGMENT)
+
+            childFragmentManager.commit {
+                setReorderingAllowed(true)
+                repositoryFragment?.let { hide(it) }
+                followerFragment?.let { show(it) }
+                    ?: add<HomeFollowerFragment>(R.id.fcv_home_bottom, FOLLOWER_FRAGMENT)
+            }
+        }
+    }
+
+    private fun changeToRepositoryFragment() {
+        binding.btnHomeRepository.setOnClickListener {
+            val followerFragment = childFragmentManager.findFragmentByTag(FOLLOWER_FRAGMENT)
+            val repositoryFragment = childFragmentManager.findFragmentByTag(REPOSITORY_FRAGMENT)
+
+            childFragmentManager.commit {
+                setReorderingAllowed(true)
+                followerFragment?.let { hide(it) }
+                repositoryFragment?.let { show(it) }
+                    ?: add<HomeRepositoryFragment>(R.id.fcv_home_bottom, REPOSITORY_FRAGMENT)
+            }
+        }
+    }
+
+    companion object {
+        val EDIT_PROFILE_FRAGMENT: String = EditProfileFragment::class.java.simpleName
+        val FOLLOWER_FRAGMENT: String = HomeFollowerFragment::class.java.simpleName
+        val REPOSITORY_FRAGMENT: String = HomeRepositoryFragment::class.java.simpleName
     }
 }
