@@ -9,4 +9,5 @@ interface UserRepository {
     suspend fun updateUserInformation(userInformation: UserInformation): UserInformation
     suspend fun getAutoLogin(): Boolean
     suspend fun getUserId(): String
+    suspend fun turnOffAutoLogin()
 }

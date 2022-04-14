@@ -57,4 +57,8 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun getUserId(): String {
         return dataStore.userId
     }
+
+    override suspend fun turnOffAutoLogin() {
+        dataStore.autoLogin = false
+    }
 }
