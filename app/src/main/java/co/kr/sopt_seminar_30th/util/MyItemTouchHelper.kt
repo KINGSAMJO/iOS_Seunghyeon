@@ -6,7 +6,7 @@ import co.kr.sopt_seminar_30th.presentation.ui.adapter.HomeFollowerAdapter
 
 class MyItemTouchHelper(private val recyclerViewAdapter: HomeFollowerAdapter) :
     ItemTouchHelper.SimpleCallback(
-        ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+        ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
         ItemTouchHelper.LEFT
     ) {
     override fun onMove(
@@ -26,13 +26,13 @@ class MyItemTouchHelper(private val recyclerViewAdapter: HomeFollowerAdapter) :
         super.onSelectedChanged(viewHolder, actionState)
         when (actionState) {
             ItemTouchHelper.ACTION_STATE_DRAG, ItemTouchHelper.ACTION_STATE_SWIPE -> {
-                (viewHolder as HomeFollowerAdapter.HomeFollowerViewHolder).itemView.alpha = 0.5f
+                viewHolder?.itemView?.alpha = 0.5f
             }
         }
     }
 
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
-        (viewHolder as HomeFollowerAdapter.HomeFollowerViewHolder).itemView.alpha = 1.0f
+        viewHolder.itemView.alpha = 1.0f
     }
 }

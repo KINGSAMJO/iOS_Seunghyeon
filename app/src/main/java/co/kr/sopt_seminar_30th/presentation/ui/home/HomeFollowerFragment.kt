@@ -44,7 +44,8 @@ class HomeFollowerFragment : BaseFragment<FragmentHomeFollowerBinding>() {
     private fun initRecyclerView() {
         binding.rvHomeFollower.addItemDecoration(MyItemDecoration(5, 10, R.color.purple_100))
         homeFollowerAdapter = HomeFollowerAdapter {
-            val intent = Intent(requireContext(), DetailActivity::class.java).apply {
+            val intent = Intent(requireContext(), DetailActivity::class.java)
+            intent.apply {
                 putExtra("name", it.followerName)
                 putExtra("description", it.followerDescription)
                 putExtra("image", it.followerImage)
@@ -54,7 +55,7 @@ class HomeFollowerFragment : BaseFragment<FragmentHomeFollowerBinding>() {
         binding.rvHomeFollower.adapter = homeFollowerAdapter
         ItemTouchHelper(MyItemTouchHelper(homeFollowerAdapter)).attachToRecyclerView(binding.rvHomeFollower)
         homeViewModel.follower.observe(viewLifecycleOwner) {
-            homeFollowerAdapter.replaceItem(it)
+            homeFollowerAdapter.updateItemList(it)
         }
     }
 }
