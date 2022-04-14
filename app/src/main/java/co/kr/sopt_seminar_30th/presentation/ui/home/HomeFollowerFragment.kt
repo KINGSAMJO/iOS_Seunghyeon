@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.FragmentHomeFollowerBinding
 import co.kr.sopt_seminar_30th.presentation.ui.adapter.HomeFollowerAdapter
 import co.kr.sopt_seminar_30th.presentation.ui.base.BaseFragment
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
 import co.kr.sopt_seminar_30th.util.MyItemDecoration
+import co.kr.sopt_seminar_30th.util.MyItemTouchHelper
 
 class HomeFollowerFragment : BaseFragment<FragmentHomeFollowerBinding>() {
     override val TAG: String
@@ -39,8 +41,11 @@ class HomeFollowerFragment : BaseFragment<FragmentHomeFollowerBinding>() {
 
     private fun initRecyclerView() {
         binding.rvHomeFollower.addItemDecoration(MyItemDecoration(5, 10, R.color.purple_100))
-        homeFollowerAdapter = HomeFollowerAdapter()
+        homeFollowerAdapter = HomeFollowerAdapter {
+
+        }
         binding.rvHomeFollower.adapter = homeFollowerAdapter
+        ItemTouchHelper(MyItemTouchHelper(homeFollowerAdapter)).attachToRecyclerView(binding.rvHomeFollower)
         homeViewModel.follower.observe(viewLifecycleOwner) {
             homeFollowerAdapter.replaceItem(it)
         }

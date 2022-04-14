@@ -23,11 +23,11 @@ class MyItemDecoration(private val myOffset: Int, private val myRound: Int, priv
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDraw(c, parent, state)
-        val strokeWidth = 10
+        val strokeWidth = 5
         val paint = Paint().apply {
             this.color = myColor
             this.style = Paint.Style.STROKE
-            this.strokeWidth = strokeWidth.pxToDp().toFloat()
+            this.strokeWidth = strokeWidth.dpToPx().toFloat()
         }
 
         parent.children.forEach { child ->

@@ -15,5 +15,6 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         lifecycle.addObserver(MyDefaultLifecycleObserver())
         binding = DataBindingUtil.setContentView(this, layoutRes)
+        binding.lifecycleOwner = this
     }
 }

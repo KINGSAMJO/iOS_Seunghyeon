@@ -16,12 +16,20 @@
         android:padding="10dp"
         tools:context=".presentation.ui.home.HomeFragment">
 
+        <TextView
+            android:id="@+id/tv_fold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_fold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/fcv_home_bottom"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintBottom_toTopOf="@id/btn_home_follower"
+            app:layout_constraintTop_toBottomOf="@id/tv_fold">
 
             <ImageView
                 android:id="@+id/iv_profile_image"
@@ -80,6 +88,7 @@
                 android:id="@+id/tv_profile_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="@{viewmodel.user.userDescription == null ? `자기소개: 미입력` : `자기소개: ` + viewmodel.user.userDescription}"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -104,9 +113,9 @@
             android:id="@+id/btn_home_follower"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:backgroundTint="@color/purple_200"
             android:text="@string/text_home_follower"
-            android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toTopOf="@id/fcv_home_bottom"
             app:layout_constraintEnd_toStartOf="@id/btn_home_repository"
             app:layout_constraintStart_toStartOf="parent"

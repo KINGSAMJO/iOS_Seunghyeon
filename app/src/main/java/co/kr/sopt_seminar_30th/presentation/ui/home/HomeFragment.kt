@@ -37,19 +37,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.getUserInformation()
+        fold()
         editProfile()
         changeToFollowerFragment()
         changeToRepositoryFragment()
     }
 
     private fun initFragmentContainerView() {
-        val followerFragment = childFragmentManager.findFragmentByTag(FOLLOWER_FRAGMENT)
-        val repositoryFragment = childFragmentManager.findFragmentByTag(REPOSITORY_FRAGMENT)
-
         childFragmentManager.apply {
-            if(fragments.isEmpty()) {
+            if (fragments.isEmpty()) {
                 commit {
                     add<HomeFollowerFragment>(R.id.fcv_home_bottom, FOLLOWER_FRAGMENT)
+                }
+            }
+        }
+    }
+
+    private fun fold() {
+        binding.tvFold.setOnClickListener {
+            binding.layoutProfile.apply {
+                when(this.visibility) {
+                    View.VISIBLE -> visibility = View.GONE
+                    else -> visibility = View.VISIBLE
                 }
             }
         }

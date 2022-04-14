@@ -9,15 +9,24 @@ import androidx.recyclerview.widget.RecyclerView
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.ItemHomeFollowerBinding
 import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
+import timber.log.Timber
+import java.util.*
 
-class HomeFollowerAdapter : RecyclerView.Adapter<HomeFollowerAdapter.HomeFollowerViewHolder>() {
+class HomeFollowerAdapter(private val itemClick: (FollowerInformation) -> (Unit)) :
+    RecyclerView.Adapter<HomeFollowerAdapter.HomeFollowerViewHolder>() {
+    // TODO: RecyclerView Item Move 시 갱신방법에 대한 고찰 필요
     private val asyncDiffer = AsyncListDiffer(this, diffCallback)
+    private var modifiedList = mutableListOf<FollowerInformation>()
 
     class HomeFollowerViewHolder(
-        private val binding: ItemHomeFollowerBinding
+        private val binding: ItemHomeFollowerBinding,
+        private val itemClick: (FollowerInformation) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(follower: FollowerInformation) {
             binding.follower = follower
+            binding.root.setOnClickListener {
+                itemClick(follower)
+            }
         }
     }
 
@@ -28,7 +37,7 @@ class HomeFollowerAdapter : RecyclerView.Adapter<HomeFollowerAdapter.HomeFollowe
             parent,
             false
         )
-        return HomeFollowerViewHolder(binding)
+        return HomeFollowerViewHolder(binding, itemClick)
     }
 
     override fun onBindViewHolder(holder: HomeFollowerViewHolder, position: Int) {
@@ -39,6 +48,22 @@ class HomeFollowerAdapter : RecyclerView.Adapter<HomeFollowerAdapter.HomeFollowe
 
     fun replaceItem(itemList: List<FollowerInformation>) {
         asyncDiffer.submitList(itemList)
+        modifiedList = asyncDiffer.currentList.toMutableList()
+    }
+
+    fun replaceItemAfterItemTouch() {
+        asyncDiffer.submitList(modifiedList)
+        modifiedList = asyncDiffer.currentList.toMutableList()
+    }
+
+    fun moveItem(fromPosition: Int, toPosition: Int) {
+        Collections.swap(modifiedList, fromPosition, toPosition)
+        notifyItemMoved(fromPosition, toPosition)
+    }
+
+    fun removeItem(position: Int) {
+        modifiedList.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     companion object {
