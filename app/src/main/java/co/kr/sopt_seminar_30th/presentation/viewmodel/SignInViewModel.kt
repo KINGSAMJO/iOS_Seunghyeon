@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
+import co.kr.sopt_seminar_30th.domain.usecase.user.GetAutoLoginUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.LoginUseCase
 import co.kr.sopt_seminar_30th.util.SingleLiveEvent
@@ -18,10 +19,14 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val getUserIdUseCase: GetUserIdUseCase,
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val getAutoLoginUseCase: GetAutoLoginUseCase
 ) : ViewModel() {
     var userId = MutableLiveData<String>()
     var userPassword = MutableLiveData<String>()
+
+    private var _autoLogin = MutableLiveData<Boolean>(false)
+    val autoLogin: LiveData<Boolean> get() = _autoLogin
 
     private var _userInformation = MutableLiveData<UserInformation>()
     val userInformation: LiveData<UserInformation> get() = _userInformation
@@ -34,17 +39,21 @@ class SignInViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-//            val result = getUserIdUseCase(Unit)
-//            when (result) {
-//                is Result.Success -> userId.value = result.data
-//                is Result.Error -> Timber.e(result.exception)
-//            }
             kotlin.runCatching {
-                getUserIdUseCase()
+                getAutoLoginUseCase()
             }.onSuccess {
-                userId.value = it
-            }.onFailure {
-                Timber.e(it)
+                when(it) {
+                    true -> {
+                        _autoLogin.value = it
+                    }
+                    false -> {
+                        kotlin.runCatching {
+                            getUserIdUseCase()
+                        }.onSuccess {
+                            userId.value = it
+                        }
+                    }
+                }
             }
         }
     }

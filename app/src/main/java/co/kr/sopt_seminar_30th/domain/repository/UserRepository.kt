@@ -7,5 +7,6 @@ interface UserRepository {
     suspend fun login(id: String, password: String): Boolean
     suspend fun insertUserInformation(id: String, password: String, name: String): Long
     suspend fun updateUserInformation(userInformation: UserInformation): UserInformation
+    suspend fun getAutoLogin(): Boolean
     suspend fun getUserId(): String
 }

@@ -20,6 +20,7 @@ class UserRepositoryImpl @Inject constructor(
         val userInformation = getUserInformation(id)
         return if (userInformation.userId == id && userInformation.userPassword == password) {
             dataStore.userId = id
+            dataStore.autoLogin = true
             true
         } else {
             false
@@ -47,6 +48,10 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun updateUserInformation(userInformation: UserInformation): UserInformation {
         userDao.updateUserInformation(UserMapper.mapperToUserDto(userInformation))
         return getUserInformation(userInformation.userId)
+    }
+
+    override suspend fun getAutoLogin(): Boolean {
+        return dataStore.autoLogin
     }
 
     override suspend fun getUserId(): String {
