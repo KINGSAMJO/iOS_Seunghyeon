@@ -50,6 +50,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
         showImageToast()
         changeProfileImage()
         clickSave()
+        clickTurnOffAutoLogin()
         observeEditProfile()
     }
 
@@ -60,6 +61,17 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
     private fun clickSave() {
         binding.btnSave.setOnClickListener {
             homeViewModel.editProfile()
+        }
+    }
+
+    private fun clickTurnOffAutoLogin() {
+        binding.btnTurnOffAutoLogin.setOnClickListener {
+            homeViewModel.turnOffAutoLogin()
+            homeViewModel.turnOffSuccess.observe(viewLifecycleOwner) {
+                if (it) {
+                    Toast.makeText(requireContext(), "자동로그인 해제", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

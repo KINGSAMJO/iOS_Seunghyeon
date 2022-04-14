@@ -16,6 +16,7 @@ import co.kr.sopt_seminar_30th.domain.usecase.repository.GetRepositoryListUseCas
 import co.kr.sopt_seminar_30th.domain.usecase.repository.InsertRepositoryListUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserInformationUseCase
+import co.kr.sopt_seminar_30th.domain.usecase.user.TurnOffAutoLoginUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.UpdateUserInformationUseCase
 import co.kr.sopt_seminar_30th.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,7 +33,8 @@ class HomeViewModel @Inject constructor(
     private val getRepositoryListUseCase: GetRepositoryListUseCase,
     private val getUserIdUseCase: GetUserIdUseCase,
     private val getUserInformationUseCase: GetUserInformationUseCase,
-    private val updateUserInformationUseCase: UpdateUserInformationUseCase
+    private val updateUserInformationUseCase: UpdateUserInformationUseCase,
+    private val turnOffAutoLoginUseCase: TurnOffAutoLoginUseCase
 ) : ViewModel() {
     private var userId: String = ""
 
@@ -52,6 +54,9 @@ class HomeViewModel @Inject constructor(
 
     private var _updateSuccess = SingleLiveEvent<Boolean>()
     val updateSuccess: LiveData<Boolean> get() = _updateSuccess
+
+    private var _turnOffSuccess = SingleLiveEvent<Boolean>()
+    val turnOffSuccess: LiveData<Boolean> get() = _turnOffSuccess
 
     fun insertFollowerList(followerList: List<FollowerInformation>) {
         viewModelScope.launch {
@@ -160,6 +165,16 @@ class HomeViewModel @Inject constructor(
                     userDescription.value = user.value?.userDescription
                     _updateSuccess.value = false
                 }
+            }
+        }
+    }
+
+    fun turnOffAutoLogin() {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                turnOffAutoLoginUseCase()
+            }.onSuccess {
+                _turnOffSuccess.value = true
             }
         }
     }
