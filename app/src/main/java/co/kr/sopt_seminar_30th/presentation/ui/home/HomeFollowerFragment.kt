@@ -1,5 +1,6 @@
 package co.kr.sopt_seminar_30th.presentation.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.FragmentHomeFollowerBinding
 import co.kr.sopt_seminar_30th.presentation.ui.adapter.HomeFollowerAdapter
 import co.kr.sopt_seminar_30th.presentation.ui.base.BaseFragment
+import co.kr.sopt_seminar_30th.presentation.ui.detail.DetailActivity
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
 import co.kr.sopt_seminar_30th.util.MyItemDecoration
 import co.kr.sopt_seminar_30th.util.MyItemTouchHelper
@@ -42,7 +44,12 @@ class HomeFollowerFragment : BaseFragment<FragmentHomeFollowerBinding>() {
     private fun initRecyclerView() {
         binding.rvHomeFollower.addItemDecoration(MyItemDecoration(5, 10, R.color.purple_100))
         homeFollowerAdapter = HomeFollowerAdapter {
-
+            val intent = Intent(requireContext(), DetailActivity::class.java).apply {
+                putExtra("name", it.followerName)
+                putExtra("description", it.followerDescription)
+                putExtra("image", it.followerImage)
+            }
+            startActivity(intent)
         }
         binding.rvHomeFollower.adapter = homeFollowerAdapter
         ItemTouchHelper(MyItemTouchHelper(homeFollowerAdapter)).attachToRecyclerView(binding.rvHomeFollower)
