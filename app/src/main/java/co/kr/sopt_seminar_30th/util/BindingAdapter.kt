@@ -13,12 +13,15 @@ object BindingAdapter {
         if (src != null) {
             Glide.with(view.context)
                 .load(src)
-                .circleCrop()
                 .error(R.mipmap.sopt_logo)
+                .centerCrop()
+                .circleCrop()
                 .into(view)
         } else {
             Glide.with(view.context)
                 .load(R.mipmap.sopt_logo)
+                .centerCrop()
+                .circleCrop()
                 .into(view)
         }
     }
@@ -30,14 +33,14 @@ object BindingAdapter {
             Glide.with(view.context)
                 .load(src)
                 .error(R.mipmap.sopt_logo)
-                .circleCrop()
                 .centerCrop()
+                .circleCrop()
                 .into(view)
         } else {
             Glide.with(view.context)
                 .load(R.mipmap.sopt_logo)
-                .circleCrop()
                 .centerCrop()
+                .circleCrop()
                 .into(view)
         }
     }
