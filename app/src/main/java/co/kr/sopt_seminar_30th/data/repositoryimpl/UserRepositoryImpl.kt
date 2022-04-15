@@ -2,10 +2,11 @@ package co.kr.sopt_seminar_30th.data.repositoryimpl
 
 import co.kr.sopt_seminar_30th.data.datasource.local.SopthubDataStore
 import co.kr.sopt_seminar_30th.data.datasource.local.UserDao
-import co.kr.sopt_seminar_30th.data.mapper.UserMapper
 import co.kr.sopt_seminar_30th.data.model.UserDto
 import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
 import co.kr.sopt_seminar_30th.domain.repository.UserRepository
+import co.kr.sopt_seminar_30th.util.toUserDto
+import co.kr.sopt_seminar_30th.util.toUserInformation
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -13,7 +14,7 @@ class UserRepositoryImpl @Inject constructor(
     private val dataStore: SopthubDataStore
 ) : UserRepository {
     override suspend fun getUserInformation(userId: String): UserInformation {
-        return UserMapper.mapperToUserInformation(userDao.getUserInformation(userId))
+        return userDao.getUserInformation(userId).toUserInformation()
     }
 
     override suspend fun login(id: String, password: String): Boolean {
@@ -46,7 +47,7 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateUserInformation(userInformation: UserInformation): UserInformation {
-        userDao.updateUserInformation(UserMapper.mapperToUserDto(userInformation))
+        userDao.updateUserInformation(userInformation.toUserDto())
         return getUserInformation(userInformation.userId)
     }
 

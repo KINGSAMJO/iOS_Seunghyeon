@@ -1,9 +1,10 @@
 package co.kr.sopt_seminar_30th.data.repositoryimpl
 
 import co.kr.sopt_seminar_30th.data.datasource.local.RepositoryDao
-import co.kr.sopt_seminar_30th.data.mapper.RepositoryMapper
 import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
 import co.kr.sopt_seminar_30th.domain.repository.RepositoryRepository
+import co.kr.sopt_seminar_30th.util.toRepositoryDto
+import co.kr.sopt_seminar_30th.util.toRepositoryInformation
 import javax.inject.Inject
 
 class RepositoryRepositoryImpl @Inject constructor(
@@ -11,11 +12,11 @@ class RepositoryRepositoryImpl @Inject constructor(
 ) : RepositoryRepository {
     override suspend fun insertRepositoryList(repositoryList: List<RepositoryInformation>): List<Long> {
         return repositoryDao.insertRepositoryList(
-            repositoryList.map { RepositoryMapper.mapperToRepositoryDto(it) }
+            repositoryList.map { it.toRepositoryDto() }
         )
     }
 
     override suspend fun getRepositoryList(): List<RepositoryInformation> {
-        return repositoryDao.getRepositoryList().map { RepositoryMapper.mapperToRepositoryInformation(it) }
+        return repositoryDao.getRepositoryList().map { it.toRepositoryInformation() }
     }
 }
