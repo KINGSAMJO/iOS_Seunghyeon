@@ -1,7 +1,7 @@
 ---
 name: Assignment Issue Template
 about: 과제 이슈 템플릿
-title: "[FEAT] "
+title: "[Assignment] "
 labels: ''
 assignees: ''
 
