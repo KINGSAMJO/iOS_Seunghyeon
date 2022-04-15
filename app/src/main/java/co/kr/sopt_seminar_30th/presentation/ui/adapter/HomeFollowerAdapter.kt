@@ -12,10 +12,10 @@ import co.kr.sopt_seminar_30th.util.MyDiffUtilCallback
 import java.util.*
 
 class HomeFollowerAdapter(private val itemClick: (FollowerInformation) -> (Unit)) :
-    RecyclerView.Adapter<HomeFollowerAdapter.TestHomeFollowerViewHolder>() {
+    RecyclerView.Adapter<HomeFollowerAdapter.HomeFollowerViewHolder>() {
     private val itemList = mutableListOf<FollowerInformation>()
 
-    class TestHomeFollowerViewHolder(
+    class HomeFollowerViewHolder(
         private val binding: ItemHomeFollowerBinding,
         private val itemClick: (FollowerInformation) -> (Unit)
     ) :
@@ -29,17 +29,17 @@ class HomeFollowerAdapter(private val itemClick: (FollowerInformation) -> (Unit)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestHomeFollowerViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeFollowerViewHolder {
         val binding = DataBindingUtil.inflate<ItemHomeFollowerBinding>(
             LayoutInflater.from(parent.context),
             R.layout.item_home_follower,
             parent,
             false
         )
-        return TestHomeFollowerViewHolder(binding, itemClick)
+        return HomeFollowerViewHolder(binding, itemClick)
     }
 
-    override fun onBindViewHolder(holder: TestHomeFollowerViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HomeFollowerViewHolder, position: Int) {
         holder.bind(itemList[position])
     }
 

@@ -1,10 +1,12 @@
 package co.kr.sopt_seminar_30th.util
 
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_DRAG
+import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
 import androidx.recyclerview.widget.RecyclerView
 import co.kr.sopt_seminar_30th.presentation.ui.adapter.HomeFollowerAdapter
 
-class MyItemTouchHelper(private val recyclerViewAdapter: HomeFollowerAdapter) :
+class MyItemTouchHelperForFollower(private val recyclerViewAdapter: HomeFollowerAdapter) :
     ItemTouchHelper.SimpleCallback(
         ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
         ItemTouchHelper.LEFT
@@ -25,7 +27,7 @@ class MyItemTouchHelper(private val recyclerViewAdapter: HomeFollowerAdapter) :
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         super.onSelectedChanged(viewHolder, actionState)
         when (actionState) {
-            ItemTouchHelper.ACTION_STATE_DRAG, ItemTouchHelper.ACTION_STATE_SWIPE -> {
+            ACTION_STATE_DRAG or ACTION_STATE_SWIPE -> {
                 viewHolder?.itemView?.alpha = 0.5f
             }
         }
