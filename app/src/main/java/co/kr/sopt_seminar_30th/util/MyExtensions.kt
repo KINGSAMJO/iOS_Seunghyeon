@@ -21,33 +21,12 @@ fun UserInformation.toUserDto(): UserDto = UserDto(
     userDescription = this.userDescription
 )
 
-fun UserDto.toUserInformation(): UserInformation = UserInformation(
-    userId = this.userId,
-    userPassword = this.userPassword,
-    userName = this.userName,
-    userAge = this.userAge,
-    userMbti = this.userMbti,
-    userImage = this.userImage,
-    userDescription = this.userDescription
-)
-
 fun RepositoryInformation.toRepositoryDto(): RepositoryDto = RepositoryDto(
     repositoryName = this.repositoryName,
     repositoryDescription = this.repositoryDescription
 )
 
-fun RepositoryDto.toRepositoryInformation(): RepositoryInformation = RepositoryInformation(
-    repositoryName = this.repositoryName,
-    repositoryDescription = this.repositoryDescription
-)
-
 fun FollowerInformation.toFollowerDto(): FollowerDto = FollowerDto(
-    followerName = this.followerName,
-    followerDescription = this.followerDescription,
-    followerImage = this.followerImage
-)
-
-fun FollowerDto.toFollowerInformation(): FollowerInformation = FollowerInformation(
     followerName = this.followerName,
     followerDescription = this.followerDescription,
     followerImage = this.followerImage

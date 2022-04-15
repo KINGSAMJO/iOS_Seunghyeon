@@ -4,7 +4,6 @@ import co.kr.sopt_seminar_30th.data.datasource.local.RepositoryDao
 import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
 import co.kr.sopt_seminar_30th.domain.repository.RepositoryRepository
 import co.kr.sopt_seminar_30th.util.toRepositoryDto
-import co.kr.sopt_seminar_30th.util.toRepositoryInformation
 import javax.inject.Inject
 
 class RepositoryRepositoryImpl @Inject constructor(

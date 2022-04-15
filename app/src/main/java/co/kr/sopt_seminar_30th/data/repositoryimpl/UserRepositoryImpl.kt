@@ -6,7 +6,6 @@ import co.kr.sopt_seminar_30th.data.model.UserDto
 import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
 import co.kr.sopt_seminar_30th.domain.repository.UserRepository
 import co.kr.sopt_seminar_30th.util.toUserDto
-import co.kr.sopt_seminar_30th.util.toUserInformation
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
