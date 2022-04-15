@@ -9,15 +9,25 @@ import androidx.recyclerview.widget.RecyclerView
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.ItemHomeRepositoryBinding
 import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
+import co.kr.sopt_seminar_30th.util.MyDiffUtilCallback
+import java.util.*
 
 class HomeRepositoryAdapter: RecyclerView.Adapter<HomeRepositoryAdapter.HomeRepositoryViewHolder>() {
-    private val asyncDiffer = AsyncListDiffer(this, diffCallback)
+    private val itemList = mutableListOf<RepositoryInformation>()
 
     class HomeRepositoryViewHolder(
-        private val binding: ItemHomeRepositoryBinding
+        private val binding: ItemHomeRepositoryBinding,
+        private val removeItem: (Int) -> (Unit)
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(repository: RepositoryInformation) {
             binding.repository = repository
+            clickDelete()
+        }
+
+        private fun clickDelete() {
+            binding.tvItemDelete.setOnClickListener {
+                removeItem(this.adapterPosition)
+            }
         }
     }
 
@@ -28,30 +38,37 @@ class HomeRepositoryAdapter: RecyclerView.Adapter<HomeRepositoryAdapter.HomeRepo
             parent,
             false
         )
-        return HomeRepositoryViewHolder(binding)
+        return HomeRepositoryViewHolder(binding) {
+            removeItem(it)
+        }
     }
 
     override fun onBindViewHolder(holder: HomeRepositoryViewHolder, position: Int) {
-        holder.bind(asyncDiffer.currentList[position])
+        holder.bind(itemList[position])
     }
 
-    override fun getItemCount(): Int = asyncDiffer.currentList.size
+    override fun getItemCount(): Int = itemList.size
 
-    fun replaceItem(itemList: List<RepositoryInformation>) {
-        asyncDiffer.submitList(itemList)
-    }
+    fun updateItemList(newItemList: List<RepositoryInformation>?) {
+        newItemList?.let {
+            val diffCallback = MyDiffUtilCallback(itemList, newItemList)
+            val diffResult = DiffUtil.calculateDiff(diffCallback)
 
-    companion object {
-        private val diffCallback = object : DiffUtil.ItemCallback<RepositoryInformation>() {
-            override fun areItemsTheSame(
-                oldItem: RepositoryInformation,
-                newItem: RepositoryInformation
-            ): Boolean = oldItem.repositoryName == newItem.repositoryName
-
-            override fun areContentsTheSame(
-                oldItem: RepositoryInformation,
-                newItem: RepositoryInformation
-            ): Boolean = oldItem == newItem
+            itemList.run {
+                clear()
+                addAll(newItemList)
+                diffResult.dispatchUpdatesTo(this@HomeRepositoryAdapter)
+            }
         }
+    }
+
+    fun moveItem(fromPosition: Int, toPosition: Int) {
+        Collections.swap(itemList, fromPosition, toPosition)
+        notifyItemMoved(fromPosition, toPosition)
+    }
+
+    private fun removeItem(position: Int) {
+        itemList.removeAt(position)
+        notifyItemRemoved(position)
     }
 }

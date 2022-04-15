@@ -1,17 +1,19 @@
 package co.kr.sopt_seminar_30th.presentation.ui.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.FragmentHomeRepositoryBinding
 import co.kr.sopt_seminar_30th.presentation.ui.adapter.HomeRepositoryAdapter
 import co.kr.sopt_seminar_30th.presentation.ui.base.BaseFragment
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
 import co.kr.sopt_seminar_30th.util.MyItemDecoration
+import co.kr.sopt_seminar_30th.util.MyItemTouchHelperForRepository
 
 class HomeRepositoryFragment : BaseFragment<FragmentHomeRepositoryBinding>() {
     override val TAG: String
@@ -21,6 +23,7 @@ class HomeRepositoryFragment : BaseFragment<FragmentHomeRepositoryBinding>() {
 
     private val homeViewModel by activityViewModels<HomeViewModel>()
     private lateinit var homeRepositoryAdapter: HomeRepositoryAdapter
+    private lateinit var myItemTouchHelperForRepository: MyItemTouchHelperForRepository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,12 +41,24 @@ class HomeRepositoryFragment : BaseFragment<FragmentHomeRepositoryBinding>() {
         homeViewModel.getRepositoryList()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initRecyclerView() {
-        binding.rvHomeRepository.addItemDecoration(MyItemDecoration(5, 10, R.color.purple_100))
+//        binding.rvHomeRepository.addItemDecoration(MyItemDecoration(5, 10, R.color.purple_100))
         homeRepositoryAdapter = HomeRepositoryAdapter()
         binding.rvHomeRepository.adapter = homeRepositoryAdapter
+        myItemTouchHelperForRepository =
+            MyItemTouchHelperForRepository(homeRepositoryAdapter).apply {
+                setClamp((resources.displayMetrics.widthPixels.toFloat() - 30) / 4)
+            }
+        ItemTouchHelper(myItemTouchHelperForRepository).attachToRecyclerView(
+            binding.rvHomeRepository
+        )
+        binding.rvHomeRepository.setOnTouchListener { _, _ ->
+            myItemTouchHelperForRepository.removePreviousClamp(binding.rvHomeRepository)
+            false
+        }
         homeViewModel.repository.observe(viewLifecycleOwner) {
-            homeRepositoryAdapter.replaceItem(it)
+            homeRepositoryAdapter.updateItemList(it)
         }
     }
 }
