@@ -60,6 +60,9 @@ class HomeFollowerAdapter(private val itemClick: (FollowerInformation) -> (Unit)
 
     fun moveItem(fromPosition: Int, toPosition: Int) {
         Collections.swap(itemList, fromPosition, toPosition)
+        itemList[fromPosition].followerOrder = itemList[toPosition].followerOrder.also {
+            itemList[toPosition].followerOrder = itemList[fromPosition].followerOrder
+        }
         notifyItemMoved(fromPosition, toPosition)
     }
 
@@ -67,4 +70,6 @@ class HomeFollowerAdapter(private val itemClick: (FollowerInformation) -> (Unit)
         itemList.removeAt(position)
         notifyItemRemoved(position)
     }
+
+    fun getItemList(): List<FollowerInformation> = itemList
 }

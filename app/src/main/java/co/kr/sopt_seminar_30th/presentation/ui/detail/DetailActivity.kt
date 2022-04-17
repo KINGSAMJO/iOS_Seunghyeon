@@ -24,6 +24,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>() {
         val name = intent.getStringExtra("name") ?: error("name must not null")
         val description = intent.getStringExtra("description") ?: error("description must not null")
         val image = intent.getStringExtra("image")
-        detailViewModel.setFollower(name, description, image)
+        detailViewModel.setFollower(name, description, image, 0)
     }
 }

@@ -12,6 +12,7 @@ import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
 import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
 import co.kr.sopt_seminar_30th.domain.usecase.follower.GetFollowerListUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.follower.InsertFollowerListUseCase
+import co.kr.sopt_seminar_30th.domain.usecase.follower.UpdateFollowerListUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.repository.GetRepositoryListUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.repository.InsertRepositoryListUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
@@ -29,6 +30,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val insertFollowerListUseCase: InsertFollowerListUseCase,
     private val getFollowerListUseCase: GetFollowerListUseCase,
+    private val updateFollowerListUseCase: UpdateFollowerListUseCase,
     private val insertRepositoryListUseCase: InsertRepositoryListUseCase,
     private val getRepositoryListUseCase: GetRepositoryListUseCase,
     private val getUserIdUseCase: GetUserIdUseCase,
@@ -74,6 +76,16 @@ class HomeViewModel @Inject constructor(
                 getFollowerListUseCase()
             }.onSuccess {
                 _follower.value = it
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
+
+    fun updateFollowerList(followerList: List<FollowerInformation>) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                updateFollowerListUseCase(followerList)
             }.onFailure {
                 Timber.e(it)
             }

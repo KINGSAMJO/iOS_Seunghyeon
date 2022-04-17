@@ -113,7 +113,7 @@
             android:id="@+id/btn_home_follower"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="5dp"
             android:backgroundTint="@color/purple_200"
             android:text="@string/text_home_follower"
             app:layout_constraintBottom_toTopOf="@id/fcv_home_bottom"

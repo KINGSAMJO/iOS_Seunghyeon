@@ -45,8 +45,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             "조재훈"
         )
         val followerList = mutableListOf<FollowerInformation>()
-        nameList.forEach {
-            followerList.add(FollowerInformation(it, it+"입니다.", null))
+        for(i in nameList.indices) {
+            followerList.add(FollowerInformation(nameList[i], "${nameList[i]}입니다.", null, i))
         }
         homeViewModel.insertFollowerList(followerList)
     }

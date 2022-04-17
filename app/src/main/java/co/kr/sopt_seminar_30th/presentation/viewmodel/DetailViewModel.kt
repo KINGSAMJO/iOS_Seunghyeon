@@ -9,7 +9,7 @@ class DetailViewModel: ViewModel() {
     private var _follower = MutableLiveData<FollowerInformation>()
     val follower: LiveData<FollowerInformation> get() = _follower
 
-    fun setFollower(name: String, description: String, image: String?) {
-        _follower.value = FollowerInformation(name, description, image)
+    fun setFollower(name: String, description: String, image: String?, order: Int) {
+        _follower.value = FollowerInformation(name, description, image, order)
     }
 }

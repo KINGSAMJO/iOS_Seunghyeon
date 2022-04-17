@@ -60,7 +60,10 @@ class HomeFollowerFragment : BaseFragment<FragmentHomeFollowerBinding>() {
             startActivity(intent)
         }
         binding.rvHomeFollower.adapter = homeFollowerAdapter
-        ItemTouchHelper(MyItemTouchHelperForFollower(homeFollowerAdapter)).attachToRecyclerView(
+        ItemTouchHelper(MyItemTouchHelperForFollower(homeFollowerAdapter) {
+            homeViewModel.updateFollowerList(homeFollowerAdapter.getItemList())
+        }
+        ).attachToRecyclerView(
             binding.rvHomeFollower
         )
         homeViewModel.follower.observe(viewLifecycleOwner) {

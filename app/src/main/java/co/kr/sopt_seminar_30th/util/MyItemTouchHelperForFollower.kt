@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
 import androidx.recyclerview.widget.RecyclerView
 import co.kr.sopt_seminar_30th.presentation.ui.adapter.HomeFollowerAdapter
 
-class MyItemTouchHelperForFollower(private val recyclerViewAdapter: HomeFollowerAdapter) :
+class MyItemTouchHelperForFollower(
+    private val recyclerViewAdapter: HomeFollowerAdapter,
+    private val updateDb: (Unit) -> (Unit)
+) :
     ItemTouchHelper.SimpleCallback(
         ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
         ItemTouchHelper.LEFT
@@ -22,6 +25,7 @@ class MyItemTouchHelperForFollower(private val recyclerViewAdapter: HomeFollower
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         recyclerViewAdapter.removeItem(viewHolder.adapterPosition)
+        updateDb(Unit)
     }
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
@@ -36,5 +40,6 @@ class MyItemTouchHelperForFollower(private val recyclerViewAdapter: HomeFollower
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
         viewHolder.itemView.alpha = 1.0f
+        updateDb(Unit)
     }
 }

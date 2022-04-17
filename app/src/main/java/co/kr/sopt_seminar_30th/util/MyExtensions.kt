@@ -29,5 +29,6 @@ fun RepositoryInformation.toRepositoryDto(): RepositoryDto = RepositoryDto(
 fun FollowerInformation.toFollowerDto(): FollowerDto = FollowerDto(
     followerName = this.followerName,
     followerDescription = this.followerDescription,
-    followerImage = this.followerImage
+    followerImage = this.followerImage,
+    followerOrder = this.followerOrder
 )

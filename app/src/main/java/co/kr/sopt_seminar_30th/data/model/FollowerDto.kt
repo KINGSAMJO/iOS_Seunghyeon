@@ -9,11 +9,13 @@ import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
 data class FollowerDto(
     @PrimaryKey val followerName: String,
     @ColumnInfo(name = "followerDescription") val followerDescription: String,
-    @ColumnInfo(name = "followerImage") val followerImage: String?
+    @ColumnInfo(name = "followerImage") val followerImage: String?,
+    @ColumnInfo(name = "followerOrder") val followerOrder: Int
 ) {
     fun toFollowerInformation(): FollowerInformation = FollowerInformation(
         followerName = this.followerName,
         followerDescription = this.followerDescription,
-        followerImage = this.followerImage
+        followerImage = this.followerImage,
+        followerOrder = this.followerOrder
     )
 }

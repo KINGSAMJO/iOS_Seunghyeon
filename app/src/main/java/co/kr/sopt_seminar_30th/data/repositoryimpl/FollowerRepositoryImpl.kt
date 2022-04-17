@@ -8,12 +8,16 @@ import javax.inject.Inject
 
 class FollowerRepositoryImpl @Inject constructor(
     private val followerDao: FollowerDao
-): FollowerRepository {
+) : FollowerRepository {
     override suspend fun insertFollowerList(followerList: List<FollowerInformation>): List<Long> {
         return followerDao.insertFollowerList(followerList.map { it.toFollowerDto() })
     }
 
     override suspend fun getFollowerList(): List<FollowerInformation> {
         return followerDao.getFollowerList().map { it.toFollowerInformation() }
+    }
+
+    override suspend fun updateFollowerList(followerList: List<FollowerInformation>) {
+        return followerDao.updateFollowerList(followerList.map { it.toFollowerDto() })
     }
 }
