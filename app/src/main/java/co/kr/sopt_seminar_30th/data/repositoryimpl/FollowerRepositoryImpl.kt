@@ -20,4 +20,12 @@ class FollowerRepositoryImpl @Inject constructor(
     override suspend fun updateFollowerList(followerList: List<FollowerInformation>) {
         return followerDao.updateFollowerList(followerList.map { it.toFollowerDto() })
     }
+
+    override suspend fun deleteFollower(follower: FollowerInformation) {
+        return followerDao.deleteFollower(follower.toFollowerDto())
+    }
+
+    override suspend fun deleteFollowerList(followerList: List<FollowerInformation>) {
+        return followerDao.deleteFollowerList(followerList.map { it.toFollowerDto() })
+    }
 }

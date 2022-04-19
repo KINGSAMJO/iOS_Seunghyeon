@@ -1,9 +1,6 @@
 package co.kr.sopt_seminar_30th.data.datasource.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import co.kr.sopt_seminar_30th.data.model.FollowerDto
 
 @Dao
@@ -16,4 +13,10 @@ interface FollowerDao {
 
     @Update
     suspend fun updateFollowerList(followerList: List<FollowerDto>)
+
+    @Delete
+    suspend fun deleteFollower(follower: FollowerDto)
+
+    @Delete
+    suspend fun deleteFollowerList(followerList: List<FollowerDto>)
 }

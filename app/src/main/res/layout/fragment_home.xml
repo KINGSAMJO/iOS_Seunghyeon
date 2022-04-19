@@ -17,6 +17,14 @@
         tools:context=".presentation.ui.home.HomeFragment">
 
         <TextView
+            android:id="@+id/tv_init"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_init"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/tv_fold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/btn_home_follower"
-            app:layout_constraintTop_toBottomOf="@id/tv_fold">
+            app:layout_constraintTop_toBottomOf="@id/tv_init">
 
             <ImageView
                 android:id="@+id/iv_profile_image"

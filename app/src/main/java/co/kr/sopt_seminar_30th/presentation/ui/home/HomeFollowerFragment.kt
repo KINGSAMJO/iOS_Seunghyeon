@@ -40,6 +40,7 @@ class HomeFollowerFragment : BaseFragment<FragmentHomeFollowerBinding>() {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
         homeViewModel.getFollowerList()
+        observeLiveData()
     }
 
     private fun initRecyclerView() {
@@ -60,14 +61,20 @@ class HomeFollowerFragment : BaseFragment<FragmentHomeFollowerBinding>() {
             startActivity(intent)
         }
         binding.rvHomeFollower.adapter = homeFollowerAdapter
-        ItemTouchHelper(MyItemTouchHelperForFollower(homeFollowerAdapter) {
-            homeViewModel.updateFollowerList(homeFollowerAdapter.getItemList())
-        }
+        ItemTouchHelper(
+            MyItemTouchHelperForFollower(homeFollowerAdapter, {
+                homeViewModel.updateFollowerList(homeFollowerAdapter.getItemList())
+            }, {
+                homeViewModel.deleteFollower(it)
+            })
         ).attachToRecyclerView(
             binding.rvHomeFollower
         )
+    }
+
+    private fun observeLiveData() {
         homeViewModel.follower.observe(viewLifecycleOwner) {
-            homeFollowerAdapter.updateItemList(it)
+            homeFollowerAdapter.updateItemList(it.map { follower -> follower.copy() })
         }
     }
 }

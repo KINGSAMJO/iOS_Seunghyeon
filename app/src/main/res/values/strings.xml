@@ -23,4 +23,5 @@
     <string name="text_fold">접기/펴기</string>
     <string name="text_turn_off_auto_login">TURN OFF AUTO LOGIN</string>
     <string name="text_item_delete">DELETE</string>
+    <string name="text_init">데이터 초기화</string>
 </resources>

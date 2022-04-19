@@ -10,9 +10,7 @@ import androidx.lifecycle.viewModelScope
 import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
 import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
 import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
-import co.kr.sopt_seminar_30th.domain.usecase.follower.GetFollowerListUseCase
-import co.kr.sopt_seminar_30th.domain.usecase.follower.InsertFollowerListUseCase
-import co.kr.sopt_seminar_30th.domain.usecase.follower.UpdateFollowerListUseCase
+import co.kr.sopt_seminar_30th.domain.usecase.follower.*
 import co.kr.sopt_seminar_30th.domain.usecase.repository.GetRepositoryListUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.repository.InsertRepositoryListUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
@@ -31,6 +29,8 @@ class HomeViewModel @Inject constructor(
     private val insertFollowerListUseCase: InsertFollowerListUseCase,
     private val getFollowerListUseCase: GetFollowerListUseCase,
     private val updateFollowerListUseCase: UpdateFollowerListUseCase,
+    private val deleteFollowerUseCase: DeleteFollowerUseCase,
+    private val deleteFollowerListUseCase: DeleteFollowerListUseCase,
     private val insertRepositoryListUseCase: InsertRepositoryListUseCase,
     private val getRepositoryListUseCase: GetRepositoryListUseCase,
     private val getUserIdUseCase: GetUserIdUseCase,
@@ -60,10 +60,22 @@ class HomeViewModel @Inject constructor(
     private var _turnOffSuccess = SingleLiveEvent<Boolean>()
     val turnOffSuccess: LiveData<Boolean> get() = _turnOffSuccess
 
-    fun insertFollowerList(followerList: List<FollowerInformation>) {
+    fun initFollowerList(followerList: List<FollowerInformation>) {
         viewModelScope.launch {
             kotlin.runCatching {
-                insertFollowerListUseCase(followerList)
+                deleteFollowerListUseCase(followerList)
+            }.onSuccess {
+                kotlin.runCatching {
+                    insertFollowerListUseCase(followerList)
+                }.onSuccess {
+                    kotlin.runCatching {
+                        getFollowerListUseCase()
+                    }.onSuccess {
+                        _follower.value = it
+                    }.onFailure {
+                        Timber.e(it)
+                    }
+                }.onFailure { Timber.e(it) }
             }.onFailure {
                 Timber.e(it)
             }
@@ -92,14 +104,18 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun insertRepositoryList(repositoryList: List<RepositoryInformation>) {
+    fun deleteFollower(follower: FollowerInformation) {
         viewModelScope.launch {
             kotlin.runCatching {
-                insertRepositoryListUseCase(repositoryList)
+                deleteFollowerUseCase(follower)
             }.onFailure {
                 Timber.e(it)
             }
         }
+    }
+
+    fun initRepositoryList(repositoryList: List<RepositoryInformation>) {
+
     }
 
     fun getRepositoryList() {
