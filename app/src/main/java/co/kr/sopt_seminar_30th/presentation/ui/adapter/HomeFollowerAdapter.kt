@@ -59,10 +59,18 @@ class HomeFollowerAdapter(private val itemClick: (FollowerInformation) -> (Unit)
     }
 
     fun moveItem(fromPosition: Int, toPosition: Int) {
-        Collections.swap(itemList, fromPosition, toPosition)
         itemList[fromPosition].followerOrder = itemList[toPosition].followerOrder.also {
-            itemList[toPosition].followerOrder = itemList[fromPosition].followerOrder
+            if (fromPosition < toPosition) {
+                for (i in toPosition downTo fromPosition + 1) {
+                    itemList[i].followerOrder = itemList[i - 1].followerOrder
+                }
+            } else if (toPosition < fromPosition) {
+                for (i in toPosition until fromPosition) {
+                    itemList[i].followerOrder = itemList[i + 1].followerOrder
+                }
+            }
         }
+        Collections.swap(itemList, fromPosition, toPosition)
         notifyItemMoved(fromPosition, toPosition)
     }
 
