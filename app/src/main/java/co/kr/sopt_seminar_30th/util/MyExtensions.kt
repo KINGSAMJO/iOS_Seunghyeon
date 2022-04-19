@@ -23,7 +23,8 @@ fun UserInformation.toUserDto(): UserDto = UserDto(
 
 fun RepositoryInformation.toRepositoryDto(): RepositoryDto = RepositoryDto(
     repositoryName = this.repositoryName,
-    repositoryDescription = this.repositoryDescription
+    repositoryDescription = this.repositoryDescription,
+    repositoryOrder = this.repositoryOrder
 )
 
 fun FollowerInformation.toFollowerDto(): FollowerDto = FollowerDto(

@@ -43,11 +43,14 @@ class HomeRepositoryFragment : BaseFragment<FragmentHomeRepositoryBinding>() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initRecyclerView() {
-//        binding.rvHomeRepository.addItemDecoration(MyItemDecoration(5, 10, R.color.purple_100))
-        homeRepositoryAdapter = HomeRepositoryAdapter()
+        homeRepositoryAdapter = HomeRepositoryAdapter {
+            homeViewModel.deleteRepository(it)
+        }
         binding.rvHomeRepository.adapter = homeRepositoryAdapter
         myItemTouchHelperForRepository =
-            MyItemTouchHelperForRepository(homeRepositoryAdapter).apply {
+            MyItemTouchHelperForRepository(homeRepositoryAdapter) {
+                homeViewModel.updateRepositoryList(homeRepositoryAdapter.getItemList())
+            }.apply {
                 setClamp((resources.displayMetrics.widthPixels.toFloat() - 30) / 4)
             }
         ItemTouchHelper(myItemTouchHelperForRepository).attachToRecyclerView(

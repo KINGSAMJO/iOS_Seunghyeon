@@ -3,7 +3,6 @@ package co.kr.sopt_seminar_30th.presentation.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.kr.sopt_seminar_30th.R
@@ -12,21 +11,24 @@ import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
 import co.kr.sopt_seminar_30th.util.MyDiffUtilCallback
 import java.util.*
 
-class HomeRepositoryAdapter: RecyclerView.Adapter<HomeRepositoryAdapter.HomeRepositoryViewHolder>() {
+class HomeRepositoryAdapter(private val removeData: (RepositoryInformation) -> (Unit)) :
+    RecyclerView.Adapter<HomeRepositoryAdapter.HomeRepositoryViewHolder>() {
     private val itemList = mutableListOf<RepositoryInformation>()
 
     class HomeRepositoryViewHolder(
         private val binding: ItemHomeRepositoryBinding,
-        private val removeItem: (Int) -> (Unit)
-    ): RecyclerView.ViewHolder(binding.root) {
+        private val removeItem: (Int) -> (Unit),
+        private val removeData: (RepositoryInformation) -> (Unit)
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(repository: RepositoryInformation) {
             binding.repository = repository
-            clickDelete()
+            clickDelete(repository)
         }
 
-        private fun clickDelete() {
+        private fun clickDelete(repository: RepositoryInformation) {
             binding.tvItemDelete.setOnClickListener {
                 removeItem(this.adapterPosition)
+                removeData(repository)
             }
         }
     }
@@ -38,9 +40,11 @@ class HomeRepositoryAdapter: RecyclerView.Adapter<HomeRepositoryAdapter.HomeRepo
             parent,
             false
         )
-        return HomeRepositoryViewHolder(binding) {
+        return HomeRepositoryViewHolder(binding, {
             removeItem(it)
-        }
+        }, {
+            removeData(it)
+        })
     }
 
     override fun onBindViewHolder(holder: HomeRepositoryViewHolder, position: Int) {
@@ -64,6 +68,9 @@ class HomeRepositoryAdapter: RecyclerView.Adapter<HomeRepositoryAdapter.HomeRepo
 
     fun moveItem(fromPosition: Int, toPosition: Int) {
         Collections.swap(itemList, fromPosition, toPosition)
+        itemList[fromPosition].repositoryOrder = itemList[toPosition].repositoryOrder.also {
+            itemList[toPosition].repositoryOrder = itemList[fromPosition].repositoryOrder
+        }
         notifyItemMoved(fromPosition, toPosition)
     }
 
@@ -71,4 +78,6 @@ class HomeRepositoryAdapter: RecyclerView.Adapter<HomeRepositoryAdapter.HomeRepo
         itemList.removeAt(position)
         notifyItemRemoved(position)
     }
+
+    fun getItemList(): List<RepositoryInformation> = itemList
 }

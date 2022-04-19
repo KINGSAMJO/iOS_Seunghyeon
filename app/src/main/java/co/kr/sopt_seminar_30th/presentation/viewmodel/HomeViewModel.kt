@@ -11,8 +11,7 @@ import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
 import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
 import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
 import co.kr.sopt_seminar_30th.domain.usecase.follower.*
-import co.kr.sopt_seminar_30th.domain.usecase.repository.GetRepositoryListUseCase
-import co.kr.sopt_seminar_30th.domain.usecase.repository.InsertRepositoryListUseCase
+import co.kr.sopt_seminar_30th.domain.usecase.repository.*
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserInformationUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.TurnOffAutoLoginUseCase
@@ -33,6 +32,9 @@ class HomeViewModel @Inject constructor(
     private val deleteFollowerListUseCase: DeleteFollowerListUseCase,
     private val insertRepositoryListUseCase: InsertRepositoryListUseCase,
     private val getRepositoryListUseCase: GetRepositoryListUseCase,
+    private val updateRepositoryListUseCase: UpdateRepositoryListUseCase,
+    private val deleteRepositoryUseCase: DeleteRepositoryUseCase,
+    private val deleteRepositoryListUseCase: DeleteRepositoryListUseCase,
     private val getUserIdUseCase: GetUserIdUseCase,
     private val getUserInformationUseCase: GetUserInformationUseCase,
     private val updateUserInformationUseCase: UpdateUserInformationUseCase,
@@ -115,7 +117,27 @@ class HomeViewModel @Inject constructor(
     }
 
     fun initRepositoryList(repositoryList: List<RepositoryInformation>) {
-
+        viewModelScope.launch {
+            kotlin.runCatching {
+                deleteRepositoryListUseCase(repositoryList)
+            }.onSuccess {
+                kotlin.runCatching {
+                    insertRepositoryListUseCase(repositoryList)
+                }.onSuccess {
+                    kotlin.runCatching {
+                        getRepositoryListUseCase()
+                    }.onSuccess {
+                        _repository.value = it
+                    }.onFailure {
+                        Timber.e(it)
+                    }
+                }.onFailure {
+                    Timber.e(it)
+                }
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
     }
 
     fun getRepositoryList() {
@@ -124,6 +146,26 @@ class HomeViewModel @Inject constructor(
                 getRepositoryListUseCase()
             }.onSuccess {
                 _repository.value = it
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
+
+    fun updateRepositoryList(repositoryList: List<RepositoryInformation>) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                updateRepositoryListUseCase(repositoryList)
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
+
+    fun deleteRepository(repository: RepositoryInformation) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                deleteRepositoryUseCase(repository)
             }.onFailure {
                 Timber.e(it)
             }

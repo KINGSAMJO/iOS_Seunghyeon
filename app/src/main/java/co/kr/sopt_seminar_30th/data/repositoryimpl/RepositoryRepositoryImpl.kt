@@ -18,4 +18,16 @@ class RepositoryRepositoryImpl @Inject constructor(
     override suspend fun getRepositoryList(): List<RepositoryInformation> {
         return repositoryDao.getRepositoryList().map { it.toRepositoryInformation() }
     }
+
+    override suspend fun updateRepositoryList(repositoryList: List<RepositoryInformation>) {
+        return repositoryDao.updateRepositoryList(repositoryList.map { it.toRepositoryDto() })
+    }
+
+    override suspend fun deleteRepository(repository: RepositoryInformation) {
+        return repositoryDao.deleteRepository(repository.toRepositoryDto())
+    }
+
+    override suspend fun deleteRepositoryList(repositoryList: List<RepositoryInformation>) {
+        return repositoryDao.deleteRepositoryList(repositoryList.map { it.toRepositoryDto() })
+    }
 }

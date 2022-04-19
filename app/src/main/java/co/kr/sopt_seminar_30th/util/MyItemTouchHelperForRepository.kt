@@ -10,7 +10,10 @@ import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.presentation.ui.adapter.HomeRepositoryAdapter
 import kotlin.math.min
 
-class MyItemTouchHelperForRepository(private val recyclerViewAdapter: HomeRepositoryAdapter) :
+class MyItemTouchHelperForRepository(
+    private val recyclerViewAdapter: HomeRepositoryAdapter,
+    private val updateData: (Unit) -> (Unit)
+) :
     ItemTouchHelper.SimpleCallback(
         ItemTouchHelper.UP or ItemTouchHelper.DOWN,
         ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -39,7 +42,6 @@ class MyItemTouchHelperForRepository(private val recyclerViewAdapter: HomeReposi
         super.onSelectedChanged(viewHolder, actionState)
         when (actionState) {
             ACTION_STATE_DRAG or ACTION_STATE_SWIPE -> {
-                viewHolder?.itemView?.alpha = 0.5f
                 viewHolder?.let {
                     viewHolder.itemView.alpha = 0.5f
                     currentPosition = viewHolder.adapterPosition
@@ -55,6 +57,7 @@ class MyItemTouchHelperForRepository(private val recyclerViewAdapter: HomeReposi
         currentDx = 0f
         previousPosition = viewHolder.adapterPosition
         getDefaultUIUtil().clearView(getView(viewHolder))
+        updateData(Unit)
     }
 
     override fun onChildDraw(

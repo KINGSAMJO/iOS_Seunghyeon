@@ -59,7 +59,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun initData() {
         binding.tvInit.setOnClickListener {
             val followerList = initFollowerList()
+            val repositoryList = initRepositoryList()
             homeViewModel.initFollowerList(followerList)
+            homeViewModel.initRepositoryList(repositoryList)
         }
     }
 
@@ -159,7 +161,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 repositoryList.add(
                     RepositoryInformation(
                         repositoryNameList[i],
-                        "${repositoryNameList[i]}의 레포지토리입니다."
+                        "${repositoryNameList[i]}의 레포지토리입니다.",
+                        i
                     )
                 )
             }
