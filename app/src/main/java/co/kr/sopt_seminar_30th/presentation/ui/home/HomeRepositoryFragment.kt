@@ -12,7 +12,6 @@ import co.kr.sopt_seminar_30th.databinding.FragmentHomeRepositoryBinding
 import co.kr.sopt_seminar_30th.presentation.ui.adapter.HomeRepositoryAdapter
 import co.kr.sopt_seminar_30th.presentation.ui.base.BaseFragment
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
-import co.kr.sopt_seminar_30th.util.MyItemDecoration
 import co.kr.sopt_seminar_30th.util.MyItemTouchHelperForRepository
 
 class HomeRepositoryFragment : BaseFragment<FragmentHomeRepositoryBinding>() {
@@ -38,6 +37,7 @@ class HomeRepositoryFragment : BaseFragment<FragmentHomeRepositoryBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
+        observeLiveData()
         homeViewModel.getRepositoryList()
     }
 
@@ -60,6 +60,9 @@ class HomeRepositoryFragment : BaseFragment<FragmentHomeRepositoryBinding>() {
             myItemTouchHelperForRepository.removePreviousClamp(binding.rvHomeRepository)
             false
         }
+    }
+
+    private fun observeLiveData() {
         homeViewModel.repository.observe(viewLifecycleOwner) {
             homeRepositoryAdapter.updateItemList(it)
         }

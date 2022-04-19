@@ -3,8 +3,7 @@ package co.kr.sopt_seminar_30th.util
 import android.graphics.Canvas
 import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_DRAG
-import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
+import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.presentation.ui.adapter.HomeRepositoryAdapter
@@ -15,8 +14,8 @@ class MyItemTouchHelperForRepository(
     private val updateData: (Unit) -> (Unit)
 ) :
     ItemTouchHelper.SimpleCallback(
-        ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        UP or DOWN or LEFT or RIGHT,
+        LEFT or RIGHT
     ) {
     private var currentPosition: Int? = null
     private var previousPosition: Int? = null
@@ -43,7 +42,6 @@ class MyItemTouchHelperForRepository(
         when (actionState) {
             ACTION_STATE_DRAG or ACTION_STATE_SWIPE -> {
                 viewHolder?.let {
-                    viewHolder.itemView.alpha = 0.5f
                     currentPosition = viewHolder.adapterPosition
                     getDefaultUIUtil().onSelected(getView(it))
                 }
@@ -53,7 +51,6 @@ class MyItemTouchHelperForRepository(
 
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
-        viewHolder.itemView.alpha = 1.0f
         currentDx = 0f
         previousPosition = viewHolder.adapterPosition
         getDefaultUIUtil().clearView(getView(viewHolder))
