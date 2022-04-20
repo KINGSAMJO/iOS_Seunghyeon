@@ -9,6 +9,7 @@ import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.ItemHomeFollowerBinding
 import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
 import co.kr.sopt_seminar_30th.util.MyDiffUtilCallback
+import timber.log.Timber
 import java.util.*
 
 class HomeFollowerAdapter(private val itemClick: (FollowerInformation) -> (Unit)) :
@@ -61,21 +62,18 @@ class HomeFollowerAdapter(private val itemClick: (FollowerInformation) -> (Unit)
     fun moveItem(fromPosition: Int, toPosition: Int) {
         itemList[fromPosition].followerOrder = itemList[toPosition].followerOrder.also {
             if (fromPosition < toPosition) {
-                var j = fromPosition
                 for (i in toPosition downTo fromPosition + 1) {
                     itemList[i].followerOrder = itemList[i - 1].followerOrder
-                    Collections.swap(itemList, j, j+1)
-                    j++
                 }
+                itemList.add(toPosition, itemList.removeAt(fromPosition))
             } else if (toPosition < fromPosition) {
-                var j = fromPosition
                 for (i in toPosition until fromPosition) {
                     itemList[i].followerOrder = itemList[i + 1].followerOrder
-                    Collections.swap(itemList, j, j-1)
-                    j--
                 }
+                itemList.add(toPosition, itemList.removeAt(fromPosition))
             }
         }
+        Timber.i(itemList.toString())
         notifyItemMoved(fromPosition, toPosition)
     }
 
