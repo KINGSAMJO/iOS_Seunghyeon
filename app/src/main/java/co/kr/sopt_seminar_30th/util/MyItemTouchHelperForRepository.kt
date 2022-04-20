@@ -11,7 +11,7 @@ import kotlin.math.min
 
 class MyItemTouchHelperForRepository(
     private val recyclerViewAdapter: HomeRepositoryAdapter,
-    private val updateData: (Unit) -> (Unit)
+    private val updateData: () -> (Unit)
 ) :
     ItemTouchHelper.SimpleCallback(
         UP or DOWN or LEFT or RIGHT,
@@ -54,7 +54,7 @@ class MyItemTouchHelperForRepository(
         currentDx = 0f
         previousPosition = viewHolder.adapterPosition
         getDefaultUIUtil().clearView(getView(viewHolder))
-        updateData(Unit)
+        updateData()
     }
 
     override fun onChildDraw(

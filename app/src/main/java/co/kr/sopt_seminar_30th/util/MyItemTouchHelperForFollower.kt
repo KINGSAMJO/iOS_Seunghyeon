@@ -10,7 +10,7 @@ import timber.log.Timber
 
 class MyItemTouchHelperForFollower(
     private val recyclerViewAdapter: HomeFollowerAdapter,
-    private val updateData: (Unit) -> (Unit),
+    private val updateData: () -> (Unit),
     private val removeData: (FollowerInformation) -> (Unit)
 ) :
     ItemTouchHelper.SimpleCallback(
@@ -35,6 +35,6 @@ class MyItemTouchHelperForFollower(
 
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
-        updateData(Unit)
+        updateData()
     }
 }
