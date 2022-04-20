@@ -5,10 +5,13 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
 import androidx.core.view.children
-import androidx.core.view.setPadding
 import androidx.recyclerview.widget.RecyclerView
 
-class MyItemDecoration(private val myOffset: Int, private val myRound: Int, private val myColor: Int) :
+class MyItemDecoration(
+    private val myOffset: Int,
+    private val myRound: Int,
+    private val myColor: Int
+) :
     RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,
