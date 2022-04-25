@@ -21,10 +21,6 @@
         android:id="@+id/fragment_more"
         android:name="co.kr.sopt_seminar_30th.presentation.ui.home.more.MoreFragment"
         android:label="more_fragment"
-        tools:layout="@layout/fragment_more">
-        <action
-            android:id="@+id/action_fragment_more_to_fragment_profile"
-            app:destination="@id/fragment_profile" />
-    </fragment>
+        tools:layout="@layout/fragment_more" />
 
 </navigation>

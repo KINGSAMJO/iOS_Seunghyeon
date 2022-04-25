@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.navigation.Navigation
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.FragmentMyProfileBinding
 import co.kr.sopt_seminar_30th.presentation.ui.base.BaseFragment
+import co.kr.sopt_seminar_30th.presentation.ui.home.home.HomeFragment
+import co.kr.sopt_seminar_30th.presentation.ui.home.more.MoreFragment
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
 
 class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
@@ -24,7 +27,7 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding.viewmodel = homeViewModel
         return binding.root
@@ -33,21 +36,5 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.getUserInformation()
-        editProfile()
-    }
-
-    private fun editProfile() {
-        binding.btnEdit.setOnClickListener {
-            parentFragment?.let { parent ->
-                parent.parentFragmentManager.commit {
-                    replace<EditProfileFragment>(R.id.fcv_home, EDIT_PROFILE_FRAGMENT)
-                    addToBackStack(EDIT_PROFILE_FRAGMENT)
-                }
-            }
-        }
-    }
-
-    companion object {
-        val EDIT_PROFILE_FRAGMENT: String = EditProfileFragment::class.java.simpleName
     }
 }

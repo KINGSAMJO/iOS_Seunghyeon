@@ -29,9 +29,9 @@
             android:id="@+id/bnv_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemIconTint="@color/purple_200"
+            app:itemIconTint="@color/selector_bnv"
             app:itemRippleColor="@color/white"
-            app:itemTextColor="@color/purple_200"
+            app:itemTextColor="@color/selector_bnv"
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/menu_home" />
