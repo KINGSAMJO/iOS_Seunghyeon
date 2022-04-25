@@ -40,7 +40,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             HomeViewPagerAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
         binding.vpHome.adapter = homeViewPagerAdapter
 
-        val tabText = listOf("FOLLOWING", "FOLLOWER")
         TabLayoutMediator(binding.tlHome, binding.vpHome) { tab, position ->
             tab.text = tabText[position]
         }.attach()
@@ -48,5 +47,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     companion object {
         private val MY_PROFILE_FRAGMENT = MyProfileFragment::class.java.simpleName
+        private val tabText = listOf("FOLLOWING", "FOLLOWER")
     }
 }

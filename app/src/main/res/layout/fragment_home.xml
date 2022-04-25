@@ -15,7 +15,7 @@
             android:id="@+id/fcv_home_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
+            android:padding="10dp"
             app:layout_constraintBottom_toTopOf="@id/tl_home"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,12 +28,19 @@
             app:tabIndicatorColor="@color/purple_200"
             app:tabTextColor="@color/purple_200" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp_home"
+        <co.kr.sopt_seminar_30th.util.NestedScrollableHost
+            android:id="@+id/nsh_home"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tl_home" />
+            app:layout_constraintTop_toBottomOf="@id/tl_home">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </co.kr.sopt_seminar_30th.util.NestedScrollableHost>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
