@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_home"
+    app:startDestination="@id/fragment_profile">
+
+    <fragment
+        android:id="@+id/fragment_profile"
+        android:name="co.kr.sopt_seminar_30th.presentation.ui.home.profile.ProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="co.kr.sopt_seminar_30th.presentation.ui.home.home.HomeFragment"
+        android:label="home_fragment"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/fragment_more"
+        android:name="co.kr.sopt_seminar_30th.presentation.ui.home.more.MoreFragment"
+        android:label="more_fragment"
+        tools:layout="@layout/fragment_more">
+        <action
+            android:id="@+id/action_fragment_more_to_fragment_profile"
+            app:destination="@id/fragment_profile" />
+    </fragment>
+
+</navigation>
