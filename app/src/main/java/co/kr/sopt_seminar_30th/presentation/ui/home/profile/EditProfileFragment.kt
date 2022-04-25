@@ -1,4 +1,4 @@
-package co.kr.sopt_seminar_30th.presentation.ui.home
+package co.kr.sopt_seminar_30th.presentation.ui.home.profile
 
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK

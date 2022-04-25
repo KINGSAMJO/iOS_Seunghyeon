@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        tools:context=".presentation.ui.home.profile.ProfileFragment">
+
+        <TextView
+            android:id="@+id/tv_init"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_init"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_fold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_fold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcv_profile_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/btn_profile_follower"
+            app:layout_constraintTop_toBottomOf="@id/tv_init" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_profile_follower"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/selector_profile_button"
+            android:text="@string/text_profile_follower"
+            app:layout_constraintBottom_toTopOf="@id/fcv_profile_bottom"
+            app:layout_constraintEnd_toStartOf="@id/btn_profile_repository"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fcv_profile_top" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_profile_repository"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_profile_button"
+            android:text="@string/text_profile_repository"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_profile_follower"
+            app:layout_constraintTop_toBottomOf="@id/fcv_profile_top" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcv_profile_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_profile_follower" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

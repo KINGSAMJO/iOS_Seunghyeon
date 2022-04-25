@@ -13,14 +13,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.home.HomeRepositoryFragment">
+        tools:context=".presentation.ui.home.profile.ProfileFollowerFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_home_repository"
+            android:id="@+id/rv_profile_follower"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_home_repository" />
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:listitem="@layout/item_profile_follower" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

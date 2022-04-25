@@ -1,4 +1,4 @@
-package co.kr.sopt_seminar_30th.presentation.ui.home
+package co.kr.sopt_seminar_30th.presentation.ui.home.profile
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,22 +9,22 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import co.kr.sopt_seminar_30th.R
-import co.kr.sopt_seminar_30th.databinding.FragmentHomeFollowerBinding
-import co.kr.sopt_seminar_30th.presentation.ui.adapter.HomeFollowerAdapter
+import co.kr.sopt_seminar_30th.databinding.FragmentProfileFollowerBinding
+import co.kr.sopt_seminar_30th.presentation.ui.adapter.ProfileFollowerAdapter
 import co.kr.sopt_seminar_30th.presentation.ui.base.BaseFragment
 import co.kr.sopt_seminar_30th.presentation.ui.detail.DetailActivity
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
 import co.kr.sopt_seminar_30th.util.MyItemDecoration
 import co.kr.sopt_seminar_30th.util.MyItemTouchHelperForFollower
 
-class HomeFollowerFragment : BaseFragment<FragmentHomeFollowerBinding>() {
+class ProfileFollowerFragment : BaseFragment<FragmentProfileFollowerBinding>() {
     override val TAG: String
-        get() = HomeFollowerFragment::class.java.simpleName
+        get() = ProfileFollowerFragment::class.java.simpleName
     override val layoutRes: Int
-        get() = R.layout.fragment_home_follower
+        get() = R.layout.fragment_profile_follower
 
     private val homeViewModel by activityViewModels<HomeViewModel>()
-    private lateinit var homeFollowerAdapter: HomeFollowerAdapter
+    private lateinit var profileFollowerAdapter: ProfileFollowerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,14 +44,14 @@ class HomeFollowerFragment : BaseFragment<FragmentHomeFollowerBinding>() {
     }
 
     private fun initRecyclerView() {
-        binding.rvHomeFollower.addItemDecoration(
+        binding.rvProfileFollower.addItemDecoration(
             MyItemDecoration(
                 5,
                 10,
                 ContextCompat.getColor(requireContext(), R.color.purple_100)
             )
         )
-        homeFollowerAdapter = HomeFollowerAdapter {
+        profileFollowerAdapter = ProfileFollowerAdapter {
             val intent = Intent(requireContext(), DetailActivity::class.java)
             intent.apply {
                 putExtra("name", it.followerName)
@@ -60,21 +60,21 @@ class HomeFollowerFragment : BaseFragment<FragmentHomeFollowerBinding>() {
             }
             startActivity(intent)
         }
-        binding.rvHomeFollower.adapter = homeFollowerAdapter
+        binding.rvProfileFollower.adapter = profileFollowerAdapter
         ItemTouchHelper(
-            MyItemTouchHelperForFollower(homeFollowerAdapter, {
-                homeViewModel.updateFollowerList(homeFollowerAdapter.getItemList())
+            MyItemTouchHelperForFollower(profileFollowerAdapter, {
+                homeViewModel.updateFollowerList(profileFollowerAdapter.getItemList())
             }, {
                 homeViewModel.deleteFollower(it)
             })
         ).attachToRecyclerView(
-            binding.rvHomeFollower
+            binding.rvProfileFollower
         )
     }
 
     private fun observeLiveData() {
         homeViewModel.follower.observe(viewLifecycleOwner) {
-            homeFollowerAdapter.updateItemList(it.map { follower -> follower.copy() })
+            profileFollowerAdapter.updateItemList(it.map { follower -> follower.copy() })
         }
     }
 }

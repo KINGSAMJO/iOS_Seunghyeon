@@ -6,17 +6,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.kr.sopt_seminar_30th.R
-import co.kr.sopt_seminar_30th.databinding.ItemHomeRepositoryBinding
+import co.kr.sopt_seminar_30th.databinding.ItemProfileRepositoryBinding
 import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
 import co.kr.sopt_seminar_30th.util.MyDiffUtilCallback
 import java.util.*
 
-class HomeRepositoryAdapter(private val removeData: (RepositoryInformation) -> (Unit)) :
-    RecyclerView.Adapter<HomeRepositoryAdapter.HomeRepositoryViewHolder>() {
+class ProfileRepositoryAdapter(private val removeData: (RepositoryInformation) -> (Unit)) :
+    RecyclerView.Adapter<ProfileRepositoryAdapter.HomeRepositoryViewHolder>() {
     private val itemList = mutableListOf<RepositoryInformation>()
 
     class HomeRepositoryViewHolder(
-        private val binding: ItemHomeRepositoryBinding,
+        private val binding: ItemProfileRepositoryBinding,
         private val removeItem: (Int) -> (Unit),
         private val removeData: (RepositoryInformation) -> (Unit)
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -34,9 +34,9 @@ class HomeRepositoryAdapter(private val removeData: (RepositoryInformation) -> (
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeRepositoryViewHolder {
-        val binding = DataBindingUtil.inflate<ItemHomeRepositoryBinding>(
+        val binding = DataBindingUtil.inflate<ItemProfileRepositoryBinding>(
             LayoutInflater.from(parent.context),
-            R.layout.item_home_repository,
+            R.layout.item_profile_repository,
             parent,
             false
         )
@@ -61,7 +61,7 @@ class HomeRepositoryAdapter(private val removeData: (RepositoryInformation) -> (
             itemList.run {
                 clear()
                 addAll(newItemList)
-                diffResult.dispatchUpdatesTo(this@HomeRepositoryAdapter)
+                diffResult.dispatchUpdatesTo(this@ProfileRepositoryAdapter)
             }
         }
     }

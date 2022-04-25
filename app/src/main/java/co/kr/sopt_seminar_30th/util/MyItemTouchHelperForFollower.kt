@@ -3,10 +3,10 @@ package co.kr.sopt_seminar_30th.util
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
-import co.kr.sopt_seminar_30th.presentation.ui.adapter.HomeFollowerAdapter
+import co.kr.sopt_seminar_30th.presentation.ui.adapter.ProfileFollowerAdapter
 
 class MyItemTouchHelperForFollower(
-    private val recyclerViewAdapter: HomeFollowerAdapter,
+    private val recyclerViewAdapter: ProfileFollowerAdapter,
     private val updateData: () -> (Unit),
     private val removeData: (FollowerInformation) -> (Unit)
 ) :

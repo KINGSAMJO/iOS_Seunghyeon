@@ -18,10 +18,14 @@
     <string name="text_user_age_hint">나이를 입력해주세요</string>
     <string name="text_user_mbti_hint">MBTI를 입력해주세요</string>
     <string name="text_user_description_hint">자기소개를 입력해주세요</string>
-    <string name="text_home_follower">FOLLOWER</string>
-    <string name="text_home_repository">REPOSITORY</string>
+    <string name="text_profile_follower">FOLLOWER</string>
+    <string name="text_profile_repository">REPOSITORY</string>
     <string name="text_fold">접기/펴기</string>
     <string name="text_turn_off_auto_login">TURN OFF AUTO LOGIN</string>
     <string name="text_item_delete">DELETE</string>
     <string name="text_init">데이터 초기화</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_profile">프로필</string>
+    <string name="text_home">홈</string>
+    <string name="text_more">카메라</string>
 </resources>

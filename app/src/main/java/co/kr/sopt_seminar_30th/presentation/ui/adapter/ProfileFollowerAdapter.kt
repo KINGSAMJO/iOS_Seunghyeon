@@ -6,18 +6,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.kr.sopt_seminar_30th.R
-import co.kr.sopt_seminar_30th.databinding.ItemHomeFollowerBinding
+import co.kr.sopt_seminar_30th.databinding.ItemProfileFollowerBinding
 import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
 import co.kr.sopt_seminar_30th.util.MyDiffUtilCallback
 import timber.log.Timber
-import java.util.*
 
-class HomeFollowerAdapter(private val itemClick: (FollowerInformation) -> (Unit)) :
-    RecyclerView.Adapter<HomeFollowerAdapter.HomeFollowerViewHolder>() {
+class ProfileFollowerAdapter(private val itemClick: (FollowerInformation) -> (Unit)) :
+    RecyclerView.Adapter<ProfileFollowerAdapter.HomeFollowerViewHolder>() {
     private val itemList = mutableListOf<FollowerInformation>()
 
     class HomeFollowerViewHolder(
-        private val binding: ItemHomeFollowerBinding,
+        private val binding: ItemProfileFollowerBinding,
         private val itemClick: (FollowerInformation) -> (Unit)
     ) :
         RecyclerView.ViewHolder(binding.root) {
@@ -31,9 +30,9 @@ class HomeFollowerAdapter(private val itemClick: (FollowerInformation) -> (Unit)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeFollowerViewHolder {
-        val binding = DataBindingUtil.inflate<ItemHomeFollowerBinding>(
+        val binding = DataBindingUtil.inflate<ItemProfileFollowerBinding>(
             LayoutInflater.from(parent.context),
-            R.layout.item_home_follower,
+            R.layout.item_profile_follower,
             parent,
             false
         )
@@ -54,7 +53,7 @@ class HomeFollowerAdapter(private val itemClick: (FollowerInformation) -> (Unit)
             itemList.run {
                 clear()
                 addAll(newItemList)
-                diffResult.dispatchUpdatesTo(this@HomeFollowerAdapter)
+                diffResult.dispatchUpdatesTo(this@ProfileFollowerAdapter)
             }
         }
     }
