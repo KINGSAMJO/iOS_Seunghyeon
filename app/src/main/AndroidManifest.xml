@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SOPT_Seminar_30th">
         <activity
+            android:name=".presentation.ui.detail.DetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.ui.home.HomeActivity"
             android:exported="false" />
         <activity

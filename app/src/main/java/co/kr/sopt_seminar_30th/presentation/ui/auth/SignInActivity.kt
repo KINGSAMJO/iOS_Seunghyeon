@@ -67,8 +67,17 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
         }
 
         signInViewModel.isEmpty.observe(this) {
-            if(it) {
+            if (it) {
                 Toast.makeText(this, "아이디/비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        signInViewModel.autoLogin.observe(this) {
+            if (it) {
+                Toast.makeText(this, "자동로그인 성공", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         }
     }

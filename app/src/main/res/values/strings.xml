@@ -10,7 +10,7 @@
     <string name="text_user_name">이름</string>
     <string name="text_user_name_hint">이름을 입력해주세요</string>
     <string name="description_profile_image">ProfileImage</string>
-    <string name="text_edit">EDIT</string>
+    <string name="text_edit_profile">EDIT PROFILE</string>
     <string name="text_save">SAVE</string>
     <string name="text_user_age">나이</string>
     <string name="text_user_mbti">MBTI</string>
@@ -18,4 +18,10 @@
     <string name="text_user_age_hint">나이를 입력해주세요</string>
     <string name="text_user_mbti_hint">MBTI를 입력해주세요</string>
     <string name="text_user_description_hint">자기소개를 입력해주세요</string>
+    <string name="text_home_follower">FOLLOWER</string>
+    <string name="text_home_repository">REPOSITORY</string>
+    <string name="text_fold">접기/펴기</string>
+    <string name="text_turn_off_auto_login">TURN OFF AUTO LOGIN</string>
+    <string name="text_item_delete">DELETE</string>
+    <string name="text_init">데이터 초기화</string>
 </resources>

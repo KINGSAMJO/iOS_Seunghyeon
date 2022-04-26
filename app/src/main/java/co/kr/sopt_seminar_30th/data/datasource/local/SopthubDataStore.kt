@@ -29,4 +29,8 @@ class SopthubDataStore @Inject constructor(
     var userId: String
         set(value) = dataStore.edit { putString("USER_ID", value) }
         get() = dataStore.getString("USER_ID", "") ?: ""
+
+    var autoLogin: Boolean
+        set(value) = dataStore.edit { putBoolean("AUTO_LOGIN", value) }
+        get() = dataStore.getBoolean("AUTO_LOGIN", false)
 }

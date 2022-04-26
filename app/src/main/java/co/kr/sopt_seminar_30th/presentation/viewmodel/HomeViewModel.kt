@@ -7,9 +7,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
+import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
 import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
+import co.kr.sopt_seminar_30th.domain.usecase.follower.*
+import co.kr.sopt_seminar_30th.domain.usecase.repository.*
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserInformationUseCase
+import co.kr.sopt_seminar_30th.domain.usecase.user.TurnOffAutoLoginUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.UpdateUserInformationUseCase
 import co.kr.sopt_seminar_30th.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,11 +25,28 @@ import javax.inject.Inject
 @SuppressLint("NullSafeMutableLiveData")
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val insertFollowerListUseCase: InsertFollowerListUseCase,
+    private val getFollowerListUseCase: GetFollowerListUseCase,
+    private val updateFollowerListUseCase: UpdateFollowerListUseCase,
+    private val deleteFollowerUseCase: DeleteFollowerUseCase,
+    private val deleteFollowerListUseCase: DeleteFollowerListUseCase,
+    private val insertRepositoryListUseCase: InsertRepositoryListUseCase,
+    private val getRepositoryListUseCase: GetRepositoryListUseCase,
+    private val updateRepositoryListUseCase: UpdateRepositoryListUseCase,
+    private val deleteRepositoryUseCase: DeleteRepositoryUseCase,
+    private val deleteRepositoryListUseCase: DeleteRepositoryListUseCase,
     private val getUserIdUseCase: GetUserIdUseCase,
     private val getUserInformationUseCase: GetUserInformationUseCase,
-    private val updateUserInformationUseCase: UpdateUserInformationUseCase
+    private val updateUserInformationUseCase: UpdateUserInformationUseCase,
+    private val turnOffAutoLoginUseCase: TurnOffAutoLoginUseCase
 ) : ViewModel() {
     private var userId: String = ""
+
+    private var _follower = MutableLiveData<List<FollowerInformation>>()
+    val follower: LiveData<List<FollowerInformation>> get() = _follower
+
+    private var _repository = MutableLiveData<List<RepositoryInformation>>()
+    val repository: LiveData<List<RepositoryInformation>> get() = _repository
 
     private var _user = MutableLiveData<UserInformation>()
     val user: LiveData<UserInformation> get() = _user
@@ -36,6 +58,119 @@ class HomeViewModel @Inject constructor(
 
     private var _updateSuccess = SingleLiveEvent<Boolean>()
     val updateSuccess: LiveData<Boolean> get() = _updateSuccess
+
+    private var _turnOffSuccess = SingleLiveEvent<Boolean>()
+    val turnOffSuccess: LiveData<Boolean> get() = _turnOffSuccess
+
+    fun initFollowerList(followerList: List<FollowerInformation>) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                deleteFollowerListUseCase(followerList)
+            }.onSuccess {
+                kotlin.runCatching {
+                    insertFollowerListUseCase(followerList)
+                }.onSuccess {
+                    kotlin.runCatching {
+                        getFollowerListUseCase()
+                    }.onSuccess {
+                        _follower.value = it
+                    }.onFailure {
+                        Timber.e(it)
+                    }
+                }.onFailure { Timber.e(it) }
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
+
+    fun getFollowerList() {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                getFollowerListUseCase()
+            }.onSuccess {
+                _follower.value = it
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
+
+    fun updateFollowerList(followerList: List<FollowerInformation>) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                updateFollowerListUseCase(followerList)
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
+
+    fun deleteFollower(follower: FollowerInformation) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                deleteFollowerUseCase(follower)
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
+
+    fun initRepositoryList(repositoryList: List<RepositoryInformation>) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                deleteRepositoryListUseCase(repositoryList)
+            }.onSuccess {
+                kotlin.runCatching {
+                    insertRepositoryListUseCase(repositoryList)
+                }.onSuccess {
+                    kotlin.runCatching {
+                        getRepositoryListUseCase()
+                    }.onSuccess {
+                        _repository.value = it
+                    }.onFailure {
+                        Timber.e(it)
+                    }
+                }.onFailure {
+                    Timber.e(it)
+                }
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
+
+    fun getRepositoryList() {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                getRepositoryListUseCase()
+            }.onSuccess {
+                _repository.value = it
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
+
+    fun updateRepositoryList(repositoryList: List<RepositoryInformation>) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                updateRepositoryListUseCase(repositoryList)
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
+
+    fun deleteRepository(repository: RepositoryInformation) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                deleteRepositoryUseCase(repository)
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
 
     fun getUserInformation() {
         viewModelScope.launch {
@@ -100,6 +235,16 @@ class HomeViewModel @Inject constructor(
                     userDescription.value = user.value?.userDescription
                     _updateSuccess.value = false
                 }
+            }
+        }
+    }
+
+    fun turnOffAutoLogin() {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                turnOffAutoLoginUseCase()
+            }.onSuccess {
+                _turnOffSuccess.value = true
             }
         }
     }

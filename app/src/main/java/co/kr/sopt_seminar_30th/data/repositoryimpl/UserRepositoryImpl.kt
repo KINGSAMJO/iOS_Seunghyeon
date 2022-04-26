@@ -2,10 +2,10 @@ package co.kr.sopt_seminar_30th.data.repositoryimpl
 
 import co.kr.sopt_seminar_30th.data.datasource.local.SopthubDataStore
 import co.kr.sopt_seminar_30th.data.datasource.local.UserDao
-import co.kr.sopt_seminar_30th.data.mapper.UserMapper
 import co.kr.sopt_seminar_30th.data.model.UserDto
 import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
 import co.kr.sopt_seminar_30th.domain.repository.UserRepository
+import co.kr.sopt_seminar_30th.util.toUserDto
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -13,13 +13,14 @@ class UserRepositoryImpl @Inject constructor(
     private val dataStore: SopthubDataStore
 ) : UserRepository {
     override suspend fun getUserInformation(userId: String): UserInformation {
-        return UserMapper.mapperToUserInformation(userDao.getUserInformation(userId))
+        return userDao.getUserInformation(userId).toUserInformation()
     }
 
     override suspend fun login(id: String, password: String): Boolean {
         val userInformation = getUserInformation(id)
-        return if(userInformation.userId == id && userInformation.userPassword == password) {
+        return if (userInformation.userId == id && userInformation.userPassword == password) {
             dataStore.userId = id
+            dataStore.autoLogin = true
             true
         } else {
             false
@@ -45,11 +46,19 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateUserInformation(userInformation: UserInformation): UserInformation {
-        userDao.updateUserInformation(UserMapper.mapperToUserDto(userInformation))
+        userDao.updateUserInformation(userInformation.toUserDto())
         return getUserInformation(userInformation.userId)
+    }
+
+    override suspend fun getAutoLogin(): Boolean {
+        return dataStore.autoLogin
     }
 
     override suspend fun getUserId(): String {
         return dataStore.userId
+    }
+
+    override suspend fun turnOffAutoLogin() {
+        dataStore.autoLogin = false
     }
 }

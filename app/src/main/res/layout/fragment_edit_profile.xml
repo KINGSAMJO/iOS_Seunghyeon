@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toTopOf="@id/btn_save"
+            app:layout_constraintBottom_toTopOf="@id/btn_turn_off_auto_login"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +31,7 @@
 
                 <ImageView
                     android:id="@+id/iv_profile_image"
-                    setProfileImage="@{viewmodel.userImage}"
+                    setProfileImageUri="@{viewmodel.userImage}"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/description_profile_image"
@@ -144,6 +144,18 @@
         </ScrollView>
 
         <Button
+            android:id="@+id/btn_turn_off_auto_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/text_turn_off_auto_login"
+            app:layout_constraintBottom_toTopOf="@id/btn_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sv_profile"
+            android:backgroundTint="@color/purple_700"
+            app:layout_constraintWidth_percent="0.8"/>
+
+        <Button
             android:id="@+id/btn_save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -151,8 +163,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sv_profile"
-            app:layout_constraintWidth_percent="0.5" />
+            app:layout_constraintTop_toBottomOf="@id/btn_turn_off_auto_login"
+            app:layout_constraintWidth_percent="0.8" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

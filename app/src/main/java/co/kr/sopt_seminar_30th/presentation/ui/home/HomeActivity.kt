@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.ActivityHomeBinding
+import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
+import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
 import co.kr.sopt_seminar_30th.presentation.ui.base.BaseActivity
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
