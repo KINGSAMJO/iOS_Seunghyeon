@@ -13,14 +13,13 @@ class HomeViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycl
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            FOLLOWING_FRAGMENT -> HomeFollowingFragment()
-            FOLLOWER_FRAGMENT -> HomeFollowerFragment()
+            FragmentPosition.FOLLOWING_FRAGMENT.position -> HomeFollowingFragment()
+            FragmentPosition.FOLLOWER_FRAGMENT.position -> HomeFollowerFragment()
             else -> throw IndexOutOfBoundsException()
         }
     }
 
-    companion object {
-        const val FOLLOWING_FRAGMENT = 0
-        const val FOLLOWER_FRAGMENT = 1
+    enum class FragmentPosition(val position: Int) {
+        FOLLOWING_FRAGMENT(0), FOLLOWER_FRAGMENT(1)
     }
 }

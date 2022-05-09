@@ -17,12 +17,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override val layoutRes: Int
         get() = R.layout.fragment_home
 
-    private lateinit var homeViewPagerAdapter: HomeViewPagerAdapter
+    private var _homeViewPagerAdapter: HomeViewPagerAdapter? = null
+    private val homeViewPagerAdapter get() = _homeViewPagerAdapter ?: error("Adapter not initialized")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initFragmentContainerView()
         initViewPager()
+    }
+
+    override fun onDestroyView() {
+        _homeViewPagerAdapter = null
+        super.onDestroyView()
     }
 
     private fun initFragmentContainerView() {
@@ -36,7 +42,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun initViewPager() {
-        homeViewPagerAdapter =
+        _homeViewPagerAdapter =
             HomeViewPagerAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
         binding.vpHome.adapter = homeViewPagerAdapter
 

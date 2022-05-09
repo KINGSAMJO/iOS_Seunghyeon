@@ -21,8 +21,10 @@ class ProfileRepositoryFragment : BaseFragment<FragmentProfileRepositoryBinding>
         get() = R.layout.fragment_profile_repository
 
     private val homeViewModel by activityViewModels<HomeViewModel>()
-    private lateinit var profileRepositoryAdapter: ProfileRepositoryAdapter
-    private lateinit var myItemTouchHelperForRepository: MyItemTouchHelperForRepository
+    private var _profileRepositoryAdapter: ProfileRepositoryAdapter? = null
+    private val profileRepositoryAdapter get() = _profileRepositoryAdapter ?: error("Adapter not initialized")
+    private var _myItemTouchHelperForRepository: MyItemTouchHelperForRepository? = null
+    private val myItemTouchHelperForRepository get() = _myItemTouchHelperForRepository ?: error("ItemTouchHelper not initialized")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,13 +43,19 @@ class ProfileRepositoryFragment : BaseFragment<FragmentProfileRepositoryBinding>
         homeViewModel.getRepositoryList()
     }
 
+    override fun onDestroyView() {
+        _profileRepositoryAdapter = null
+        _myItemTouchHelperForRepository = null
+        super.onDestroyView()
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private fun initRecyclerView() {
-        profileRepositoryAdapter = ProfileRepositoryAdapter {
+        _profileRepositoryAdapter = ProfileRepositoryAdapter {
             homeViewModel.deleteRepository(it)
         }
         binding.rvProfileRepository.adapter = profileRepositoryAdapter
-        myItemTouchHelperForRepository =
+        _myItemTouchHelperForRepository =
             MyItemTouchHelperForRepository(profileRepositoryAdapter) {
                 homeViewModel.updateRepositoryList(profileRepositoryAdapter.getItemList())
             }.apply {
@@ -63,8 +71,9 @@ class ProfileRepositoryFragment : BaseFragment<FragmentProfileRepositoryBinding>
     }
 
     private fun observeLiveData() {
-        homeViewModel.repository.observe(viewLifecycleOwner) {
-            profileRepositoryAdapter.updateItemList(it)
-        }
+        homeViewModel.repository.observe(
+            viewLifecycleOwner,
+            profileRepositoryAdapter::updateItemList
+        )
     }
 }

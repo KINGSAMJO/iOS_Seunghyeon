@@ -24,7 +24,8 @@ class ProfileFollowerFragment : BaseFragment<FragmentProfileFollowerBinding>() {
         get() = R.layout.fragment_profile_follower
 
     private val homeViewModel by activityViewModels<HomeViewModel>()
-    private lateinit var profileFollowerAdapter: ProfileFollowerAdapter
+    private var _profileFollowerAdapter: ProfileFollowerAdapter? = null
+    private val profileFollowerAdapter get() = _profileFollowerAdapter ?: error("Adapter not initialized")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +44,11 @@ class ProfileFollowerFragment : BaseFragment<FragmentProfileFollowerBinding>() {
         observeLiveData()
     }
 
+    override fun onDestroyView() {
+        _profileFollowerAdapter = null
+        super.onDestroyView()
+    }
+
     private fun initRecyclerView() {
         binding.rvProfileFollower.addItemDecoration(
             MyItemDecoration(
@@ -51,7 +57,7 @@ class ProfileFollowerFragment : BaseFragment<FragmentProfileFollowerBinding>() {
                 ContextCompat.getColor(requireContext(), R.color.purple_100)
             )
         )
-        profileFollowerAdapter = ProfileFollowerAdapter {
+        _profileFollowerAdapter = ProfileFollowerAdapter {
             val intent = Intent(requireContext(), DetailActivity::class.java)
             intent.apply {
                 putExtra("name", it.followerName)

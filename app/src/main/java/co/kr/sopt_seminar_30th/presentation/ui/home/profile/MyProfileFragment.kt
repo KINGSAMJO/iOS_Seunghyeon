@@ -5,14 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
-import androidx.navigation.Navigation
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.FragmentMyProfileBinding
 import co.kr.sopt_seminar_30th.presentation.ui.base.BaseFragment
-import co.kr.sopt_seminar_30th.presentation.ui.home.home.HomeFragment
-import co.kr.sopt_seminar_30th.presentation.ui.home.more.MoreFragment
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
 
 class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {

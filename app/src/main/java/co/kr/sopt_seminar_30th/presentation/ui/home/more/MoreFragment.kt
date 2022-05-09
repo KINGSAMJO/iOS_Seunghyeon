@@ -107,10 +107,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
     private fun changeProfileImage() {
         binding.ivProfileImage.setOnClickListener {
             when {
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED -> {
+                checkSelfPermissionGranted() -> {
                     navigateGallery()
                 }
                 shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
@@ -121,6 +118,13 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
                 }
             }
         }
+    }
+
+    private fun checkSelfPermissionGranted(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun navigateGallery() {
