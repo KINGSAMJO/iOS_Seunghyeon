@@ -61,8 +61,7 @@ class HomeFollowingFragment : BaseFragment<FragmentHomeFollowingBinding>() {
         _profileFollowerAdapter = ProfileFollowerAdapter {
             val intent = Intent(requireContext(), DetailActivity::class.java)
             intent.apply {
-                putExtra("name", it.userId)
-                putExtra("image", it.profileImageUrl)
+                putExtra("userId", it.userId)
             }
             startActivity(intent)
         }

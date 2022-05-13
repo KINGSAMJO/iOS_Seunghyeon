@@ -24,7 +24,7 @@ class HomeRepositoryImpl @Inject constructor(
     override suspend fun fetchUserFollowers(userId: String): Result<List<UserFollowInformation>> {
         return withContext(coroutineDispatcher) {
             kotlin.runCatching {
-                service.fetchUserFollowers(userId)
+                service.fetchUserFollowers(userId, 100)
                     .mapIndexed { index, responseFetchUserFollowerItem ->
                         responseFetchUserFollowerItem.toUserFollowInformation().apply {
                             followOrder = index
@@ -37,7 +37,7 @@ class HomeRepositoryImpl @Inject constructor(
     override suspend fun fetchUserFollowing(userId: String): Result<List<UserFollowInformation>> {
         return withContext(coroutineDispatcher) {
             kotlin.runCatching {
-                service.fetchUserFollowing(userId)
+                service.fetchUserFollowing(userId, 100)
                     .mapIndexed { index, responseFetchUserFollowItem ->
                         responseFetchUserFollowItem.toUserFollowInformation().apply {
                             followOrder = index

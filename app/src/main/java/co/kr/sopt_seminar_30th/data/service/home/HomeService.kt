@@ -5,6 +5,7 @@ import co.kr.sopt_seminar_30th.data.model.response.home.ResponseFetchUserInforma
 import co.kr.sopt_seminar_30th.data.model.response.home.ResponseFetchUserRepositoryItem
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface HomeService {
     @GET("/users/{userId}")
@@ -14,12 +15,14 @@ interface HomeService {
 
     @GET("/users/{userId}/followers")
     suspend fun fetchUserFollowers(
-        @Path("userId") userId: String
+        @Path("userId") userId: String,
+        @Query("per_page") perPage: Int
     ): List<ResponseFetchUserFollowItem>
 
     @GET("/users/{userId}/following")
     suspend fun fetchUserFollowing(
-        @Path("userId") userId: String
+        @Path("userId") userId: String,
+        @Query("per_page") perPage: Int
     ): List<ResponseFetchUserFollowItem>
 
     @GET("/users/{userId}/repos")

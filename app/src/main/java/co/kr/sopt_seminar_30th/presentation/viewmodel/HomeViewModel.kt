@@ -50,6 +50,10 @@ class HomeViewModel @Inject constructor(
     private var _turnOffSuccess = SingleLiveEvent<Boolean>()
     val turnOffSuccess: LiveData<Boolean> get() = _turnOffSuccess
 
+    fun setId(userId: String) {
+        id = userId
+    }
+
     fun getFollowerList() {
         viewModelScope.launch {
             when (id) {
@@ -176,9 +180,24 @@ class HomeViewModel @Inject constructor(
 
     fun getUserInformation() {
         viewModelScope.launch {
-            getUserIdUseCase()
-                .onSuccess { userId ->
-                    id = userId
+            when (id) {
+                "" -> {
+                    getUserIdUseCase()
+                        .onSuccess { userId ->
+                            id = userId
+                            homeRepository.fetchUserInformation(id)
+                                .onSuccess { homeUserInformation ->
+                                    _user.value = homeUserInformation
+                                }
+                                .onFailure { exception ->
+                                    Timber.e(exception)
+                                }
+                        }.onFailure {
+                            id = ""
+                            error("Authorization error")
+                        }
+                }
+                else -> {
                     homeRepository.fetchUserInformation(id)
                         .onSuccess { homeUserInformation ->
                             _user.value = homeUserInformation
@@ -186,10 +205,8 @@ class HomeViewModel @Inject constructor(
                         .onFailure { exception ->
                             Timber.e(exception)
                         }
-                }.onFailure {
-                    id = ""
-                    error("Authorization error")
                 }
+            }
         }
     }
 

@@ -16,6 +16,7 @@ import co.kr.sopt_seminar_30th.presentation.ui.detail.DetailActivity
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
 import co.kr.sopt_seminar_30th.util.MyItemDecoration
 import co.kr.sopt_seminar_30th.util.MyItemTouchHelperForFollower
+import timber.log.Timber
 
 class ProfileFollowerFragment : BaseFragment<FragmentProfileFollowerBinding>() {
     override val TAG: String
@@ -60,8 +61,8 @@ class ProfileFollowerFragment : BaseFragment<FragmentProfileFollowerBinding>() {
         _profileFollowerAdapter = ProfileFollowerAdapter {
             val intent = Intent(requireContext(), DetailActivity::class.java)
             intent.apply {
-                putExtra("name", it.userId)
-                putExtra("image", it.profileImageUrl)
+                putExtra("userId", it.userId)
+                Timber.i("userId: ${it.userId}")
             }
             startActivity(intent)
         }
