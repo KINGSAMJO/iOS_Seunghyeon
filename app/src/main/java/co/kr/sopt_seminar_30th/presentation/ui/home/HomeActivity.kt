@@ -2,6 +2,9 @@ package co.kr.sopt_seminar_30th.presentation.ui.home
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.ActivityHomeBinding
 import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
@@ -20,6 +23,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewmodel = homeViewModel
-        binding.lifecycleOwner = this
+        initBottomNavigationView()
+    }
+
+    private fun initBottomNavigationView() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv_home) as NavHostFragment
+        val navController = navHostFragment.findNavController()
+        binding.bnvHome.setupWithNavController(navController)
     }
 }

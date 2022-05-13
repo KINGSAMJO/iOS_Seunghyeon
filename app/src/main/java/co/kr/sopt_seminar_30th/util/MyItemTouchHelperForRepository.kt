@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
 import co.kr.sopt_seminar_30th.R
-import co.kr.sopt_seminar_30th.presentation.ui.adapter.HomeRepositoryAdapter
+import co.kr.sopt_seminar_30th.presentation.ui.adapter.ProfileRepositoryAdapter
 import kotlin.math.min
 
 class MyItemTouchHelperForRepository(
-    private val recyclerViewAdapter: HomeRepositoryAdapter,
+    private val recyclerViewAdapter: ProfileRepositoryAdapter,
     private val updateData: () -> (Unit)
 ) :
     ItemTouchHelper.SimpleCallback(

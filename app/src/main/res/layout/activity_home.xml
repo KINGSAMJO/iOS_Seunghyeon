@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel" />
@@ -15,9 +17,24 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fcv_home"
-            android:name="co.kr.sopt_seminar_30th.presentation.ui.home.HomeFragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toTopOf="@id/bnv_home"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navGraph="@navigation/nav_graph_home" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bnv_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemIconTint="@color/selector_bnv"
+            app:itemRippleColor="@color/white"
+            app:itemTextColor="@color/selector_bnv"
+            app:labelVisibilityMode="labeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/menu_home" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

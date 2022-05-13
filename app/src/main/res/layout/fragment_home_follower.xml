@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.ui.home.home.HomeFollowerFragment">
 
-    <data>
-
-        <variable
-            name="viewmodel"
-            type="co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.home.HomeFollowerFragment">
+        android:text="@string/hello_blank_fragment" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_home_follower"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
-            tools:listitem="@layout/item_home_follower" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</layout>
+</FrameLayout>
