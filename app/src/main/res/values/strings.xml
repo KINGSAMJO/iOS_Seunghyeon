@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">SOPTHUB</string>
     <string name="app_title">SOPT</string>
-    <string name="text_user_id">아이디</string>
-    <string name="text_user_id_hint">아이디를 입력해주세요</string>
+    <string name="text_user_id">Github 아이디</string>
+    <string name="text_user_id_hint">Github 아이디를 입력해주세요</string>
     <string name="text_user_password">비밀번호</string>
     <string name="text_user_password_hint">비밀번호를 입력해주세요</string>
     <string name="text_sign_in">LOGIN</string>
@@ -21,7 +21,7 @@
     <string name="text_profile_follower">FOLLOWER</string>
     <string name="text_profile_repository">REPOSITORY</string>
     <string name="text_fold">접기/펴기</string>
-    <string name="text_turn_off_auto_login">TURN OFF AUTO LOGIN</string>
+    <string name="text_sign_out">SIGN OUT</string>
     <string name="text_item_delete">DELETE</string>
     <string name="text_init">데이터 초기화</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>

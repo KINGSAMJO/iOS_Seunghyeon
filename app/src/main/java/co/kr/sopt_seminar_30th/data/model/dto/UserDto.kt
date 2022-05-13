@@ -1,9 +1,9 @@
-package co.kr.sopt_seminar_30th.data.model
+package co.kr.sopt_seminar_30th.data.model.dto
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
+import co.kr.sopt_seminar_30th.domain.entity.tmp.user.UserInfo
 
 @Entity(tableName = "UserInformation")
 data class UserDto(
@@ -15,7 +15,7 @@ data class UserDto(
     @ColumnInfo(name = "userImage") val userImage: String?,
     @ColumnInfo(name = "userDescription") val userDescription: String?
 ) {
-    fun toUserInformation(): UserInformation = UserInformation(
+    fun toUserInformation(): UserInfo = UserInfo(
         userId = this.userId,
         userPassword = this.userPassword,
         userName = this.userName,

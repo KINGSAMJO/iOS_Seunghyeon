@@ -60,9 +60,8 @@ class ProfileFollowerFragment : BaseFragment<FragmentProfileFollowerBinding>() {
         _profileFollowerAdapter = ProfileFollowerAdapter {
             val intent = Intent(requireContext(), DetailActivity::class.java)
             intent.apply {
-                putExtra("name", it.followerName)
-                putExtra("description", it.followerDescription)
-                putExtra("image", it.followerImage)
+                putExtra("name", it.userId)
+                putExtra("image", it.profileImageUrl)
             }
             startActivity(intent)
         }
@@ -71,7 +70,7 @@ class ProfileFollowerFragment : BaseFragment<FragmentProfileFollowerBinding>() {
             MyItemTouchHelperForFollower(profileFollowerAdapter, {
                 homeViewModel.updateFollowerList(profileFollowerAdapter.getItemList())
             }, {
-                homeViewModel.deleteFollower(it)
+                // TODO: 5, 6차 때 서버에서 받은 데이터와 Room 데이터를 맞춰나가도록 구현
             })
         ).attachToRecyclerView(
             binding.rvProfileFollower

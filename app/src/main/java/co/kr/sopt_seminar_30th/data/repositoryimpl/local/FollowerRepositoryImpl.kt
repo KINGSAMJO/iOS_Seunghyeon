@@ -1,8 +1,8 @@
-package co.kr.sopt_seminar_30th.data.repositoryimpl
+package co.kr.sopt_seminar_30th.data.repositoryimpl.local
 
 import co.kr.sopt_seminar_30th.data.datasource.local.FollowerDao
-import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
-import co.kr.sopt_seminar_30th.domain.repository.FollowerRepository
+import co.kr.sopt_seminar_30th.domain.entity.tmp.follower.FollowerInformation
+import co.kr.sopt_seminar_30th.domain.repository.local.FollowerRepository
 import co.kr.sopt_seminar_30th.util.toFollowerDto
 import javax.inject.Inject
 

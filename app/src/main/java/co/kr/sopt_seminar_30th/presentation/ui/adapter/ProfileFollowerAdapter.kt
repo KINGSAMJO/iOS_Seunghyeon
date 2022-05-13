@@ -7,20 +7,20 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.ItemProfileFollowerBinding
-import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
+import co.kr.sopt_seminar_30th.domain.entity.home.UserFollowInformation
 import co.kr.sopt_seminar_30th.util.MyDiffUtilCallback
 import timber.log.Timber
 
-class ProfileFollowerAdapter(private val itemClick: (FollowerInformation) -> (Unit)) :
+class ProfileFollowerAdapter(private val itemClick: (UserFollowInformation) -> (Unit)) :
     RecyclerView.Adapter<ProfileFollowerAdapter.HomeFollowerViewHolder>() {
-    private val itemList = mutableListOf<FollowerInformation>()
+    private val itemList = mutableListOf<UserFollowInformation>()
 
     class HomeFollowerViewHolder(
         private val binding: ItemProfileFollowerBinding,
-        private val itemClick: (FollowerInformation) -> (Unit)
+        private val itemClick: (UserFollowInformation) -> (Unit)
     ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(follower: FollowerInformation) {
+        fun bind(follower: UserFollowInformation) {
             binding.follower = follower
 
             binding.root.setOnClickListener {
@@ -45,7 +45,7 @@ class ProfileFollowerAdapter(private val itemClick: (FollowerInformation) -> (Un
 
     override fun getItemCount(): Int = itemList.size
 
-    fun updateItemList(newItemList: List<FollowerInformation>?) {
+    fun updateItemList(newItemList: List<UserFollowInformation>?) {
         newItemList?.let {
             val diffCallback = MyDiffUtilCallback(itemList, newItemList)
             val diffResult = DiffUtil.calculateDiff(diffCallback)
@@ -59,15 +59,15 @@ class ProfileFollowerAdapter(private val itemClick: (FollowerInformation) -> (Un
     }
 
     fun moveItem(fromPosition: Int, toPosition: Int) {
-        itemList[fromPosition].followerOrder = itemList[toPosition].followerOrder.also {
+        itemList[fromPosition].followOrder = itemList[toPosition].followOrder.also {
             if (fromPosition < toPosition) {
                 for (i in toPosition downTo fromPosition + 1) {
-                    itemList[i].followerOrder = itemList[i - 1].followerOrder
+                    itemList[i].followOrder = itemList[i - 1].followOrder
                 }
                 itemList.add(toPosition, itemList.removeAt(fromPosition))
             } else if (toPosition < fromPosition) {
                 for (i in toPosition until fromPosition) {
-                    itemList[i].followerOrder = itemList[i + 1].followerOrder
+                    itemList[i].followOrder = itemList[i + 1].followOrder
                 }
                 itemList.add(toPosition, itemList.removeAt(fromPosition))
             }
@@ -81,5 +81,5 @@ class ProfileFollowerAdapter(private val itemClick: (FollowerInformation) -> (Un
         notifyItemRemoved(position)
     }
 
-    fun getItemList(): List<FollowerInformation> = itemList
+    fun getItemList(): List<UserFollowInformation> = itemList
 }

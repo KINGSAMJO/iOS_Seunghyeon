@@ -1,8 +1,8 @@
 package co.kr.sopt_seminar_30th.domain.usecase.follower
 
 import co.kr.sopt_seminar_30th.di.IoDispatcher
-import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
-import co.kr.sopt_seminar_30th.domain.repository.FollowerRepository
+import co.kr.sopt_seminar_30th.domain.entity.tmp.follower.FollowerInformation
+import co.kr.sopt_seminar_30th.domain.repository.local.FollowerRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 

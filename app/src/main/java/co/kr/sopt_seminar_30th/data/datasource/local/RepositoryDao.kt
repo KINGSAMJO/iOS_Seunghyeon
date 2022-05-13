@@ -1,7 +1,7 @@
 package co.kr.sopt_seminar_30th.data.datasource.local
 
 import androidx.room.*
-import co.kr.sopt_seminar_30th.data.model.RepositoryDto
+import co.kr.sopt_seminar_30th.data.model.dto.RepositoryDto
 
 @Dao
 interface RepositoryDao {

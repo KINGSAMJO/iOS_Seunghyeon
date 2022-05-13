@@ -1,9 +1,9 @@
-package co.kr.sopt_seminar_30th.data.model
+package co.kr.sopt_seminar_30th.data.model.dto
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
+import co.kr.sopt_seminar_30th.domain.entity.tmp.repository.RepositoryInformation
 
 @Entity(tableName = "RepositoryInformation")
 data class RepositoryDto(

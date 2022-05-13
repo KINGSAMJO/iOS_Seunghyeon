@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.FragmentMoreBinding
+import co.kr.sopt_seminar_30th.presentation.ui.auth.SignInActivity
 import co.kr.sopt_seminar_30th.presentation.ui.base.BaseFragment
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
 
@@ -66,7 +67,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
         showImageToast()
         changeProfileImage()
         clickSave()
-        clickTurnOffAutoLogin()
+        clickSignOut()
         observeEditProfile()
     }
 
@@ -80,12 +81,15 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
         }
     }
 
-    private fun clickTurnOffAutoLogin() {
+    private fun clickSignOut() {
         binding.btnTurnOffAutoLogin.setOnClickListener {
             homeViewModel.turnOffAutoLogin()
             homeViewModel.turnOffSuccess.observe(viewLifecycleOwner) {
                 if (it) {
                     Toast.makeText(requireContext(), "자동로그인 해제", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(requireContext(), SignInActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
                 }
             }
         }

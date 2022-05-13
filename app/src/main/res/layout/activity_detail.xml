@@ -30,7 +30,7 @@
                 android:layout_height="0dp"
                 android:contentDescription="@string/description_profile_image"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toTopOf="@id/tv_profile_name"
+                app:layout_constraintBottom_toTopOf="@id/tv_profile_user_id"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
                 app:layout_constraintWidth_percent="0.33" />
 
             <TextView
-                android:id="@+id/tv_profile_name"
+                android:id="@+id/tv_profile_user_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -59,9 +59,9 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/tv_profile_name"
-                app:layout_constraintStart_toStartOf="@id/tv_profile_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_profile_name" />
+                app:layout_constraintEnd_toEndOf="@id/tv_profile_user_id"
+                app:layout_constraintStart_toStartOf="@id/tv_profile_user_id"
+                app:layout_constraintTop_toBottomOf="@id/tv_profile_user_id" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

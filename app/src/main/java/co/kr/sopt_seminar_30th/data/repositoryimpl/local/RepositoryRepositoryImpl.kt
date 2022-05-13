@@ -1,8 +1,8 @@
-package co.kr.sopt_seminar_30th.data.repositoryimpl
+package co.kr.sopt_seminar_30th.data.repositoryimpl.local
 
 import co.kr.sopt_seminar_30th.data.datasource.local.RepositoryDao
-import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
-import co.kr.sopt_seminar_30th.domain.repository.RepositoryRepository
+import co.kr.sopt_seminar_30th.domain.entity.tmp.repository.RepositoryInformation
+import co.kr.sopt_seminar_30th.domain.repository.local.RepositoryRepository
 import co.kr.sopt_seminar_30th.util.toRepositoryDto
 import javax.inject.Inject
 

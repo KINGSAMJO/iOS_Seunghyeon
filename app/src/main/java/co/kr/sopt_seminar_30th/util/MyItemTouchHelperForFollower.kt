@@ -2,7 +2,7 @@ package co.kr.sopt_seminar_30th.util
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
+import co.kr.sopt_seminar_30th.domain.entity.tmp.follower.FollowerInformation
 import co.kr.sopt_seminar_30th.presentation.ui.adapter.ProfileFollowerAdapter
 
 class MyItemTouchHelperForFollower(
@@ -24,10 +24,10 @@ class MyItemTouchHelperForFollower(
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        val removedFollower: FollowerInformation =
-            recyclerViewAdapter.getItemList()[viewHolder.adapterPosition]
-        recyclerViewAdapter.removeItem(viewHolder.adapterPosition)
-        removeData(removedFollower)
+//        val removedFollower: FollowerInformation =
+//            recyclerViewAdapter.getItemList()[viewHolder.adapterPosition]
+//        recyclerViewAdapter.removeItem(viewHolder.adapterPosition)
+//        removeData(removedFollower)
     }
 
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {

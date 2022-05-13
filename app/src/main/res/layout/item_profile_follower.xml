@@ -6,7 +6,7 @@
 
         <variable
             name="follower"
-            type="co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation" />
+            type="co.kr.sopt_seminar_30th.domain.entity.home.UserFollowInformation" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +16,7 @@
 
         <ImageView
             android:id="@+id/iv_follower_profile"
-            setProfileImageString="@{follower.followerImage}"
+            setProfileImageString="@{follower.profileImageUrl}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:contentDescription="@string/description_profile_image"
@@ -33,7 +33,7 @@
             android:layout_marginStart="10dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{follower.followerName}"
+            android:text="@{follower.userId}"
             android:textColor="@color/black"
             android:textSize="17sp"
             app:layout_constraintBottom_toTopOf="@id/tv_follower_description"
@@ -48,8 +48,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{follower.followerDescription}"
-            android:textSize="15sp"
+            android:text='@{follower.userId + "입니다."}'
+            android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/tv_follower_name"
             app:layout_constraintStart_toStartOf="@id/tv_follower_name"

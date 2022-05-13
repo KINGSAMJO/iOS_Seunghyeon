@@ -22,9 +22,11 @@ class ProfileRepositoryFragment : BaseFragment<FragmentProfileRepositoryBinding>
 
     private val homeViewModel by activityViewModels<HomeViewModel>()
     private var _profileRepositoryAdapter: ProfileRepositoryAdapter? = null
-    private val profileRepositoryAdapter get() = _profileRepositoryAdapter ?: error("Adapter not initialized")
+    private val profileRepositoryAdapter
+        get() = _profileRepositoryAdapter ?: error("Adapter not initialized")
     private var _myItemTouchHelperForRepository: MyItemTouchHelperForRepository? = null
-    private val myItemTouchHelperForRepository get() = _myItemTouchHelperForRepository ?: error("ItemTouchHelper not initialized")
+    private val myItemTouchHelperForRepository
+        get() = _myItemTouchHelperForRepository ?: error("ItemTouchHelper not initialized")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,12 +54,12 @@ class ProfileRepositoryFragment : BaseFragment<FragmentProfileRepositoryBinding>
     @SuppressLint("ClickableViewAccessibility")
     private fun initRecyclerView() {
         _profileRepositoryAdapter = ProfileRepositoryAdapter {
-            homeViewModel.deleteRepository(it)
+            // TODO: 5, 6차 때 서버에서 받은 데이터와 Room 데이터를 맞춰나가도록 구현
         }
         binding.rvProfileRepository.adapter = profileRepositoryAdapter
         _myItemTouchHelperForRepository =
             MyItemTouchHelperForRepository(profileRepositoryAdapter) {
-                homeViewModel.updateRepositoryList(profileRepositoryAdapter.getItemList())
+                // TODO: 5, 6차 때 서버에서 받은 데이터와 Room 데이터를 맞춰나가도록 구현
             }.apply {
                 setClamp((resources.displayMetrics.widthPixels.toFloat() - 30) / 4)
             }

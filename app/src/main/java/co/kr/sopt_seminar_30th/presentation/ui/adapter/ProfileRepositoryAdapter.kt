@@ -7,25 +7,26 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.ItemProfileRepositoryBinding
-import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
+import co.kr.sopt_seminar_30th.domain.entity.home.UserRepositoryInformation
+import co.kr.sopt_seminar_30th.domain.entity.tmp.repository.RepositoryInformation
 import co.kr.sopt_seminar_30th.util.MyDiffUtilCallback
 import java.util.*
 
-class ProfileRepositoryAdapter(private val removeData: (RepositoryInformation) -> (Unit)) :
+class ProfileRepositoryAdapter(private val removeData: (UserRepositoryInformation) -> (Unit)) :
     RecyclerView.Adapter<ProfileRepositoryAdapter.HomeRepositoryViewHolder>() {
-    private val itemList = mutableListOf<RepositoryInformation>()
+    private val itemList = mutableListOf<UserRepositoryInformation>()
 
     class HomeRepositoryViewHolder(
         private val binding: ItemProfileRepositoryBinding,
         private val removeItem: (Int) -> (Unit),
-        private val removeData: (RepositoryInformation) -> (Unit)
+        private val removeData: (UserRepositoryInformation) -> (Unit)
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(repository: RepositoryInformation) {
+        fun bind(repository: UserRepositoryInformation) {
             binding.repository = repository
             clickDelete(repository)
         }
 
-        private fun clickDelete(repository: RepositoryInformation) {
+        private fun clickDelete(repository: UserRepositoryInformation) {
             binding.tvItemDelete.setOnClickListener {
                 removeItem(this.adapterPosition)
                 removeData(repository)
@@ -53,7 +54,7 @@ class ProfileRepositoryAdapter(private val removeData: (RepositoryInformation) -
 
     override fun getItemCount(): Int = itemList.size
 
-    fun updateItemList(newItemList: List<RepositoryInformation>?) {
+    fun updateItemList(newItemList: List<UserRepositoryInformation>?) {
         newItemList?.let {
             val diffCallback = MyDiffUtilCallback(itemList, newItemList)
             val diffResult = DiffUtil.calculateDiff(diffCallback)
@@ -79,5 +80,5 @@ class ProfileRepositoryAdapter(private val removeData: (RepositoryInformation) -
         notifyItemRemoved(position)
     }
 
-    fun getItemList(): List<RepositoryInformation> = itemList
+    fun getItemList(): List<UserRepositoryInformation> = itemList
 }

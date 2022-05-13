@@ -3,7 +3,7 @@ package co.kr.sopt_seminar_30th.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
+import co.kr.sopt_seminar_30th.domain.entity.tmp.follower.FollowerInformation
 
 class DetailViewModel: ViewModel() {
     private var _follower = MutableLiveData<FollowerInformation>()

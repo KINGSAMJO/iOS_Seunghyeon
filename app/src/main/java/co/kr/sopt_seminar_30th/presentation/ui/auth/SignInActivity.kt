@@ -66,6 +66,20 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
             }
         }
 
+        signInViewModel.isEmailIncorrect.observe(this) {
+            if(it) {
+                Toast.makeText(this, "존재하지 않는 계정입니다", Toast.LENGTH_SHORT).show()
+                binding.etUserPassword.text.clear()
+            }
+        }
+
+        signInViewModel.isPasswordIncorrect.observe(this) {
+            if(it) {
+                Toast.makeText(this, "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
+                binding.etUserPassword.text.clear()
+            }
+        }
+
         signInViewModel.isEmpty.observe(this) {
             if (it) {
                 Toast.makeText(this, "아이디/비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
