@@ -7,29 +7,28 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.ItemProfileRepositoryBinding
-import co.kr.sopt_seminar_30th.domain.entity.home.UserRepositoryInformation
-import co.kr.sopt_seminar_30th.domain.entity.tmp.repository.RepositoryInformation
+import co.kr.sopt_seminar_30th.domain.entity.home.UserRepository
 import co.kr.sopt_seminar_30th.util.MyDiffUtilCallback
 import java.util.*
 
-class ProfileRepositoryAdapter(private val removeData: (UserRepositoryInformation) -> (Unit)) :
+class ProfileRepositoryAdapter(private val onRemoveData: (UserRepository) -> (Unit)) :
     RecyclerView.Adapter<ProfileRepositoryAdapter.HomeRepositoryViewHolder>() {
-    private val itemList = mutableListOf<UserRepositoryInformation>()
+    private val itemList = mutableListOf<UserRepository>()
 
     class HomeRepositoryViewHolder(
         private val binding: ItemProfileRepositoryBinding,
-        private val removeItem: (Int) -> (Unit),
-        private val removeData: (UserRepositoryInformation) -> (Unit)
+        private val onRemoveItem: (Int) -> (Unit),
+        private val onRemoveData: (UserRepository) -> (Unit)
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(repository: UserRepositoryInformation) {
+        fun bind(repository: UserRepository) {
             binding.repository = repository
             clickDelete(repository)
         }
 
-        private fun clickDelete(repository: UserRepositoryInformation) {
+        private fun clickDelete(repository: UserRepository) {
             binding.tvItemDelete.setOnClickListener {
-                removeItem(this.adapterPosition)
-                removeData(repository)
+                onRemoveItem(this.adapterPosition)
+                onRemoveData(repository)
             }
         }
     }
@@ -44,7 +43,7 @@ class ProfileRepositoryAdapter(private val removeData: (UserRepositoryInformatio
         return HomeRepositoryViewHolder(binding, {
             removeItem(it)
         }, {
-            removeData(it)
+            onRemoveData(it)
         })
     }
 
@@ -54,7 +53,7 @@ class ProfileRepositoryAdapter(private val removeData: (UserRepositoryInformatio
 
     override fun getItemCount(): Int = itemList.size
 
-    fun updateItemList(newItemList: List<UserRepositoryInformation>?) {
+    fun updateItemList(newItemList: List<UserRepository>?) {
         newItemList?.let {
             val diffCallback = MyDiffUtilCallback(itemList, newItemList)
             val diffResult = DiffUtil.calculateDiff(diffCallback)
@@ -80,5 +79,5 @@ class ProfileRepositoryAdapter(private val removeData: (UserRepositoryInformatio
         notifyItemRemoved(position)
     }
 
-    fun getItemList(): List<UserRepositoryInformation> = itemList
+    fun getItemList(): List<UserRepository> = itemList
 }
