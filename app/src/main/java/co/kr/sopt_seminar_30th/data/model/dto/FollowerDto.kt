@@ -1,9 +1,9 @@
-package co.kr.sopt_seminar_30th.data.model
+package co.kr.sopt_seminar_30th.data.model.dto
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
+import co.kr.sopt_seminar_30th.domain.entity.tmp.follower.FollowerInformation
 
 @Entity(tableName = "FollowerInformation")
 data class FollowerDto(

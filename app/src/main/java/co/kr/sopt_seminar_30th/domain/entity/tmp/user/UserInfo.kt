@@ -1,6 +1,6 @@
-package co.kr.sopt_seminar_30th.domain.entity.user
+package co.kr.sopt_seminar_30th.domain.entity.tmp.user
 
-data class UserInformation(
+data class UserInfo(
     val userId: String,
     val userPassword: String,
     val userName: String,

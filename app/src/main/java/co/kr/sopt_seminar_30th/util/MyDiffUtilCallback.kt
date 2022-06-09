@@ -1,8 +1,8 @@
 package co.kr.sopt_seminar_30th.util
 
 import androidx.recyclerview.widget.DiffUtil
-import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
-import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
+import co.kr.sopt_seminar_30th.domain.entity.tmp.follower.FollowerInformation
+import co.kr.sopt_seminar_30th.domain.entity.tmp.repository.RepositoryInformation
 
 class MyDiffUtilCallback(private val oldItemList: List<Any>, private val newItemList: List<Any>): DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldItemList.size

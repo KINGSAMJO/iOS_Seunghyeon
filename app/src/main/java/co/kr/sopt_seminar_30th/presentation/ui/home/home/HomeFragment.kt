@@ -53,6 +53,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     companion object {
         private val MY_PROFILE_FRAGMENT = MyProfileFragment::class.java.simpleName
-        private val tabText = listOf("FOLLOWING", "FOLLOWER")
+        private val tabText = listOf("FOLLOWER", "FOLLOWING")
     }
 }

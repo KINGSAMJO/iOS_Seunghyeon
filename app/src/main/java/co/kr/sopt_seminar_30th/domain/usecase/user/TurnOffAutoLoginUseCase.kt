@@ -1,7 +1,7 @@
 package co.kr.sopt_seminar_30th.domain.usecase.user
 
 import co.kr.sopt_seminar_30th.di.IoDispatcher
-import co.kr.sopt_seminar_30th.domain.repository.UserRepository
+import co.kr.sopt_seminar_30th.domain.repository.local.UserRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 

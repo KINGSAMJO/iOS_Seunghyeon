@@ -2,20 +2,16 @@ package co.kr.sopt_seminar_30th.presentation.viewmodel
 
 import android.annotation.SuppressLint
 import android.net.Uri
-import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
-import co.kr.sopt_seminar_30th.domain.entity.repository.RepositoryInformation
-import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
-import co.kr.sopt_seminar_30th.domain.usecase.follower.*
-import co.kr.sopt_seminar_30th.domain.usecase.repository.*
+import co.kr.sopt_seminar_30th.domain.entity.home.UserFollow
+import co.kr.sopt_seminar_30th.domain.entity.home.UserProfile
+import co.kr.sopt_seminar_30th.domain.entity.home.UserRepository
+import co.kr.sopt_seminar_30th.domain.repository.remote.HomeRepository
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
-import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserInformationUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.TurnOffAutoLoginUseCase
-import co.kr.sopt_seminar_30th.domain.usecase.user.UpdateUserInformationUseCase
 import co.kr.sopt_seminar_30th.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -25,31 +21,23 @@ import javax.inject.Inject
 @SuppressLint("NullSafeMutableLiveData")
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val insertFollowerListUseCase: InsertFollowerListUseCase,
-    private val getFollowerListUseCase: GetFollowerListUseCase,
-    private val updateFollowerListUseCase: UpdateFollowerListUseCase,
-    private val deleteFollowerUseCase: DeleteFollowerUseCase,
-    private val deleteFollowerListUseCase: DeleteFollowerListUseCase,
-    private val insertRepositoryListUseCase: InsertRepositoryListUseCase,
-    private val getRepositoryListUseCase: GetRepositoryListUseCase,
-    private val updateRepositoryListUseCase: UpdateRepositoryListUseCase,
-    private val deleteRepositoryUseCase: DeleteRepositoryUseCase,
-    private val deleteRepositoryListUseCase: DeleteRepositoryListUseCase,
     private val getUserIdUseCase: GetUserIdUseCase,
-    private val getUserInformationUseCase: GetUserInformationUseCase,
-    private val updateUserInformationUseCase: UpdateUserInformationUseCase,
-    private val turnOffAutoLoginUseCase: TurnOffAutoLoginUseCase
+    private val turnOffAutoLoginUseCase: TurnOffAutoLoginUseCase,
+    private val homeRepository: HomeRepository
 ) : ViewModel() {
-    private var userId: String = ""
+    private var id: String = ""
 
-    private var _follower = MutableLiveData<List<FollowerInformation>>()
-    val follower: LiveData<List<FollowerInformation>> get() = _follower
+    private var _follower = MutableLiveData<List<UserFollow>>()
+    val follower: LiveData<List<UserFollow>> get() = _follower
 
-    private var _repository = MutableLiveData<List<RepositoryInformation>>()
-    val repository: LiveData<List<RepositoryInformation>> get() = _repository
+    private var _following = MutableLiveData<List<UserFollow>>()
+    val following: LiveData<List<UserFollow>> get() = _following
 
-    private var _user = MutableLiveData<UserInformation>()
-    val user: LiveData<UserInformation> get() = _user
+    private var _repository = MutableLiveData<List<UserRepository>>()
+    val repository: LiveData<List<UserRepository>> get() = _repository
+
+    private var _user = MutableLiveData<UserProfile>()
+    val user: LiveData<UserProfile> get() = _user
 
     var userAge = MutableLiveData<String?>()
     var userMbti = MutableLiveData<String?>()
@@ -62,110 +50,128 @@ class HomeViewModel @Inject constructor(
     private var _turnOffSuccess = SingleLiveEvent<Boolean>()
     val turnOffSuccess: LiveData<Boolean> get() = _turnOffSuccess
 
-    fun initFollowerList(followerList: List<FollowerInformation>) {
-        viewModelScope.launch {
-            kotlin.runCatching {
-                deleteFollowerListUseCase(followerList)
-            }.onSuccess {
-                kotlin.runCatching {
-                    insertFollowerListUseCase(followerList)
-                }.onSuccess {
-                    kotlin.runCatching {
-                        getFollowerListUseCase()
-                    }.onSuccess {
-                        _follower.value = it
-                    }.onFailure {
-                        Timber.e(it)
-                    }
-                }.onFailure { Timber.e(it) }
-            }.onFailure {
-                Timber.e(it)
-            }
-        }
+    fun setId(userId: String) {
+        id = userId
     }
 
     fun getFollowerList() {
         viewModelScope.launch {
-            kotlin.runCatching {
-                getFollowerListUseCase()
-            }.onSuccess {
-                _follower.value = it
-            }.onFailure {
-                Timber.e(it)
-            }
-        }
-    }
-
-    fun updateFollowerList(followerList: List<FollowerInformation>) {
-        viewModelScope.launch {
-            kotlin.runCatching {
-                updateFollowerListUseCase(followerList)
-            }.onFailure {
-                Timber.e(it)
-            }
-        }
-    }
-
-    fun deleteFollower(follower: FollowerInformation) {
-        viewModelScope.launch {
-            kotlin.runCatching {
-                deleteFollowerUseCase(follower)
-            }.onFailure {
-                Timber.e(it)
-            }
-        }
-    }
-
-    fun initRepositoryList(repositoryList: List<RepositoryInformation>) {
-        viewModelScope.launch {
-            kotlin.runCatching {
-                deleteRepositoryListUseCase(repositoryList)
-            }.onSuccess {
-                kotlin.runCatching {
-                    insertRepositoryListUseCase(repositoryList)
-                }.onSuccess {
-                    kotlin.runCatching {
-                        getRepositoryListUseCase()
-                    }.onSuccess {
-                        _repository.value = it
-                    }.onFailure {
-                        Timber.e(it)
-                    }
-                }.onFailure {
-                    Timber.e(it)
+            when (id) {
+                "" -> {
+                    getUserIdUseCase()
+                        .onSuccess {
+                            homeRepository.fetchUserFollowers(id)
+                                .onSuccess { list ->
+                                    _follower.value = list
+                                }
+                                .onFailure { exception ->
+                                    Timber.e(exception)
+                                }
+                        }
                 }
+                else -> {
+                    homeRepository.fetchUserFollowers(id)
+                        .onSuccess { list ->
+                            _follower.value = list
+                        }
+                        .onFailure { exception ->
+                            Timber.e(exception)
+                        }
+                }
+            }
+        }
+    }
+
+    fun updateFollowerList(followerList: List<UserFollow>) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                // TODO: 5, 6차 때 서버에서 받은 데이터와 Room 데이터를 맞춰나가도록 구현
             }.onFailure {
                 Timber.e(it)
+            }
+        }
+    }
+
+    fun deleteFollower(follower: UserFollow) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                // TODO: 5, 6차 때 서버에서 받은 데이터와 Room 데이터를 맞춰나가도록 구현
+            }.onFailure {
+                Timber.e(it)
+            }
+        }
+    }
+
+    fun getFollowingList() {
+        viewModelScope.launch {
+            when (id) {
+                "" -> {
+                    getUserIdUseCase()
+                        .onSuccess {
+                            homeRepository.fetchUserFollowing(id)
+                                .onSuccess { list ->
+                                    _following.value = list
+                                }
+                                .onFailure { exception ->
+                                    Timber.e(exception)
+                                }
+                        }
+                }
+                else -> {
+                    homeRepository.fetchUserFollowing(id)
+                        .onSuccess { list ->
+                            _following.value = list
+                        }
+                        .onFailure { exception ->
+                            Timber.e(exception)
+                        }
+                }
             }
         }
     }
 
     fun getRepositoryList() {
         viewModelScope.launch {
+            when (id) {
+                "" -> {
+                    getUserIdUseCase()
+                        .onSuccess {
+                            homeRepository.fetchUserRepositories(id)
+                                .onSuccess { list ->
+                                    _repository.value = list
+                                }
+                                .onFailure { exception ->
+                                    Timber.e(exception)
+                                }
+                        }
+                }
+                else -> {
+                    homeRepository.fetchUserRepositories(id)
+                        .onSuccess { list ->
+                            _repository.value = list
+                        }
+                        .onFailure { exception ->
+                            Timber.e(exception)
+                        }
+                }
+            }
+        }
+    }
+
+    fun updateRepositoryList(repositoryList: List<UserRepository>) {
+        viewModelScope.launch {
             kotlin.runCatching {
-                getRepositoryListUseCase()
-            }.onSuccess {
-                _repository.value = it
+                // TODO: 5, 6차 때 서버에서 받은 데이터와 Room 데이터를 맞춰나가도록 구현
             }.onFailure {
                 Timber.e(it)
             }
         }
     }
 
-    fun updateRepositoryList(repositoryList: List<RepositoryInformation>) {
+    fun deleteRepository(repository: UserRepository) {
         viewModelScope.launch {
             kotlin.runCatching {
-                updateRepositoryListUseCase(repositoryList)
-            }.onFailure {
-                Timber.e(it)
-            }
-        }
-    }
-
-    fun deleteRepository(repository: RepositoryInformation) {
-        viewModelScope.launch {
-            kotlin.runCatching {
-                deleteRepositoryUseCase(repository)
+                // TODO: 5, 6차 때 서버에서 받은 데이터와 Room 데이터를 맞춰나가도록 구현
             }.onFailure {
                 Timber.e(it)
             }
@@ -174,69 +180,38 @@ class HomeViewModel @Inject constructor(
 
     fun getUserInformation() {
         viewModelScope.launch {
-            kotlin.runCatching {
-                getUserIdUseCase()
-            }.onSuccess {
-                userId = it
-            }.onFailure {
-                userId = ""
-                error("Authorization error")
-            }
-
-            kotlin.runCatching {
-                getUserInformationUseCase(userId)
-            }.onSuccess {
-                _user.value = it
-
-                when (it.userAge) {
-                    0 -> userAge.value = null
-                    else -> userAge.value = it.userAge.toString()
+            when (id) {
+                "" -> {
+                    getUserIdUseCase()
+                        .onSuccess { userId ->
+                            id = userId
+                            homeRepository.fetchUserInformation(id)
+                                .onSuccess { homeUserInformation ->
+                                    _user.value = homeUserInformation
+                                }
+                                .onFailure { exception ->
+                                    Timber.e(exception)
+                                }
+                        }.onFailure {
+                            id = ""
+                            error("Authorization error")
+                        }
                 }
-                userMbti.value = it.userMbti
-                userImage.value = it.userImage?.toUri()
-                userDescription.value = it.userDescription
-            }.onFailure {
-                Timber.e(it)
-                error("Failed while loading user information from DB")
+                else -> {
+                    homeRepository.fetchUserInformation(id)
+                        .onSuccess { homeUserInformation ->
+                            _user.value = homeUserInformation
+                        }
+                        .onFailure { exception ->
+                            Timber.e(exception)
+                        }
+                }
             }
         }
     }
 
     fun editProfile() {
-        viewModelScope.launch {
-            user.value?.let {
-                kotlin.runCatching {
-                    updateUserInformationUseCase(
-                        UserInformation(
-                            it.userId,
-                            it.userPassword,
-                            it.userName,
-                            userAge.value?.toInt(),
-                            userMbti.value,
-                            userImage.value.toString(),
-                            userDescription.value
-                        )
-                    )
-                }.onSuccess {
-                    _user.value = it
-
-                    userAge.value = when (it.userAge) {
-                        0 -> null
-                        else -> it.userAge.toString()
-                    }
-                    userMbti.value = it.userMbti
-                    userImage.value = it.userImage?.toUri()
-                    userDescription.value = it.userDescription
-                    _updateSuccess.value = true
-                }.onFailure {
-                    userAge.value = user.value?.userAge.toString()
-                    userMbti.value = user.value?.userMbti
-                    userImage.value = user.value?.userImage?.toUri()
-                    userDescription.value = user.value?.userDescription
-                    _updateSuccess.value = false
-                }
-            }
-        }
+        // TODO: 5, 6차 때 서버에서 받은 데이터와 Room 데이터를 맞춰나가도록 구현
     }
 
     fun turnOffAutoLogin() {

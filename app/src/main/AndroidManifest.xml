@@ -3,6 +3,7 @@
     package="co.kr.sopt_seminar_30th">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".application.App"
@@ -11,7 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/sopt_logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SOPT_Seminar_30th">
+        android:theme="@style/Theme.SOPT_Seminar_30th"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".presentation.ui.detail.DetailActivity"
             android:exported="false" />

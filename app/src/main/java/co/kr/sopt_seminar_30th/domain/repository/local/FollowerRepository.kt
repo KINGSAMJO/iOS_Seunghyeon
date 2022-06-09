@@ -1,6 +1,6 @@
-package co.kr.sopt_seminar_30th.domain.repository
+package co.kr.sopt_seminar_30th.domain.repository.local
 
-import co.kr.sopt_seminar_30th.domain.entity.follower.FollowerInformation
+import co.kr.sopt_seminar_30th.domain.entity.tmp.follower.FollowerInformation
 
 interface FollowerRepository {
     suspend fun insertFollowerList(followerList: List<FollowerInformation>): List<Long>

@@ -1,10 +1,10 @@
-package co.kr.sopt_seminar_30th.data.repositoryimpl
+package co.kr.sopt_seminar_30th.data.repositoryimpl.local
 
 import co.kr.sopt_seminar_30th.data.datasource.local.SopthubDataStore
 import co.kr.sopt_seminar_30th.data.datasource.local.UserDao
-import co.kr.sopt_seminar_30th.data.model.UserDto
-import co.kr.sopt_seminar_30th.domain.entity.user.UserInformation
-import co.kr.sopt_seminar_30th.domain.repository.UserRepository
+import co.kr.sopt_seminar_30th.data.model.dto.UserDto
+import co.kr.sopt_seminar_30th.domain.entity.tmp.user.UserInfo
+import co.kr.sopt_seminar_30th.domain.repository.local.UserRepository
 import co.kr.sopt_seminar_30th.util.toUserDto
 import javax.inject.Inject
 
@@ -12,19 +12,20 @@ class UserRepositoryImpl @Inject constructor(
     private val userDao: UserDao,
     private val dataStore: SopthubDataStore
 ) : UserRepository {
-    override suspend fun getUserInformation(userId: String): UserInformation {
+    override suspend fun getUserInformation(userId: String): UserInfo {
         return userDao.getUserInformation(userId).toUserInformation()
     }
 
+//    TODO: 보류
     override suspend fun login(id: String, password: String): Boolean {
-        val userInformation = getUserInformation(id)
-        return if (userInformation.userId == id && userInformation.userPassword == password) {
+//        val userInformation = getUserInformation(id)
+//        return if (userInformation.userId == id && userInformation.userPassword == password) {
             dataStore.userId = id
             dataStore.autoLogin = true
-            true
-        } else {
-            false
-        }
+            return true
+//        } else {
+//            false
+//        }
     }
 
     override suspend fun insertUserInformation(
@@ -45,7 +46,7 @@ class UserRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun updateUserInformation(userInformation: UserInformation): UserInformation {
+    override suspend fun updateUserInformation(userInformation: UserInfo): UserInfo {
         userDao.updateUserInformation(userInformation.toUserDto())
         return getUserInformation(userInformation.userId)
     }

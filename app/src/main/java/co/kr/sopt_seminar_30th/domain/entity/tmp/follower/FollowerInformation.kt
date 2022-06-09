@@ -1,4 +1,4 @@
-package co.kr.sopt_seminar_30th.domain.entity.follower
+package co.kr.sopt_seminar_30th.domain.entity.tmp.follower
 
 data class FollowerInformation(
     val followerName: String,

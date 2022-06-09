@@ -16,6 +16,7 @@ import co.kr.sopt_seminar_30th.presentation.ui.detail.DetailActivity
 import co.kr.sopt_seminar_30th.presentation.viewmodel.HomeViewModel
 import co.kr.sopt_seminar_30th.util.MyItemDecoration
 import co.kr.sopt_seminar_30th.util.MyItemTouchHelperForFollower
+import timber.log.Timber
 
 class ProfileFollowerFragment : BaseFragment<FragmentProfileFollowerBinding>() {
     override val TAG: String
@@ -60,9 +61,8 @@ class ProfileFollowerFragment : BaseFragment<FragmentProfileFollowerBinding>() {
         _profileFollowerAdapter = ProfileFollowerAdapter {
             val intent = Intent(requireContext(), DetailActivity::class.java)
             intent.apply {
-                putExtra("name", it.followerName)
-                putExtra("description", it.followerDescription)
-                putExtra("image", it.followerImage)
+                putExtra("userId", it.userId)
+                Timber.i("userId: ${it.userId}")
             }
             startActivity(intent)
         }
@@ -71,7 +71,7 @@ class ProfileFollowerFragment : BaseFragment<FragmentProfileFollowerBinding>() {
             MyItemTouchHelperForFollower(profileFollowerAdapter, {
                 homeViewModel.updateFollowerList(profileFollowerAdapter.getItemList())
             }, {
-                homeViewModel.deleteFollower(it)
+                // TODO: 5, 6차 때 서버에서 받은 데이터와 Room 데이터를 맞춰나가도록 구현
             })
         ).attachToRecyclerView(
             binding.rvProfileFollower

@@ -13,13 +13,13 @@ class HomeViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycl
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            FragmentPosition.FOLLOWING_FRAGMENT.position -> HomeFollowingFragment()
-            FragmentPosition.FOLLOWER_FRAGMENT.position -> HomeFollowerFragment()
-            else -> throw IndexOutOfBoundsException()
+            FragmentPosition.FOLLOWER.position -> HomeFollowerFragment()
+            FragmentPosition.FOLLOWING.position -> HomeFollowingFragment()
+            else -> throw IllegalStateException()
         }
     }
 
     enum class FragmentPosition(val position: Int) {
-        FOLLOWING_FRAGMENT(0), FOLLOWER_FRAGMENT(1)
+        FOLLOWER(0), FOLLOWING(1)
     }
 }
