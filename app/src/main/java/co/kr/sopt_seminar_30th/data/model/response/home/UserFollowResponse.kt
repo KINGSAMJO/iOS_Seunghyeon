@@ -1,9 +1,9 @@
 package co.kr.sopt_seminar_30th.data.model.response.home
 
-import co.kr.sopt_seminar_30th.domain.entity.home.UserFollowInformation
+import co.kr.sopt_seminar_30th.domain.entity.home.UserFollow
 import com.google.gson.annotations.SerializedName
 
-data class ResponseFetchUserFollowItem(
+data class UserFollowResponse(
     @SerializedName("avatar_url")
     val avatarUrl: String,
     @SerializedName("events_url")
@@ -37,8 +37,8 @@ data class ResponseFetchUserFollowItem(
     val type: String,
     val url: String
 ) {
-    fun toUserFollowInformation(): UserFollowInformation {
-        return UserFollowInformation(
+    fun toUserFollowInformation(): UserFollow {
+        return UserFollow(
             profileImageUrl = avatarUrl,
             userId = login,
             followOrder = 0
