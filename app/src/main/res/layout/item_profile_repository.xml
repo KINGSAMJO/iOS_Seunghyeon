@@ -6,7 +6,7 @@
 
         <variable
             name="repository"
-            type="co.kr.sopt_seminar_30th.domain.entity.home.UserRepositoryInformation" />
+            type="co.kr.sopt_seminar_30th.domain.entity.home.UserRepository" />
     </data>
 
     <FrameLayout
