@@ -8,11 +8,11 @@ class GithubInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
         val personalAccessToken = BuildConfig.PERSONAL_ACCESS_TOKEN
-        val authRequest =
+        val authorizedRequest =
             originalRequest.newBuilder()
                 .addHeader("Authorization", "token $personalAccessToken")
                 .build()
-        val response = chain.proceed(authRequest)
+        val response = chain.proceed(authorizedRequest)
         return response
     }
 }
