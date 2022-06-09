@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.kr.sopt_seminar_30th.domain.entity.home.UserFollowInformation
-import co.kr.sopt_seminar_30th.domain.entity.home.UserProfileInformation
-import co.kr.sopt_seminar_30th.domain.entity.tmp.follower.FollowerInformation
+import co.kr.sopt_seminar_30th.domain.entity.home.UserFollow
+import co.kr.sopt_seminar_30th.domain.entity.home.UserProfile
 import co.kr.sopt_seminar_30th.domain.repository.remote.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,14 +19,14 @@ class DetailViewModel @Inject constructor(
     private var _userId = ""
     val userId get() = _userId
 
-    private var _user = MutableLiveData<UserProfileInformation>()
-    val user: LiveData<UserProfileInformation> get() = _user
+    private var _user = MutableLiveData<UserProfile>()
+    val user: LiveData<UserProfile> get() = _user
 
-    private var _follower = MutableLiveData<List<UserFollowInformation>>()
-    val follower: LiveData<List<UserFollowInformation>> get() = _follower
+    private var _follower = MutableLiveData<List<UserFollow>>()
+    val follower: LiveData<List<UserFollow>> get() = _follower
 
-    private var _following = MutableLiveData<List<UserFollowInformation>>()
-    val following: LiveData<List<UserFollowInformation>> get() = _following
+    private var _following = MutableLiveData<List<UserFollow>>()
+    val following: LiveData<List<UserFollow>> get() = _following
 
     fun setUserId(userId: String) {
         _userId = userId
