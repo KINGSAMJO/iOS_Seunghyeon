@@ -6,7 +6,7 @@
 
         <variable
             name="follower"
-            type="co.kr.sopt_seminar_30th.domain.entity.home.UserFollowInformation" />
+            type="co.kr.sopt_seminar_30th.domain.entity.home.UserFollow" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
