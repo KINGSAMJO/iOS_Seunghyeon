@@ -1,9 +1,9 @@
 package co.kr.sopt_seminar_30th.data.model.response.home
 
-import co.kr.sopt_seminar_30th.domain.entity.home.UserRepositoryInformation
+import co.kr.sopt_seminar_30th.domain.entity.home.UserRepository
 import com.google.gson.annotations.SerializedName
 
-data class ResponseFetchUserRepositoryItem(
+data class UserRepositoryResponse(
     @SerializedName("allow_forking")
     val allowForking: Boolean,
     @SerializedName("archive_url")
@@ -187,8 +187,8 @@ data class ResponseFetchUserRepositoryItem(
         val url: String
     )
 
-    fun toUserRepositoryInformation(): UserRepositoryInformation {
-        return UserRepositoryInformation(
+    fun toUserRepositoryInformation(): UserRepository {
+        return UserRepository(
             name = name,
             language = language ?: "언어가 없나?",
             repositoryOrder = 0
