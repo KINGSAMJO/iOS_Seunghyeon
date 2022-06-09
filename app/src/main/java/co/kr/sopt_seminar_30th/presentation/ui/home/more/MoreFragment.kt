@@ -67,7 +67,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
         showImageToast()
         changeProfileImage()
         clickSave()
-        clickSignOut()
+        setOnTurnOffAutoLoginClickListener()
         observeEditProfile()
     }
 
@@ -81,7 +81,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
         }
     }
 
-    private fun clickSignOut() {
+    private fun setOnTurnOffAutoLoginClickListener() {
         binding.btnTurnOffAutoLogin.setOnClickListener {
             homeViewModel.turnOffAutoLogin()
             homeViewModel.turnOffSuccess.observe(viewLifecycleOwner) {
