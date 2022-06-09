@@ -7,24 +7,24 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.databinding.ItemProfileFollowerBinding
-import co.kr.sopt_seminar_30th.domain.entity.home.UserFollowInformation
+import co.kr.sopt_seminar_30th.domain.entity.home.UserFollow
 import co.kr.sopt_seminar_30th.util.MyDiffUtilCallback
 import timber.log.Timber
 
-class ProfileFollowerAdapter(private val itemClick: (UserFollowInformation) -> (Unit)) :
+class ProfileFollowerAdapter(private val onItemClick: (UserFollow) -> (Unit)) :
     RecyclerView.Adapter<ProfileFollowerAdapter.HomeFollowerViewHolder>() {
-    private val itemList = mutableListOf<UserFollowInformation>()
+    private val itemList = mutableListOf<UserFollow>()
 
     class HomeFollowerViewHolder(
         private val binding: ItemProfileFollowerBinding,
-        private val itemClick: (UserFollowInformation) -> (Unit)
+        private val onItemClick: (UserFollow) -> (Unit)
     ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(follower: UserFollowInformation) {
+        fun bind(follower: UserFollow) {
             binding.follower = follower
 
             binding.root.setOnClickListener {
-                itemClick(follower)
+                onItemClick(follower)
             }
         }
     }
@@ -36,7 +36,7 @@ class ProfileFollowerAdapter(private val itemClick: (UserFollowInformation) -> (
             parent,
             false
         )
-        return HomeFollowerViewHolder(binding, itemClick)
+        return HomeFollowerViewHolder(binding, onItemClick)
     }
 
     override fun onBindViewHolder(holder: HomeFollowerViewHolder, position: Int) {
@@ -45,7 +45,7 @@ class ProfileFollowerAdapter(private val itemClick: (UserFollowInformation) -> (
 
     override fun getItemCount(): Int = itemList.size
 
-    fun updateItemList(newItemList: List<UserFollowInformation>?) {
+    fun updateItemList(newItemList: List<UserFollow>?) {
         newItemList?.let {
             val diffCallback = MyDiffUtilCallback(itemList, newItemList)
             val diffResult = DiffUtil.calculateDiff(diffCallback)
@@ -81,5 +81,5 @@ class ProfileFollowerAdapter(private val itemClick: (UserFollowInformation) -> (
         notifyItemRemoved(position)
     }
 
-    fun getItemList(): List<UserFollowInformation> = itemList
+    fun getItemList(): List<UserFollow> = itemList
 }
