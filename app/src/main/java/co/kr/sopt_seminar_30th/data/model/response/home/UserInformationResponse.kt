@@ -1,9 +1,9 @@
 package co.kr.sopt_seminar_30th.data.model.response.home
 
-import co.kr.sopt_seminar_30th.domain.entity.home.UserProfileInformation
+import co.kr.sopt_seminar_30th.domain.entity.home.UserProfile
 import com.google.gson.annotations.SerializedName
 
-data class ResponseFetchUserInformation(
+data class UserInformationResponse(
     @SerializedName("avatar_url")
     val avatarUrl: String?,
     val bio: String?,
@@ -56,8 +56,8 @@ data class ResponseFetchUserInformation(
     val updatedAt: String?,
     val url: String?
 ) {
-    fun toHomeUserInformation(): UserProfileInformation {
-        return UserProfileInformation(
+    fun toHomeUserInformation(): UserProfile {
+        return UserProfile(
             profileImageUrl = this.avatarUrl ?: "",
             userId = this.login ?: "",
             name = this.name ?: "",
