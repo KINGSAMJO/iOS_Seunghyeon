@@ -6,9 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.kr.sopt_seminar_30th.domain.entity.home.UserFollowInformation
-import co.kr.sopt_seminar_30th.domain.entity.home.UserProfileInformation
-import co.kr.sopt_seminar_30th.domain.entity.home.UserRepositoryInformation
+import co.kr.sopt_seminar_30th.domain.entity.home.UserFollow
+import co.kr.sopt_seminar_30th.domain.entity.home.UserProfile
+import co.kr.sopt_seminar_30th.domain.entity.home.UserRepository
 import co.kr.sopt_seminar_30th.domain.repository.remote.HomeRepository
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.TurnOffAutoLoginUseCase
@@ -27,17 +27,17 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     private var id: String = ""
 
-    private var _follower = MutableLiveData<List<UserFollowInformation>>()
-    val follower: LiveData<List<UserFollowInformation>> get() = _follower
+    private var _follower = MutableLiveData<List<UserFollow>>()
+    val follower: LiveData<List<UserFollow>> get() = _follower
 
-    private var _following = MutableLiveData<List<UserFollowInformation>>()
-    val following: LiveData<List<UserFollowInformation>> get() = _following
+    private var _following = MutableLiveData<List<UserFollow>>()
+    val following: LiveData<List<UserFollow>> get() = _following
 
-    private var _repository = MutableLiveData<List<UserRepositoryInformation>>()
-    val repository: LiveData<List<UserRepositoryInformation>> get() = _repository
+    private var _repository = MutableLiveData<List<UserRepository>>()
+    val repository: LiveData<List<UserRepository>> get() = _repository
 
-    private var _user = MutableLiveData<UserProfileInformation>()
-    val user: LiveData<UserProfileInformation> get() = _user
+    private var _user = MutableLiveData<UserProfile>()
+    val user: LiveData<UserProfile> get() = _user
 
     var userAge = MutableLiveData<String?>()
     var userMbti = MutableLiveData<String?>()
@@ -82,7 +82,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun updateFollowerList(followerList: List<UserFollowInformation>) {
+    fun updateFollowerList(followerList: List<UserFollow>) {
         viewModelScope.launch {
             kotlin.runCatching {
                 // TODO: 5, 6차 때 서버에서 받은 데이터와 Room 데이터를 맞춰나가도록 구현
@@ -92,7 +92,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun deleteFollower(follower: UserFollowInformation) {
+    fun deleteFollower(follower: UserFollow) {
         viewModelScope.launch {
             kotlin.runCatching {
                 // TODO: 5, 6차 때 서버에서 받은 데이터와 Room 데이터를 맞춰나가도록 구현
@@ -158,7 +158,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun updateRepositoryList(repositoryList: List<UserRepositoryInformation>) {
+    fun updateRepositoryList(repositoryList: List<UserRepository>) {
         viewModelScope.launch {
             kotlin.runCatching {
                 // TODO: 5, 6차 때 서버에서 받은 데이터와 Room 데이터를 맞춰나가도록 구현
@@ -168,7 +168,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun deleteRepository(repository: UserRepositoryInformation) {
+    fun deleteRepository(repository: UserRepository) {
         viewModelScope.launch {
             kotlin.runCatching {
                 // TODO: 5, 6차 때 서버에서 받은 데이터와 Room 데이터를 맞춰나가도록 구현
