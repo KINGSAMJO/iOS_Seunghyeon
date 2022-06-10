@@ -6,11 +6,13 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import co.kr.sopt_seminar_30th.R
+import co.kr.sopt_seminar_30th.data.datasource.local.SopthubDataStore
 import co.kr.sopt_seminar_30th.databinding.ActivitySignInBinding
 import co.kr.sopt_seminar_30th.presentation.ui.base.BaseActivity
 import co.kr.sopt_seminar_30th.presentation.ui.home.HomeActivity
 import co.kr.sopt_seminar_30th.presentation.viewmodel.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignInActivity : BaseActivity<ActivitySignInBinding>() {
@@ -18,6 +20,9 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
         get() = R.layout.activity_sign_in
 
     private val signInViewModel by viewModels<SignInViewModel>()
+
+    @Inject
+    lateinit var dataStore: SopthubDataStore
 
     private val activityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -34,9 +39,17 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
         binding.viewmodel = signInViewModel
         binding.lifecycleOwner = this
 
+        loginWithAutoLogin()
         signUp()
         login()
         observeLogin()
+    }
+
+    private fun loginWithAutoLogin() {
+        if (dataStore.autoLogin) {
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
+        }
     }
 
     private fun signUp() {
