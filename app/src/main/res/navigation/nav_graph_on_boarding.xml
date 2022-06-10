@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_on_boarding"
+    app:startDestination="@id/fragment_on_boarding_first">
+
+    <fragment
+        android:id="@+id/fragment_on_boarding_first"
+        android:name="co.kr.sopt_seminar_30th.presentation.ui.onboarding.OnBoardingFirstFragment"
+        android:label="OnBoardingFirstFragment"
+        tools:layout="@layout/fragment_on_boarding_first">
+        <action
+            android:id="@+id/action_fragment_on_boarding_first_to_fragment_on_boarding_second"
+            app:destination="@id/fragment_on_boarding_second" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_on_boarding_second"
+        android:name="co.kr.sopt_seminar_30th.presentation.ui.onboarding.OnBoardingSecondFragment"
+        android:label="OnBoardingFirstFragment"
+        tools:layout="@layout/fragment_on_boarding_second">
+        <action
+            android:id="@+id/action_fragment_on_boarding_second_to_fragment_on_boarding_third"
+            app:destination="@id/fragment_on_boarding_third" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_on_boarding_third"
+        android:name="co.kr.sopt_seminar_30th.presentation.ui.onboarding.OnBoardingThirdFragment"
+        android:label="OnBoardingFirstFragment"
+        tools:layout="@layout/fragment_on_boarding_third">
+        <action
+            android:id="@+id/action_fragment_on_boarding_third_to_activity_sign_in"
+            app:destination="@id/activity_sign_in" />
+    </fragment>
+
+    <activity
+        android:id="@+id/activity_sign_in"
+        android:name="co.kr.sopt_seminar_30th.presentation.ui.auth.SignInActivity"
+        android:label="SignInActivity"
+        tools:layout="@layout/activity_sign_in" />
+
+</navigation>

@@ -5,12 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.kr.sopt_seminar_30th.domain.repository.local.AuthorizationRepository
 import co.kr.sopt_seminar_30th.domain.repository.remote.SignInRepository
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetAutoLoginUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.LoginUseCase
 import co.kr.sopt_seminar_30th.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import timber.log.Timber
@@ -22,25 +25,21 @@ class SignInViewModel @Inject constructor(
     private val getUserIdUseCase: GetUserIdUseCase,
     private val loginUseCase: LoginUseCase,
     private val getAutoLoginUseCase: GetAutoLoginUseCase,
-    private val signInRepository: SignInRepository
+    private val signInRepository: SignInRepository,
+    private val authorizationRepository: AuthorizationRepository
 ) : ViewModel() {
     var userId = MutableLiveData<String>()
     var userPassword = MutableLiveData<String>()
-
-    private var _autoLogin = MutableLiveData<Boolean>(false)
-    val autoLogin: LiveData<Boolean> get() = _autoLogin
-
     private var _isSuccess = SingleLiveEvent<Boolean>()
     val isSuccess: LiveData<Boolean> get() = _isSuccess
-
     private var _isEmpty = SingleLiveEvent<Boolean>()
     val isEmpty: LiveData<Boolean> get() = _isEmpty
-
     private var _isEmailIncorrect = SingleLiveEvent<Boolean>()
     val isEmailIncorrect: LiveData<Boolean> get() = _isEmailIncorrect
-
     private var _isPasswordIncorrect = SingleLiveEvent<Boolean>()
     val isPasswordIncorrect: LiveData<Boolean> get() = _isPasswordIncorrect
+    private val _autoLoginState = MutableStateFlow(false)
+    val autoLoginState = _autoLoginState.asStateFlow()
 
     fun login() {
         if (!userId.value.isNullOrBlank() && !userPassword.value.isNullOrBlank()) {
@@ -53,6 +52,9 @@ class SignInViewModel @Inject constructor(
                     .onSuccess {
                         _isSuccess.value = true
                         loginUseCase(email, password)
+                        runCatching {
+                            authorizationRepository.insertAuthorization(email, true)
+                        }.onFailure { Timber.e(it) }
                     }
                     .onFailure { exception ->
                         when ((exception as HttpException).code()) {
@@ -65,6 +67,19 @@ class SignInViewModel @Inject constructor(
             }
         } else {
             _isEmpty.value = true
+        }
+    }
+
+    fun checkAuthorization(userId: String) {
+        viewModelScope.launch {
+            runCatching {
+                authorizationRepository.getAuthorization(userId)
+            }.onSuccess {
+                _autoLoginState.emit(true)
+            }.onFailure {
+                _autoLoginState.emit(false)
+                Timber.e(it)
+            }
         }
     }
 }
