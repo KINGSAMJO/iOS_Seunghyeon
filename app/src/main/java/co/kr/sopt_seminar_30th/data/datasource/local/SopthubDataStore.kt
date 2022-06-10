@@ -33,4 +33,8 @@ class SopthubDataStore @Inject constructor(
     var autoLogin: Boolean
         set(value) = dataStore.edit { putBoolean("AUTO_LOGIN", value) }
         get() = dataStore.getBoolean("AUTO_LOGIN", false)
+
+    var onBoardingEnabled: Boolean
+        set(value) = dataStore.edit { putBoolean("ON_BOARDING_ENABLED", value) }
+        get() = dataStore.getBoolean("ON_BOARDING_ENABLED", false)
 }

@@ -28,4 +28,10 @@
     <string name="text_profile">프로필</string>
     <string name="text_home">홈</string>
     <string name="text_more">더보기</string>
+    <string name="text_on_boarding">WELCOME</string>
+    <string name="text_on_boarding_first">온</string>
+    <string name="text_next">next</string>
+    <string name="text_on_boarding_second">보</string>
+    <string name="text_on_boarding_third">딩</string>
+    <string name="text_start">start</string>
 </resources>
