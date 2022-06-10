@@ -2,6 +2,7 @@ package co.kr.sopt_seminar_30th.di
 
 import android.content.Context
 import co.kr.sopt_seminar_30th.data.database.AppDatabase
+import co.kr.sopt_seminar_30th.data.datasource.local.AuthorizationDao
 import co.kr.sopt_seminar_30th.data.datasource.local.FollowerDao
 import co.kr.sopt_seminar_30th.data.datasource.local.RepositoryDao
 import co.kr.sopt_seminar_30th.data.datasource.local.UserDao
@@ -33,4 +34,8 @@ object DbModule {
     @Singleton
     @Provides
     fun provideRepositoryDao(appDatabase: AppDatabase): RepositoryDao = appDatabase.repositoryDao()
+
+    @Singleton
+    @Provides
+    fun provideAuthorizationDao(appDatabase: AppDatabase): AuthorizationDao = appDatabase.authorizationDao()
 }

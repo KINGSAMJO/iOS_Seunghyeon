@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import co.kr.sopt_seminar_30th.domain.entity.home.UserFollow
 import co.kr.sopt_seminar_30th.domain.entity.home.UserProfile
 import co.kr.sopt_seminar_30th.domain.entity.home.UserRepository
+import co.kr.sopt_seminar_30th.domain.repository.local.AuthorizationRepository
 import co.kr.sopt_seminar_30th.domain.repository.remote.HomeRepository
 import co.kr.sopt_seminar_30th.domain.usecase.user.GetUserIdUseCase
 import co.kr.sopt_seminar_30th.domain.usecase.user.TurnOffAutoLoginUseCase
@@ -23,7 +24,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getUserIdUseCase: GetUserIdUseCase,
     private val turnOffAutoLoginUseCase: TurnOffAutoLoginUseCase,
-    private val homeRepository: HomeRepository
+    private val homeRepository: HomeRepository,
+    private val authorizationRepository: AuthorizationRepository
 ) : ViewModel() {
     private var id: String = ""
 
@@ -216,10 +218,14 @@ class HomeViewModel @Inject constructor(
 
     fun turnOffAutoLogin() {
         viewModelScope.launch {
-            kotlin.runCatching {
+            runCatching {
                 turnOffAutoLoginUseCase()
             }.onSuccess {
-                _turnOffSuccess.value = true
+                runCatching {
+                    authorizationRepository.deleteAuthorization(id, true)
+                }.onSuccess {
+                    _turnOffSuccess.value = true
+                }
             }
         }
     }

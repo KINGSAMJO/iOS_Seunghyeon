@@ -1,9 +1,7 @@
 package co.kr.sopt_seminar_30th.di
 
-import co.kr.sopt_seminar_30th.data.datasource.local.FollowerDao
-import co.kr.sopt_seminar_30th.data.datasource.local.RepositoryDao
-import co.kr.sopt_seminar_30th.data.datasource.local.SopthubDataStore
-import co.kr.sopt_seminar_30th.data.datasource.local.UserDao
+import co.kr.sopt_seminar_30th.data.datasource.local.*
+import co.kr.sopt_seminar_30th.data.repositoryimpl.local.AuthorizationRepositoryImpl
 import co.kr.sopt_seminar_30th.data.repositoryimpl.local.FollowerRepositoryImpl
 import co.kr.sopt_seminar_30th.data.repositoryimpl.local.RepositoryRepositoryImpl
 import co.kr.sopt_seminar_30th.data.repositoryimpl.local.UserRepositoryImpl
@@ -13,6 +11,7 @@ import co.kr.sopt_seminar_30th.data.repositoryimpl.remote.SignUpRepositoryImpl
 import co.kr.sopt_seminar_30th.data.service.auth.SignInService
 import co.kr.sopt_seminar_30th.data.service.auth.SignUpService
 import co.kr.sopt_seminar_30th.data.service.home.HomeService
+import co.kr.sopt_seminar_30th.domain.repository.local.AuthorizationRepository
 import co.kr.sopt_seminar_30th.domain.repository.local.FollowerRepository
 import co.kr.sopt_seminar_30th.domain.repository.local.RepositoryRepository
 import co.kr.sopt_seminar_30th.domain.repository.local.UserRepository
@@ -68,4 +67,12 @@ object RepositoryModule {
         homeService: HomeService,
         @IoDispatcher coroutineDispatcher: CoroutineDispatcher
     ): HomeRepository = HomeRepositoryImpl(homeService, coroutineDispatcher)
+
+    @Singleton
+    @Provides
+    fun provideAuthorizationRepository(
+        authorizationDao: AuthorizationDao,
+        @IoDispatcher coroutineDispatcher: CoroutineDispatcher
+    ): AuthorizationRepository =
+        AuthorizationRepositoryImpl(authorizationDao, coroutineDispatcher)
 }

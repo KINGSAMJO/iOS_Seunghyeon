@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import co.kr.sopt_seminar_30th.R
 import co.kr.sopt_seminar_30th.data.datasource.local.SopthubDataStore
 import co.kr.sopt_seminar_30th.databinding.ActivitySignInBinding
@@ -12,6 +14,8 @@ import co.kr.sopt_seminar_30th.presentation.ui.base.BaseActivity
 import co.kr.sopt_seminar_30th.presentation.ui.home.HomeActivity
 import co.kr.sopt_seminar_30th.presentation.viewmodel.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -47,8 +51,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
 
     private fun loginWithAutoLogin() {
         if (dataStore.autoLogin) {
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
+            signInViewModel.checkAuthorization(dataStore.userId)
         }
     }
 
@@ -95,5 +98,13 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
                 Toast.makeText(this, "아이디/비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
             }
         }
+        signInViewModel.autoLoginState
+            .flowWithLifecycle(this.lifecycle)
+            .onEach {
+                if(it) {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
+                }
+            }.launchIn(this.lifecycleScope)
     }
 }
