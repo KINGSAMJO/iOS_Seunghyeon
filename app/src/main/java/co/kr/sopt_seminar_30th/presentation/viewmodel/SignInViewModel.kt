@@ -27,9 +27,6 @@ class SignInViewModel @Inject constructor(
     var userId = MutableLiveData<String>()
     var userPassword = MutableLiveData<String>()
 
-    private var _autoLogin = MutableLiveData<Boolean>(false)
-    val autoLogin: LiveData<Boolean> get() = _autoLogin
-
     private var _isSuccess = SingleLiveEvent<Boolean>()
     val isSuccess: LiveData<Boolean> get() = _isSuccess
 
